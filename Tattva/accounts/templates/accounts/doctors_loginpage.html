@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LifeCord Doctor - Secure Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- THEME CONFIGURATION --- */
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E64A19;
+            --gradient-primary: linear-gradient(135deg, #FF8C42 0%, #FF5E3A 100%);
+            --bg-body: #F8FAFC;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border: #E2E8F0;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        /* Mobile-First Base Layout - Allows scrolling if needed */
+        body { 
+            min-height: 100vh; 
+            width: 100%; 
+            display: flex; 
+            background-color: var(--bg-body);
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* --- SPLIT LAYOUT --- */
+        .split-container { display: flex; width: 100%; min-height: 100vh; }
+        
+        /* LEFT SIDE: BRANDING (Hidden on Mobile) */
+        .brand-section {
+            flex: 1;
+            background: var(--gradient-primary);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            color: white;
+            overflow: hidden;
+            height: 100vh; /* Full height fixed for desktop brand side */
+            position: sticky;
+            top: 0;
+        }
+        
+        /* Abstract background shapes */
+        .brand-section::before {
+            content: ''; position: absolute; top: -10%; right: -10%; width: 400px; height: 400px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+        }
+        .brand-section::after {
+            content: ''; position: absolute; bottom: -5%; left: -5%; width: 300px; height: 300px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+        }
+
+        .brand-content { position: relative; z-index: 10; max-width: 500px; animation: slideRight 0.8s ease-out; }
+        .brand-logo { font-size: 3rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .brand-desc { font-size: 1.2rem; line-height: 1.6; opacity: 0.9; font-weight: 300; }
+        .feature-list { margin-top: 40px; list-style: none; }
+        .feature-list li { margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 15px; }
+        .feature-list i { background: rgba(255,255,255,0.2); width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+
+        /* RIGHT SIDE: LOGIN FORM */
+        .login-section {
+            flex: 1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            min-height: 100vh; /* Ensure full height */
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .login-header { margin-bottom: 40px; }
+        .login-header h2 { font-size: 2rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+        .login-header p { color: var(--text-muted); }
+
+        /* Form Groups */
+        .form-group { margin-bottom: 25px; position: relative; }
+        .form-label {
+            position: absolute; left: 15px; top: 15px;
+            color: var(--text-muted); font-size: 0.9rem;
+            transition: 0.2s; pointer-events: none;
+            background: white; padding: 0 5px;
+        }
+        
+        .form-input {
+            width: 100%; padding: 15px; border: 2px solid var(--border);
+            border-radius: 12px; font-size: 1rem; background: transparent;
+            transition: 0.2s;
+        }
+        
+        /* Input Focus State */
+        .form-input:focus { border-color: var(--primary); }
+        .form-input:focus + .form-label,
+        .form-input:not(:placeholder-shown) + .form-label {
+            top: -10px; font-size: 0.8rem; color: var(--primary); font-weight: 600;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute; right: 15px; top: 15px;
+            color: var(--text-muted); cursor: pointer;
+        }
+
+        /* Actions */
+        .form-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; font-size: 0.9rem; }
+        .remember-me { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); }
+        .forgot-link { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .forgot-link:hover { text-decoration: underline; }
+
+        .btn-login {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            background: var(--gradient-primary); color: white;
+            font-size: 1rem; font-weight: 700; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 107, 53, 0.4); }
+        .btn-login:active { transform: scale(0.98); }
+
+        .footer-links { margin-top: 30px; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+        .footer-links a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+        /* Security Badge */
+        .security-badge {
+            margin-top: 40px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--text-muted); font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-box {
+            background: white; width: 90%; max-width: 450px;
+            padding: 30px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            text-align: center; animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Animations */
+        @keyframes slideRight { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .brand-section { display: none; } /* Hide decorative side on mobile */
+            
+            .login-section { 
+                width: 100%; 
+                background: var(--bg-body); 
+                padding: 20px; /* Less padding on mobile */
+            }
+            
+            .login-card { 
+                background: white; 
+                border-radius: 20px; 
+                padding: 30px 20px; 
+                box-shadow: var(--shadow); 
+            }
+            
+            .login-header h2 { font-size: 1.8rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="split-container">
+        
+        <!-- LEFT: Branding (Hidden on Mobile) -->
+        <div class="brand-section">
+            <div class="brand-content">
+                <div class="brand-logo"><i class="fas fa-heartbeat"></i> LifeCord Doc</div>
+                <p class="brand-desc">The Next-Gen Clinical Operating System.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-magic"></i> AI Ambient Scribe</li>
+                    <li><i class="fas fa-chart-line"></i> Real-time Vitals Monitoring</li>
+                    <li><i class="fas fa-shield-alt"></i> HIPAA Compliant Security</li>
+                    <li><i class="fas fa-user-md"></i> Seamless Digital Prescriptions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RIGHT: Login Form -->
+        <div class="login-section">
+            <div class="login-card">
+                <div class="login-header">
+                    <h2>Welcome Back</h2>
+                    <p>Enter your unique ID to access your dashboard.</p>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    
+                    <!-- UID Input -->
+                    <div class="form-group">
+                        <input type="text" id="docUid" class="form-input" placeholder=" " required>
+                        <label class="form-label">Doctor UID (e.g. DOC-1023)</label>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <input type="password" id="docPass" class="form-input" placeholder=" " required>
+                        <label class="form-label">Password</label>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <label class="remember-me">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link" onclick="openModal('forgotModal')">Forgot Password?</a>
+                    </div>
+
+                    <!-- Button -->
+                    <button type="submit" class="btn-login">Secure Login <i class="fas fa-arrow-right" style="margin-left:8px;"></i></button>
+
+                </form>
+
+                <!-- Removed Registration Links -->
+                <div class="footer-links">
+                    <p><a href="#" onclick="openModal('supportModal')">Need Technical Help?</a></p>
+                </div>
+            </div>
+
+            <div class="security-badge">
+                <i class="fas fa-lock"></i> 256-bit SSL Encrypted
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotModal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="color:var(--primary); font-size:3rem; margin-bottom:10px;"><i class="fas fa-key"></i></div>
+            <h3 style="font-size:1.5rem; margin-bottom:10px;">Reset Password</h3>
+            <p style="color:var(--text-muted); margin-bottom:20px;">Enter your registered email or Doctor UID to receive a reset link.</p>
+            <div class="form-group" style="text-align:left;">
+                <input type="text" class="form-input" placeholder=" " id="resetInput">
+                <label class="form-label">Email or UID</label>
+            </div>
+            <button class="btn-login" onclick="simulateReset()">Send Reset Link</button>
+            <button class="btn-login" style="background:transparent; color:var(--text-muted); box-shadow:none; margin-top:5px;" onclick="closeModal('forgotModal')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="color:var(--text-main); font-size:3rem; margin-bottom:10px;"><i class="fas fa-headset"></i></div>
+            <h3 style="font-size:1.5rem; margin-bottom:10px;">Support Team</h3>
+            <p style="color:var(--text-muted); margin-bottom:20px;">Call us at <strong>+91-1800-LIFE-CORD</strong> or email support@lifecord.com</p>
+            <button class="btn-login" onclick="closeModal('supportModal')">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // --- PASSWORD TOGGLE ---
+        function togglePassword() {
+            const passInput = document.getElementById('docPass');
+            const icon = document.querySelector('.password-toggle');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // --- LOGIN LOGIC ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const uid = document.getElementById('docUid').value.trim();
+            const pass = document.getElementById('docPass').value;
+
+            if(uid && pass) {
+                // Simple visual feedback
+                const btn = document.querySelector('.btn-login');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
+                btn.style.opacity = '0.8';
+
+                setTimeout(() => {
+                    // Mock Success
+                    alert(`Welcome Dr. ${uid}! Redirecting to Dashboard...`);
+                    // In a real app: window.location.href = 'doctor_dashboard.html';
+                    btn.innerHTML = originalText;
+                    btn.style.opacity = '1';
+                }, 1500);
+            }
+        }
+
+        // --- MODALS ---
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function simulateReset() {
+            const input = document.getElementById('resetInput').value;
+            if(!input) {
+                alert("Please enter your Email or UID.");
+                return;
+            }
+            closeModal('forgotModal');
+            alert(`✅ Password reset link sent to ${input}`);
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

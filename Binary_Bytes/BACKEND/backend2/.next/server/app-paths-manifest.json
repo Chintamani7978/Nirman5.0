@@ -1,0 +1,6 @@
+{
+  "/api/cameras/[id]/route": "app/api/cameras/[id]/route.js",
+  "/api/cameras/route": "app/api/cameras/route.js",
+  "/api/threats/route": "app/api/threats/route.js",
+  "/api/scans/route": "app/api/scans/route.js"
+}

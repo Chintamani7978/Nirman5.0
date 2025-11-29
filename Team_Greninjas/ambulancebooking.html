@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Booking - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                <li><a href="ambulance-booking.html" class="active">Ambulance</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="admin-panel.html">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-ambulance"></i> Emergency Ambulance Booking</h1>
+        <p>Get emergency medical assistance instantly</p>
+    </div>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="alert alert-danger" style="margin-bottom: 30px;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong>Emergency Hotline: 108</strong><br>
+                    For immediate emergency assistance, call 108 or 102
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Book Ambulance</h2>
+                <form id="ambulanceForm">
+                    <div class="form-group">
+                        <label for="emergencyType"><i class="fas fa-exclamation-circle"></i> Emergency Type</label>
+                        <select id="emergencyType" required>
+                            <option value="">Select emergency type</option>
+                            <option value="critical">Critical Emergency</option>
+                            <option value="accident">Accident</option>
+                            <option value="cardiac">Cardiac Emergency</option>
+                            <option value="stroke">Stroke</option>
+                            <option value="respiratory">Respiratory Emergency</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pickupLocation"><i class="fas fa-map-marker-alt"></i> Pickup Location</label>
+                        <input type="text" id="pickupLocation" placeholder="Enter pickup address" required>
+                        <button type="button" class="btn btn-secondary" onclick="getCurrentLocation()" style="margin-top: 10px; width: 100%;">
+                            <i class="fas fa-crosshairs"></i> Use Current Location
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="destinationHospital"><i class="fas fa-hospital"></i> Destination Hospital (Optional)</label>
+                        <select id="destinationHospital">
+                            <option value="">Select hospital (or leave blank for nearest)</option>
+                            <option value="1">City General Hospital</option>
+                            <option value="2">Metro Medical Center</option>
+                            <option value="3">Community Health Clinic</option>
+                            <option value="4">Regional Hospital</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientName"><i class="fas fa-user"></i> Patient Name</label>
+                        <input type="text" id="patientName" placeholder="Enter patient name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone"><i class="fas fa-phone"></i> Contact Phone</label>
+                        <input type="tel" id="contactPhone" placeholder="Enter contact number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalInfo"><i class="fas fa-info-circle"></i> Additional Information</label>
+                        <textarea id="additionalInfo" rows="3" placeholder="Any additional information about the emergency"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-block" style="font-size: 1.1rem; padding: 15px;">
+                        <i class="fas fa-ambulance"></i> Request Ambulance Now
+                    </button>
+                </form>
+            </div>
+
+            <div id="map" class="map-container" style="margin-top: 40px;"></div>
+
+            <div style="margin-top: 40px;">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Available Ambulances</h2>
+                <div class="dashboard-grid" id="ambulanceStatus">
+                    <!-- Ambulance status will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Sanjeevani Live</h3>
+                    <p>Your trusted healthcare companion for real-time medical services</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        const ambulances = [
+            { id: 1, number: "AMB-001", status: "available", location: "Downtown", eta: "5 min" },
+            { id: 2, number: "AMB-002", status: "available", location: "North District", eta: "8 min" },
+            { id: 3, number: "AMB-003", status: "busy", location: "East Side", eta: "15 min" },
+            { id: 4, number: "AMB-004", status: "available", location: "West End", eta: "10 min" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderAmbulanceStatus();
+            initMap();
+            
+            document.getElementById('ambulanceForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                bookAmbulance();
+            });
+        });
+
+        function renderAmbulanceStatus() {
+            const container = document.getElementById('ambulanceStatus');
+            container.innerHTML = ambulances.map(ambulance => `
+                <div class="hospital-card">
+                    <div class="hospital-header">
+                        <div>
+                            <div class="hospital-name">
+                                <span class="status-indicator ${ambulance.status}"></span>
+                                ${ambulance.number}
+                            </div>
+                            <div class="hospital-location">
+                                <i class="fas fa-map-marker-alt"></i> ${ambulance.location}
+                            </div>
+                        </div>
+                        <span class="status-badge ${ambulance.status === 'available' ? 'available' : 'limited'}">
+                            ${ambulance.status === 'available' ? 'Available' : 'Busy'}
+                        </span>
+                    </div>
+                    <div style="padding: 15px 0; border-top: 1px solid #e0e0e0; margin-top: 15px;">
+                        <div style="margin-bottom: 15px;">
+                            <strong>Estimated Arrival:</strong> ${ambulance.eta}
+                        </div>
+                        ${ambulance.status === 'available' ? `
+                            <button class="btn btn-primary btn-block" onclick="selectAmbulance(${ambulance.id})">
+                                <i class="fas fa-check"></i> Select This Ambulance
+                            </button>
+                        ` : `
+                            <button class="btn btn-secondary btn-block" disabled>
+                                <i class="fas fa-clock"></i> Currently Busy
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        // Reverse geocoding would be done here with Google Maps API
+                        document.getElementById('pickupLocation').value = `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`;
+                        showAlert('Location detected successfully!', 'success');
+                        
+                        // Update map
+                        if (typeof google !== 'undefined' && google.maps) {
+                            initMap(lat, lng);
+                        }
+                    },
+                    function(error) {
+                        showAlert('Unable to get your location. Please enter manually.', 'warning');
+                    }
+                );
+            } else {
+                showAlert('Geolocation is not supported by your browser.', 'warning');
+            }
+        }
+
+        function selectAmbulance(ambulanceId) {
+            const ambulance = ambulances.find(a => a.id === ambulanceId);
+            if (ambulance && ambulance.status === 'available') {
+                showAlert(`Ambulance ${ambulance.number} selected. Please fill the form and submit.`, 'info');
+            }
+        }
+
+        function bookAmbulance() {
+            if (!validateForm('ambulanceForm')) {
+                showAlert('Please fill in all required fields', 'warning');
+                return;
+            }
+
+            const formData = {
+                emergencyType: document.getElementById('emergencyType').value,
+                pickupLocation: document.getElementById('pickupLocation').value,
+                destinationHospital: document.getElementById('destinationHospital').value,
+                patientName: document.getElementById('patientName').value,
+                contactPhone: document.getElementById('contactPhone').value,
+                additionalInfo: document.getElementById('additionalInfo').value
+            };
+
+            // Find available ambulance
+            const availableAmbulance = ambulances.find(a => a.status === 'available');
+            
+            if (availableAmbulance) {
+                showAlert(`Ambulance ${availableAmbulance.number} has been dispatched! ETA: ${availableAmbulance.eta}. You will receive updates at ${formData.contactPhone}`, 'success');
+                
+                // Update ambulance status
+                availableAmbulance.status = 'busy';
+                renderAmbulanceStatus();
+                
+                // Save booking
+                const bookings = getFromLocalStorage('ambulanceBookings') || [];
+                bookings.push({
+                    ...formData,
+                    ambulanceNumber: availableAmbulance.number,
+                    id: Date.now(),
+                    status: 'dispatched',
+                    timestamp: new Date().toISOString()
+                });
+                saveToLocalStorage('ambulanceBookings', bookings);
+                
+                // Reset form
+                document.getElementById('ambulanceForm').reset();
+            } else {
+                showAlert('No ambulances available at the moment. Please call 108 for immediate assistance.', 'danger');
+            }
+        }
+
+        // Simulate real-time ambulance updates
+        setInterval(() => {
+            ambulances.forEach(ambulance => {
+                if (ambulance.status === 'busy' && Math.random() > 0.7) {
+                    ambulance.status = 'available';
+                }
+            });
+            renderAmbulanceStatus();
+        }, 30000); // Update every 30 seconds
+    </script>
+    <!-- Google Maps API - Replace YOUR_API_KEY with your actual API key -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script> -->
+</body>
+</html>
+

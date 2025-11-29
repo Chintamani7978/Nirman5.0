@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Verification - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html" class="active">Doctor Verification</a></li>
+                <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="login.html" class="nav-login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <div class="mode-toggle">
+                <button id="themeToggleBtn" class="theme-btn" title="Toggle light / dark">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-certificate"></i> Verified Doctors Directory</h1>
+        <p>Our network of certified and verified medical professionals across various specializations</p>
+    </div>
+
+    <!-- Search Bar Section -->
+    <div class="search-section">
+        <div class="container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="doctorSearch" class="search-input" placeholder="Search doctors by name, specialty, or location...">
+                <button class="search-clear" id="clearDoctorSearch" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor Verification Section -->
+    <section class="doctor-verification-section">
+        <div class="container">
+            <div class="doctors-grid" id="doctorGrid">
+                <!-- Doctor Card 1 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Abinash Mohanty
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Cardiology</p>
+                            <p class="doctor-qualifications">MD, DM Cardiology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">14 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12345</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41001</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 2 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Rituparna Samal
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Neurology</p>
+                            <p class="doctor-qualifications">MD, DM Neurology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">11 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12346</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41002</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1800</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 3 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Sushant Mishra
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Orthopedics</p>
+                            <p class="doctor-qualifications">MS Orthopedics</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">16 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12347</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41003</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1200</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 4 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Lipika Pradhan
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Pediatrics</p>
+                            <p class="doctor-qualifications">MD Pediatrics</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">9 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12348</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41004</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹900</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 5 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Tapan Ratha
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Oncology</p>
+                            <p class="doctor-qualifications">MD, DM Oncology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">18 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12349</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41005</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹2000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 6 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Pragyan Parimita
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> General Medicine</p>
+                            <p class="doctor-qualifications">MBBS, MD</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">12 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12350</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41006</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹800</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 7 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Manoj Kumar Dash
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Dermatology</p>
+                            <p class="doctor-qualifications">MD Dermatology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">10 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12351</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41007</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 8 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Jyoti Sahu
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Gynecology</p>
+                            <p class="doctor-qualifications">MD, DNB Gynecology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">13 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12352</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41008</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1600</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 9 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Bikash Chandra Nayak
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> ENT Specialist</p>
+                            <p class="doctor-qualifications">MS ENT</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">15 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12353</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41009</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 10 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Ananya Rath
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Pulmonology</p>
+                            <p class="doctor-qualifications">MD Pulmonology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">8 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12354</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41010</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1400</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 11 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Praveen Prusty
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Nephrology</p>
+                            <p class="doctor-qualifications">MD, DM Nephrology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">17 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12355</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41011</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹2100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 12 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Sangeeta Mohapatra
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Endocrinology</p>
+                            <p class="doctor-qualifications">MD, DM Endocrinology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">12 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12356</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41012</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1700</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 13 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Subrat Sahoo
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Gastroenterology</p>
+                            <p class="doctor-qualifications">MD, DM Gastroenterology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">20 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12357</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41013</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹2200</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 14 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Chitra Samantray
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Psychiatry</p>
+                            <p class="doctor-qualifications">MD Psychiatry</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">9 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12358</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41014</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1200</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 15 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Alok Rath
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Urology</p>
+                            <p class="doctor-qualifications">MS, MCh Urology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">14 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12359</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41015</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹2000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 16 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Ipsita Mohanty
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Ophthalmology</p>
+                            <p class="doctor-qualifications">MS Ophthalmology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">11 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12360</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41016</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹900</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 17 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Pramod Sethi
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Radiology</p>
+                            <p class="doctor-qualifications">MD Radiology</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">13 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12361</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41017</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹1500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 18 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Debasmita Nayak
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Dental Surgeon</p>
+                            <p class="doctor-qualifications">BDS, MDS</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">7 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12362</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41018</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹700</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 19 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Swetapadma Swain
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Physiotherapy</p>
+                            <p class="doctor-qualifications">MPT Orthopedic</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">8 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12363</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41019</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹600</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 20 -->
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                Dr. Ambarish Tripathy
+                            </h3>
+                            <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> Critical Care / ICU</p>
+                            <p class="doctor-qualifications">MD, FNB Critical Care</p>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-briefcase"></i> Experience:</span>
+                            <span class="value">19 years</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-id-card"></i> Reg No:</span>
+                            <span class="value">OD-12364</span>
+                        </div>
+                        <div class="doctor-detail">
+                            <span class="label"><i class="fas fa-phone"></i> Contact:</span>
+                            <span class="value phone">+91 98765 41020</span>
+                        </div>
+                        <div class="doctor-detail fee">
+                            <span class="label"><i class="fas fa-rupee-sign"></i> Consultation:</span>
+                            <span class="value">₹2500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Sanjeevani Live</h3>
+                    <p>Your trusted healthcare companion for real-time medical services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hospital-profiles.html">Hospitals</a></li>
+                        <li><a href="pharmacy.html">Pharmacy</a></li>
+                        <li><a href="ambulance-booking.html">Emergency</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                        <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                        <li><a href="patient-portal.html">Patient Portal</a></li>
+                        <li><a href="admin-panel.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency</h4>
+                    <p><i class="fas fa-phone"></i> 108 - Emergency</p>
+                    <p><i class="fas fa-phone"></i> 102 - Ambulance</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

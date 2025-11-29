@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard App</title>
+    <!-- Load Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --primary-blue: #2A68F8;
+            --accent-green: #4CAF50;
+            --accent-red: #E57373;
+            --bg-light: #F8F8F8;
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* Priority Colors */
+            --priority-high: #F44336;
+            --priority-medium: #FFC107;
+            --priority-low: #4CAF50;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+        }
+
+        .dashboard-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: var(--text-light);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 70px;
+        }
+
+        .hidden-view { display: none; }
+        .mr-2 { margin-right: 0.5rem; }
+
+        .dashboard-header { display: flex; justify-content: flex-end; padding: 15px 15px 0; }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .home-view { padding: 15px; }
+
+        .welcome-card { background-color: var(--primary-blue); color: var(--text-light); }
+        .welcome-card .greeting { opacity: 0.8; margin: 0 0 5px 0; }
+        .welcome-card .user-name { font-size: 1.8em; margin: 0 0 10px 0; font-weight: bold; }
+        .status-tag { display: inline-block; padding: 4px 10px; border-radius: 15px; font-size: 0.8em; font-weight: 600; margin-bottom: 20px; }
+        .on-duty { background-color: var(--accent-green); color: var(--text-light); }
+
+        .shift-details p { margin: 0; font-size: 0.9em; }
+        .shift-details .shift-time { font-size: 1.5em; font-weight: bold; margin: 5px 0; }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .action-card {
+            text-align: center;
+            background-color: var(--text-light);
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            padding: 15px;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .action-card:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); }
+
+        .icon-placeholder { display: block; margin: 0 auto 10px; width: 40px; height: 40px; color: var(--primary-blue); }
+
+        .emergency-card { border: 2px solid var(--accent-red); box-shadow: 0 4px 12px rgba(229, 115, 115, 0.3); }
+        .emergency-card .icon-placeholder { color: var(--accent-red); }
+
+        .card-label { margin: 0; font-size: 0.9em; font-weight: 500; color: var(--text-dark); }
+
+        .alert-card {
+            display: flex; align-items: center; background-color: #FFFDE7; color: #E65100;
+            padding: 15px; border-left: 5px solid #FF9800; border-radius: 12px;
+            margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .alert-card .icon { font-size: 1.5em; margin-right: 15px; }
+        .alert-text { font-size: 0.9em; line-height: 1.4; }
+        .alert-text strong { font-weight: bold; }
+
+        .tasks-section h2 { font-size: 1.1em; font-weight: 600; margin: 0 0 15px 0; color: var(--text-dark); }
+
+        .task-card { display: flex; align-items: center; background-color: var(--text-light); border-radius: 8px; padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .task-card .icon { font-size: 1.2em; color: #999; margin-right: 15px; }
+        .task-details { flex-grow: 1; }
+        .task-label { margin: 0; font-size: 0.9em; color: var(--text-dark); }
+
+        .priority-tag { font-size: 0.75em; font-weight: 600; padding: 3px 10px; border-radius: 4px; color: var(--text-light); text-transform: uppercase; }
+        .priority-tag.high { background-color: var(--priority-high); }
+        .priority-tag.medium { background-color: var(--priority-medium); color: var(--text-dark); }
+        .priority-tag.low { background-color: var(--priority-low); }
+
+        .shift-screen-main, .attendance-screen-main { padding: 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .section-header h1 { font-size: 1.5em; margin: 0; color: var(--text-dark); }
+        .history-link { color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 0.9em; }
+
+        .calendar-strip { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; justify-content: space-between; }
+        .calendar-strip::-webkit-scrollbar { display: none; }
+        .date-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: white; border: 1px solid #eee; border-radius: 12px; min-width: 55px; padding: 10px 5px; cursor: pointer; transition: all 0.2s; }
+        .day-name { font-size: 0.75em; color: #888; margin-bottom: 4px; }
+        .day-number { font-size: 1.1em; font-weight: bold; color: var(--text-dark); }
+        .date-item.active { background-color: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 4px 8px rgba(42,104,248,0.3); }
+        .date-item.active .day-name, .date-item.active .day-number { color: white; }
+
+        .shifts-list { display: flex; flex-direction: column; gap: 15px; }
+        .shift-card { background-color: white; border-radius: 12px; padding: 15px; box-shadow: var(--card-shadow); border-left: 5px solid transparent; }
+        .shift-card.completed { border-left-color: var(--accent-green); }
+        .shift-card.upcoming { border-left-color: #FF9800; }
+
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .ward-name { margin: 0; font-size: 1.1em; font-weight: 600; color: var(--text-dark); }
+        .status-badge { font-size: 0.75em; padding: 4px 8px; border-radius: 12px; font-weight: 600; }
+        .status-completed { background-color: rgba(76, 175, 80, 0.1); color: var(--accent-green); }
+        .status-upcoming { background-color: rgba(255, 152, 0, 0.1); color: #EF6C00; }
+
+        .card-body { display: flex; flex-direction: column; gap: 8px; }
+        .time-row, .role-row { display: flex; align-items: center; color: #555; font-size: 0.9em; }
+        .time-row i, .role-row i { width: 20px; color: #999; margin-right: 8px; }
+
+        .card-footer { margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; text-align: right; }
+        .btn-view-details { background-color: transparent; color: var(--primary-blue); border: none; font-weight: 600; cursor: pointer; font-size: 0.9em; }
+
+        .attendance-header { display: flex; align-items: center; margin-bottom: 30px; font-size: 1.5em; font-weight: bold; color: var(--text-dark); }
+        .attendance-header i { margin-right: 15px; cursor: pointer; color: #999; }
+
+        .qr-card { text-align: center; background-color: var(--text-light); }
+        .qr-placeholder { width: 150px; height: 150px; margin: 0 auto 15px; background-color: var(--bg-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .qr-placeholder svg { width: 80px; height: 80px; color: var(--primary-blue); }
+        .qr-card p { font-size: 0.9em; color: #555; margin-bottom: 20px; }
+        .btn-open-scanner { background-color: var(--primary-blue); color: var(--text-light); padding: 10px 30px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+        .btn-open-scanner:hover { background-color: #2050D0; }
+
+        .last-punch-card { background-color: var(--text-light); display: flex; align-items: center; }
+        .punch-icon { width: 40px; height: 40px; border-radius: 50%; background-color: rgba(76,175,80,0.1); color: var(--accent-green); display: flex; align-items: center; justify-content: center; margin-right: 15px; }
+        .punch-details h4 { margin: 0; font-size: 1em; font-weight: 600; color: var(--text-dark); }
+        .punch-details p { margin: 2px 0 0 0; font-size: 0.85em; color: #555; display: flex; align-items: center; }
+        .punch-details p i { margin-left: 10px; color: var(--primary-blue); }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; max-width: 400px; display: flex; justify-content: space-around;
+            align-items: center; height: 65px; background-color: var(--text-light); border-top: 1px solid #eee;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 10;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #888; font-size: 0.75em; padding: 5px; transition: color 0.2s; cursor: pointer; }
+        .nav-item i { font-size: 1.3em; margin-bottom: 5px; }
+        .nav-item.active { color: var(--primary-blue); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <!-- Main Content Area: Content switches here -->
+    <div id="main-content-area">
+        <!-- HOME VIEW -->
+        <div id="home-view" class="home-view">
+            <section class="card welcome-card">
+                <p class="greeting">Good Morning</p>
+                <h1 class="user-name">Dr. Kavya Sharma</h1>
+                <span class="status-tag on-duty">On Duty</span>
+                <div class="shift-details">
+                    <p>Today's Shift</p>
+                    <p class="shift-time">10:00 AM - 6:00 PM</p>
+                    <p class="shift-location">ICU</p>
+                </div>
+            </section>
+
+            <section class="action-grid">
+                <div class="card action-card" data-action-view="attend-view">
+                    <svg class="icon-placeholder" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    <p class="card-label">Mark Attendance</p>
+                </div>
+
+                <div class="card action-card" data-action-view="shifts-view">
+                    <svg class="icon-placeholder" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM5 7V6h14v1H5z"/></svg>
+                    <p class="card-label">View Shifts</p>
+                </div>
+
+                <div class="card action-card">
+                    <svg class="icon-placeholder" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16h-4v2h4v-2zm0-4h-4v2h4v-2zm-2-4V4.5L17.5 9H13c-.55 0-1 .45-1 1v4h2v-2z"/></svg>
+                    <p class="card-label">Apply Leave</p>
+                </div>
+
+                <div class="card action-card emergency-card">
+                    <i class="icon-placeholder fas fa-exclamation-circle"></i>
+                    <p class="card-label">Emergencies</p>
+                </div>
+            </section>
+
+            <section class="alert-card upcoming-shift">
+                <i class="icon far fa-bell"></i>
+                <p class="alert-text">
+                    <strong>Upcoming Shift</strong>
+                    <br>Tomorrow: 2:00 PM - 10:00 PM, Ward B
+                </p>
+            </section>
+
+            <section class="tasks-section">
+                <h2>Today's Tasks</h2>
+                <div class="task-card">
+                    <i class="icon far fa-clipboard-list"></i>
+                    <div class="task-details"><p class="task-label">Patient rounds - ICU</p></div>
+                    <span class="priority-tag high">High</span>
+                </div>
+                <div class="task-card">
+                    <i class="icon far fa-file-alt"></i>
+                    <div class="task-details"><p class="task-label">Update medical records</p></div>
+                    <span class="priority-tag medium">Medium</span>
+                </div>
+                <div class="task-card">
+                    <i class="icon far fa-file-alt"></i>
+                    <div class="task-details"><p class="task-label">Review lab results</p></div>
+                    <span class="priority-tag low">Low</span>
+                </div>
+            </section>
+        </div>
+
+        <!-- SHIFTS VIEW -->
+        <div id="shifts-view" class="shift-screen-main hidden-view">
+            <div class="section-header">
+                <h1>My Shifts</h1>
+                <a href="#" class="history-link">History</a>
+            </div>
+
+            <div class="calendar-strip">
+                <div class="date-item"><span class="day-name">Mon</span><span class="day-number">20</span></div>
+                <div class="date-item"><span class="day-name">Tue</span><span class="day-number">21</span></div>
+                <div class="date-item active"><span class="day-name">Wed</span><span class="day-number">22</span></div>
+                <div class="date-item"><span class="day-name">Thu</span><span class="day-number">23</span></div>
+                <div class="date-item"><span class="day-name">Fri</span><span class="day-number">24</span></div>
+                <div class="date-item"><span class="day-name">Sat</span><span class="day-number">25</span></div>
+                <div class="date-item"><span class="day-name">Sun</span><span class="day-number">26</span></div>
+            </div>
+
+            <div class="shifts-list">
+                <div class="shift-card completed">
+                    <div class="card-header"><h3 class="ward-name">General Ward</h3><span class="status-badge status-completed">Completed</span></div>
+                    <div class="card-body"><div class="time-row"><i class="far fa-clock"></i><span>09:00 AM - 02:00 PM</span></div>
+                    <div class="role-row"><i class="far fa-user"></i><span>Head Nurse</span></div></div>
+                </div>
+                <div class="shift-card upcoming">
+                    <div class="card-header"><h3 class="ward-name">ICU (Intensive Care)</h3><span class="status-badge status-upcoming">Upcoming</span></div>
+                    <div class="card-body"><div class="time-row"><i class="far fa-clock"></i><span>02:00 PM - 10:00 PM</span></div>
+                    <div class="role-row"><i class="far fa-user"></i><span>Senior Doctor</span></div></div>
+                    <div class="card-footer"><button class="btn-view-details">View Details</button></div>
+                </div>
+                <div class="shift-card completed">
+                    <div class="card-header"><h3 class="ward-name">Emergency Room</h3><span class="status-badge status-completed">Completed</span></div>
+                    <div class="card-body"><div class="time-row"><i class="far fa-clock"></i><span>07:00 AM - 01:00 PM</span></div>
+                    <div class="role-row"><i class="far fa-user"></i><span>Attending Physician</span></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE VIEW -->
+        <div id="attend-view" class="attendance-screen-main hidden-view">
+            <div class="attendance-header"><i class="fas fa-arrow-left" id="back-to-home"></i>Attendance</div>
+            <section class="card qr-card">
+                <div class="qr-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 8V6h2V4h-2V2h-2v2h-2v2h2v2h-2v2h2v2h2v-2h2v-2h-2V8h2V6h-2zM4 16H2v2h2v2h2v-2H4v-2zm12-4h-2V6H8v2h2v2h4v2zM4 4H2v2h2V4zm0 6H2v2h2v-2zM8 4H6v2h2V4zM8 8H6v2h2V8zM12 4h-2v2h2V4zM4 12H2v2h2v-2zM12 16h-2v-2h2v2zM12 12h-2v-2h2v2zM16 16h-2v-2h2v2zM16 20h-2v-2h2v2zM20 4h-2v2h2V4zm0 6h-2v2h2v-2zM20 16h-2v2h2v-2zM20 20h-2v-2h2v2zM8 20H6v-2h2v2zM12 20h-2v-2h2v2zM20 8h-2v2h2V8z"/>
+                    </svg>
+                </div>
+                <p>Scan QR Code to Mark Attendance</p>
+                <button class="btn-open-scanner">Open Scanner</button>
+            </section>
+
+            <section class="card last-punch-card">
+                <div class="punch-icon"><i class="fas fa-check"></i></div>
+                <div class="punch-details"><h4>Last Punch: Check In</h4><p>Today, 9:55 AM <i class="fas fa-map-marker-alt"></i></p></div>
+            </section>
+        </div>
+
+        <!-- CHAT VIEW -->
+        <div id="chat-view" class="hidden-view"></div>
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a class="nav-item active" data-view="home-view"><i class="fas fa-home"></i>Home</a>
+        <a class="nav-item" data-view="shifts-view"><i class="far fa-calendar-alt"></i>Shifts</a>
+        <a class="nav-item" data-view="attend-view"><i class="fas fa-qrcode"></i>Attend</a>
+        <a class="nav-item" data-view="chat-view"><i class="far fa-comment-dots"></i>Chat</a>
+    </nav>
+</div>
+
+<script>
+    // Simple view switching
+    const viewMap = {
+        'home-view': document.getElementById('home-view'),
+        'shifts-view': document.getElementById('shifts-view'),
+        'attend-view': document.getElementById('attend-view'),
+        'chat-view': document.getElementById('chat-view')
+    };
+    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+
+    function switchView(viewId) {
+        Object.values(viewMap).forEach(v => v.classList.add('hidden-view'));
+        viewMap[viewId].classList.remove('hidden-view');
+
+        navItems.forEach(item => item.classList.remove('active'));
+        document.querySelector(`.nav-item[data-view="${viewId}"]`).classList.add('active');
+    }
+
+    navItems.forEach(item => {
+        item.addEventListener('click', e => {
+            e.preventDefault();
+            switchView(item.getAttribute('data-view'));
+        });
+    });
+
+    document.querySelectorAll('.action-card[data-action-view]').forEach(card => {
+        card.addEventListener('click', () => {
+            const viewId = card.getAttribute('data-action-view');
+            switchView(viewId);
+        });
+    });
+
+    document.getElementById('back-to-home').addEventListener('click', () => switchView('home-view'));
+</script>
+
+</body>
+</html>

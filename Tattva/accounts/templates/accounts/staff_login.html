@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Login</title>
+</head>
+<body>
+    <h2>Hospital Staff Login (Test Page)</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>This page exists now, please log in.</p>
+        {{ form.as_p }}
+        <button type="submit">Log In</button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</body>
+</html>

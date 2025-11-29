@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - SevaBandhu Hospital Staff Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            background: #ffffff;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            flex: 1;
+            background: linear-gradient(135deg, hsl(195, 85%, 45%), hsl(195, 85%, 40%), hsl(190, 75%, 50%));
+            color: white;
+            padding: 3rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: hsl(43, 90%, 60%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        .feature-item:hover .feature-icon {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-content h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .feature-content p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .hero-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.875rem;
+            opacity: 0.75;
+        }
+
+        /* Signup Section */
+        .signup-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+            background: #fafafa;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .mobile-logo {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-logo .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: hsl(195, 85%, 45%);
+        }
+
+        .mobile-logo .logo-text {
+            font-size: 1.5rem;
+            color: hsl(0, 0%, 20%);
+        }
+
+        .signup-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .signup-header {
+            margin-bottom: 2rem;
+        }
+
+        .signup-header h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: hsl(0, 0%, 20%);
+            margin-bottom: 0.5rem;
+        }
+
+        .signup-header p {
+            color: hsl(0, 0%, 45%);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: hsl(0, 0%, 20%);
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            height: 44px;
+            padding: 0.75rem;
+            border: 1px solid hsl(0, 0%, 85%);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: hsl(195, 85%, 45%);
+            box-shadow: 0 0 0 3px rgba(0, 160, 220, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: hsl(0, 0%, 65%);
+        }
+
+        .password-requirements {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: hsl(0, 0%, 55%);
+            line-height: 1.4;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 0.875rem;
+            color: hsl(0, 0%, 20%);
+            cursor: pointer;
+            user-select: none;
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: hsl(195, 85%, 45%);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            height: 44px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: hsl(195, 85%, 45%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: hsl(195, 85%, 40%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 160, 220, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: hsl(0, 0%, 85%);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: hsl(0, 0%, 85%);
+        }
+
+        .divider span {
+            position: relative;
+            background: white;
+            padding: 0 0.75rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: hsl(0, 0%, 55%);
+        }
+
+        .login-text {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: hsl(0, 0%, 55%);
+        }
+
+        .login-link {
+            color: hsl(195, 85%, 45%);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .login-link:hover {
+            color: hsl(195, 85%, 35%);
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .input-error {
+            border-color: #dc2626 !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-section {
+                display: none;
+            }
+
+            .mobile-logo {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .signup-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .signup-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="logo-section">
+                    <div class="logo-icon">⚕️</div>
+                    <h1 class="logo-text">SevaBandhu</h1>
+                </div>
+                <p class="hero-subtitle">
+                    Join India's Leading Hospital Staff Management Platform
+                </p>
+
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-content">
+                            <h3>Quick Registration</h3>
+                            <p>Get started in minutes with our streamlined onboarding</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">🏥</div>
+                        <div class="feature-content">
+                            <h3>Multi-Hospital Support</h3>
+                            <p>Work across multiple healthcare facilities seamlessly</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-content">
+                            <h3>Mobile Ready</h3>
+                            <p>Access your schedule and alerts from anywhere</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-footer">
+                    Trusted by 500+ hospitals • 50,000+ healthcare professionals
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Section -->
+        <div class="signup-section">
+            <div class="signup-container">
+                <!-- Mobile Logo -->
+                <div class="mobile-logo">
+                    <div class="logo-icon">⚕️</div>
+                    <h1 class="logo-text">SevaBandhu</h1>
+                </div>
+
+                <div class="signup-card">
+                    <div class="signup-header">
+                        <h2>Create your account</h2>
+                        <p>Join SevaBandhu to manage your hospital duties efficiently</p>
+                    </div>
+
+                    <form id="signupForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="firstName">First Name</label>
+                                <input 
+                                    type="text" 
+                                    id="firstName" 
+                                    class="form-input" 
+                                    placeholder="Rajesh"
+                                    required
+                                >
+                                <div class="error-message" id="firstNameError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="lastName">Last Name</label>
+                                <input 
+                                    type="text" 
+                                    id="lastName" 
+                                    class="form-input" 
+                                    placeholder="Kumar"
+                                    required
+                                >
+                                <div class="error-message" id="lastNameError"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="form-input" 
+                                placeholder="rajesh.kumar@hospital.com"
+                                required
+                            >
+                            <div class="error-message" id="emailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                class="form-input" 
+                                placeholder="+91 98765 43210"
+                                required
+                            >
+                            <div class="error-message" id="phoneError"></div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="role">Role</label>
+                                <select id="role" class="form-select" required>
+                                    <option value="">Select Role</option>
+                                    <option value="doctor">Doctor</option>
+                                    <option value="nurse">Nurse</option>
+                                    <option value="admin">Administrator</option>
+                                    <option value="technician">Technician</option>
+                                    <option value="pharmacist">Pharmacist</option>
+                                    <option value="support">Support Staff</option>
+                                </select>
+                                <div class="error-message" id="roleError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="department">Department</label>
+                                <select id="department" class="form-select" required>
+                                    <option value="">Select Department</option>
+                                    <option value="emergency">Emergency</option>
+                                    <option value="icu">ICU</option>
+                                    <option value="surgery">Surgery</option>
+                                    <option value="pediatrics">Pediatrics</option>
+                                    <option value="cardiology">Cardiology</option>
+                                    <option value="oncology">Oncology</option>
+                                    <option value="radiology">Radiology</option>
+                                    <option value="pharmacy">Pharmacy</option>
+                                    <option value="administration">Administration</option>
+                                </select>
+                                <div class="error-message" id="departmentError"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="form-input" 
+                                placeholder="Create a strong password"
+                                required
+                            >
+                            <div class="password-requirements">
+                                Must be at least 8 characters with uppercase, lowercase, and numbers
+                            </div>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                class="form-input" 
+                                placeholder="Re-enter your password"
+                                required
+                            >
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" class="checkbox-input" required>
+                            <label for="terms" class="checkbox-label">
+                                I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <p class="login-text">
+                        Already have an account? 
+                        <a href="login.html" class="login-link">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+            const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+            return re.test(password);
+        }
+
+        function validatePhone(phone) {
+            // Indian phone number validation
+            const re = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,5}[)]?[-\s\.]?[0-9]{4,6}$/;
+            return re.test(phone.replace(/\s/g, ''));
+        }
+
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const inputElement = document.getElementById(fieldId);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+            inputElement.classList.add('input-error');
+        }
+
+        function clearError(fieldId) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const inputElement = document.getElementById(fieldId);
+            errorElement.classList.remove('show');
+            inputElement.classList.remove('input-error');
+        }
+
+        // Clear errors on input
+        ['firstName', 'lastName', 'email', 'phone', 'role', 'department', 'password', 'confirmPassword'].forEach(fieldId => {
+            document.getElementById(fieldId).addEventListener('input', function() {
+                clearError(fieldId);
+            });
+        });
+
+        // Form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear all previous errors
+            ['firstName', 'lastName', 'email', 'phone', 'role', 'department', 'password', 'confirmPassword'].forEach(clearError);
+            
+            let isValid = true;
+            
+            // Get form values
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const role = document.getElementById('role').value;
+            const department = document.getElementById('department').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            // Validate first name
+            if (firstName.length < 2) {
+                showError('firstName', 'First name must be at least 2 characters');
+                isValid = false;
+            }
+            
+            // Validate last name
+            if (lastName.length < 2) {
+                showError('lastName', 'Last name must be at least 2 characters');
+                isValid = false;
+            }
+            
+            // Validate email
+            if (!validateEmail(email)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate phone
+            if (!validatePhone(phone)) {
+                showError('phone', 'Please enter a valid phone number');
+                isValid = false;
+            }
+            
+            // Validate role
+            if (!role) {
+                showError('role', 'Please select your role');
+                isValid = false;
+            }
+            
+            // Validate department
+            if (!department) {
+                showError('department', 'Please select your department');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!validatePassword(password)) {
+                showError('password', 'Password must be at least 8 characters with uppercase, lowercase, and numbers');
+                isValid = false;
+            }
+            
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                showError('confirmPassword', 'Passwords do not match');
+                isValid = false;
+            }
+            
+            // Check terms
+            if (!terms) {
+                alert('Please accept the Terms of Service and Privacy Policy');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                console.log('Signup form data:', {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    role,
+                    department
+                });
+                
+                alert('Account created successfully!\n\nWelcome to SevaBandhu, ' + firstName + '!\n\nYou will be redirected to the login page.');
+                
+                // Here you would typically make an API call to create the account
+                // Example:
+                // fetch('/api/signup', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ firstName, lastName, email, phone, role, department, password })
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         window.location.href = 'login.html';
+                //     }
+                // });
+            }
+        });
+    </script>
+</body>
+</html>

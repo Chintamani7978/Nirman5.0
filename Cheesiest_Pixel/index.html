@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SamhitaFusion | Integrated Healthcare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;600;700;800&family=Rajdhani:wght@300;500;600;700&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['Rajdhani', 'sans-serif'],
+          },
+          transitionTimingFunction: {
+            'fluid': 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
+            'snappy': 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+            'bounce-subtle': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+          },
+          colors: {
+            // Light Mode Palette
+            primary: '#87CEEB', // Sky Blue
+            secondary: '#008080', // Deep Teal
+            neutral: '#D3D3D3', // Warm Grey
+            sage: '#B2D8B2', // Soft Sage Green
+            peach: '#FFDAB9', // Light Peach/Blush
+
+            // Dark Mode Palette (Specific Request)
+            'dark-bg': '#2C3E50', // Deep Charcoal Grey
+            'dark-text': '#ECF0F1', // Light Grey/Off-white
+            'dark-primary': '#87CEEB', // Sky Blue (Same as light, toned)
+            'dark-secondary': '#B2D8B2', // Soft Sage Green
+            'dark-accent': '#FFDAB9', // Light Peach/Blush
+            'dark-detail': '#008080', // Deep Teal
+
+            // Utility overrides for the new palette
+            'dark-surface': '#34495E', // Slightly lighter than bg for cards
+            'dark-border': '#465f76',
+          },
+          animation: {
+            'float': 'float 8s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow': 'glow 3s ease-in-out infinite alternate',
+            'scan': 'scan 4s linear infinite',
+            'gradient-x': 'gradient-x 8s ease infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 5px rgba(135, 206, 235, 0.5), 0 0 10px rgba(135, 206, 235, 0.3)' },
+              '100%': { boxShadow: '0 0 20px rgba(135, 206, 235, 0.8), 0 0 30px rgba(0, 128, 128, 0.6)' }
+            },
+            scan: {
+              '0%': { backgroundPosition: '0% 0%' },
+              '100%': { backgroundPosition: '0% 100%' },
+            },
+            'gradient-x': {
+              '0%, 100%': {
+                'background-size': '200% 200%',
+                'background-position': 'left center'
+              },
+              '50%': {
+                'background-size': '200% 200%',
+                'background-position': 'right center'
+              }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      overflow-x: hidden;
+      transition: background-color 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0), color 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    }
+
+    .dark body {
+      background-color: #2C3E50;
+      color: #ECF0F1;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(135, 206, 235, 0.3);
+      border-radius: 4px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(135, 206, 235, 0.8);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 1s cubic-bezier(0.25, 0.1, 0.25, 1.0) forwards;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-500 {
+      animation-delay: 0.5s;
+    }
+
+    /* SVG Flow Animation for Knowledge Graph */
+    @keyframes dashDraw {
+      from {
+        stroke-dashoffset: 20;
+      }
+
+      to {
+        stroke-dashoffset: -100;
+      }
+    }
+
+    .path-flow {
+      animation: dashDraw 4s linear infinite;
+      will-change: stroke-dashoffset;
+    }
+
+    /* Node Breathing Animation */
+    @keyframes breathe {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    .node-breathe {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: breathe 6s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Fluid Transitions */
+    .fluid-transition {
+      transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    }
+
+    /* Glassmorphism Utilities */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .dark .glass {
+      background: rgba(44, 62, 80, 0.4);
+      border: 1px solid rgba(135, 206, 235, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* Holographic Card Effect */
+    .holo-card {
+      transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      position: relative;
+      overflow: hidden;
+      will-change: transform, box-shadow;
+    }
+
+    .holo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(135, 206, 235, 0.15), transparent);
+      transition: 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      pointer-events: none;
+    }
+
+    .holo-card:hover::before {
+      left: 100%;
+    }
+
+    /* Scanline Overlay for Screens */
+    .scanline-overlay {
+      background: linear-gradient(to bottom,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0) 50%,
+          rgba(0, 0, 0, 0.05) 50%,
+          rgba(0, 0, 0, 0.05));
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+
+    .dark .scanline-overlay {
+      background: linear-gradient(to bottom,
+          rgba(135, 206, 235, 0),
+          rgba(135, 206, 235, 0) 50%,
+          rgba(0, 0, 0, 0.1) 50%,
+          rgba(0, 0, 0, 0.1));
+      background-size: 100% 4px;
+    }
+
+    /* Background Grid Pattern for Graph */
+    .bg-grid-pattern {
+      background-size: 20px 20px;
+      background-image:
+        linear-gradient(to right, rgba(135, 206, 235, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(135, 206, 235, 0.05) 1px, transparent 1px);
+    }
+
+    /* HUD Corner Borders */
+    .hud-corners {
+      position: relative;
+    }
+
+    .hud-corners::after,
+    .hud-corners::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      border-color: #87CEEB;
+      opacity: 0.5;
+    }
+
+    .hud-corners::before {
+      top: 0;
+      left: 0;
+      border-top: 1px solid;
+      border-left: 1px solid;
+    }
+
+    .hud-corners::after {
+      bottom: 0;
+      right: 0;
+      border-bottom: 1px solid;
+      border-right: 1px solid;
+    }
+
+    .holo-card:hover .hud-corners::before,
+    .holo-card:hover .hud-corners::after {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+    }
+
+    /* Perspective for 3D Cards */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "react-qr-code": "https://aistudiocdn.com/react-qr-code@^2.0.18",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.0.28"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.jsx"></script>
+</body>
+
+</html>

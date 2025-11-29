@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SevaBandhu – Smart Hospital Staff Management</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons (Lucide CDN) -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    body{
+        background:#f4f6fb;
+        color:#222;
+    }
+
+    /* Navbar */
+    nav{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        background:rgba(255,255,255,0.9);
+        backdrop-filter:blur(8px);
+        border-bottom:1px solid #ddd;
+        z-index:1000;
+    }
+
+    nav .container{
+        max-width:1200px;
+        margin:auto;
+        padding:15px 20px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    nav .menu{
+        display:flex;
+        gap:15px;
+        align-items:center;
+    }
+
+    nav a{
+        text-decoration:none;
+        color:#222;
+        font-size:16px;
+        transition:0.3s;
+    }
+
+    nav a:hover{
+        color:#0066ff;
+    }
+
+    .btn{
+        padding:8px 16px;
+        border:none;
+        background:#0066ff;
+        color:white;
+        border-radius:6px;
+        cursor:pointer;
+        transition:0.3s;
+        font-size:14px;
+    }
+
+    .btn-outline{
+        background:transparent;
+        border:2px solid #0066ff;
+        color:#0066ff;
+    }
+
+    .btn:hover{
+        opacity:0.8;
+    }
+
+    .mobile-toggle{
+        display:none;
+        cursor:pointer;
+    }
+
+    /* Admin/Staff buttons */
+    .role-buttons{
+        display:flex;
+        gap:10px;
+    }
+
+    /* Mobile menu */
+    .mobile-menu{
+        display:none;
+        padding:15px 20px;
+        background:white;
+        border-top:1px solid #ddd;
+        text-align:left;
+    }
+
+    .mobile-menu a{
+        display:block;
+        margin:10px 0;
+    }
+
+    /* Sections */
+    section{
+        padding:80px 20px;
+    }
+
+    .hero{
+        text-align:center;
+        margin-top:80px;
+    }
+
+    .hero h1{
+        font-size:55px;
+        font-weight:700;
+    }
+
+    .hero p{
+        max-width:650px;
+        margin:auto;
+        margin-top:15px;
+        color:#555;
+        font-size:18px;
+    }
+
+    /* Features */
+    .features-grid{
+        max-width:1200px;
+        margin:auto;
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        gap:20px;
+    }
+
+    .feature-card{
+        background:white;
+        border:1px solid #ddd;
+        border-radius:10px;
+        padding:25px;
+        transition:0.3s;
+    }
+
+    .feature-card:hover{
+        box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .feature-card h3{
+        font-size:20px;
+        margin:10px 0;
+    }
+
+    /* Pricing */
+    .pricing-box{
+        background:white;
+        border:1px solid #ddd;
+        border-radius:10px;
+        padding:30px;
+        max-width:900px;
+        margin:auto;
+    }
+
+    .footer{
+        text-align:center;
+        padding:30px;
+        background:#eef1f5;
+        border-top:1px solid #ddd;
+        margin-top:40px;
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+        .menu{
+            display:none;
+        }
+        .mobile-toggle{
+            display:block;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="container">
+      <div class="logo"><strong style="font-size:24px;">❤️ SevaBandhu</strong></div>
+
+      <div class="menu">
+          <a href="#features">Features</a>
+          <a href="#about">About</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
+
+          <!-- Admin/Staff buttons -->
+          <div class="role-buttons">
+              <button class="btn" onclick="openAdmin()">Admin</button>
+              <button class="btn" onclick="openStaff()">Staff</button>
+          </div>
+
+          <!-- Signup/Login -->
+          <button class="btn" onclick="openSignup()">Sign in</button>
+          <button class="btn" onclick="openLogin()">Login</button>
+      </div>
+
+      <div class="mobile-toggle" onclick="toggleMenu()">
+          <i data-lucide="menu"></i>
+      </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+          <button class="btn" onclick="openAdmin()">Admin</button>
+          <button class="btn" onclick="openStaff()">Staff</button>
+      </div>
+
+      <button class="btn btn-outline" onclick="openSignup()">Signup</button>
+      <button class="btn" onclick="openLogin()">Login</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>SevaBandhu</h1>
+  <p>A Connected Hospital Staff Management System for India</p>
+  <p>Simplifying and automating staff coordination across all departments. From attendance to emergency alerts.</p>
+  <br>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="background:#eef1f5;">
+  <h2 style="text-align:center;font-size:40px;">Key Features</h2>
+  <p style="text-align:center;color:#555;margin-bottom:40px;">Designed for Indian healthcare workflows</p>
+
+  <div class="features-grid">
+
+      <div class="feature-card">
+        <i data-lucide="users" style="width:40px;height:40px;color:#0066ff;"></i>
+        <h3>Aadhaar / QR Attendance</h3>
+        <p>Seamless biometric and QR-based attendance tracking.</p>
+      </div>
+
+      <div class="feature-card">
+        <i data-lucide="clock" style="width:40px;height:40px;color:#0066ff;"></i>
+        <h3>Automatic Shift Scheduling</h3>
+        <p>AI-powered optimized scheduling.</p>
+      </div>
+
+      <div class="feature-card">
+        <i data-lucide="bell" style="width:40px;height:40px;color:#0066ff;"></i>
+        <h3>Emergency Alerts</h3>
+        <p>Instant Code Blue/Red notifications.</p>
+      </div>
+
+      <div class="feature-card">
+        <i data-lucide="bar-chart-3" style="width:40px;height:40px;color:#0066ff;"></i>
+        <h3>Data Insights</h3>
+        <p>Analytics for staffing and peak load.</p>
+      </div>
+
+      <div class="feature-card">
+        <i data-lucide="globe" style="width:40px;height:40px;color:#0066ff;"></i>
+        <h3>Multi-Language Support</h3>
+        <p>Works with multiple Indian languages.</p>
+      </div>
+
+      <div class="feature-card">
+        <i data-lucide="heart" style="width:40px;height:40px;color:#0066ff;"></i>
+        <h3>Leave Management</h3>
+        <p>Smart replacement suggestions.</p>
+      </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2 style="text-align:center;font-size:40px;margin-bottom:20px;">Why SevaBandhu?</h2>
+
+  <div style="max-width:900px;margin:auto;color:#555;font-size:18px;line-height:1.7;">
+    <p>Most Indian hospitals struggle with staff overload, emergency response delays, and miscommunication.</p>
+    <br>
+    <p>SevaBandhu simplifies all of this with a unified intelligent platform that helps hospitals reduce workload and improve coordination.</p>
+    <br>
+    <p>This system is extremely useful for Indian healthcare where high patient load and limited manpower is common.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:#eef1f5;">
+  <h2 style="text-align:center;font-size:40px;">Simple, Affordable Pricing</h2>
+  <p style="text-align:center;color:#555;margin-bottom:40px;">Designed for Indian hospitals</p>
+
+  <div class="pricing-box">
+      <div style="display:flex;gap:40px;flex-wrap:wrap;">
+
+        <div style="flex:1;">
+            <h3>Monthly Subscription</h3>
+            <p style="font-size:28px;color:#0066ff;font-weight:bold;">₹20 - ₹50</p>
+            <p>per staff/month</p>
+        </div>
+
+        <div style="flex:1;">
+            <h3>One-Time Setup</h3>
+            <p style="font-size:28px;color:#0066ff;font-weight:bold;">₹10,000 - ₹50,000</p>
+            <p>Includes installation & training</p>
+        </div>
+
+      </div>
+
+      <hr style="margin:30px 0;">
+
+      <h3>Annual Maintenance</h3>
+      <p style="font-size:24px;color:#0066ff;font-weight:bold;">₹15,000 - ₹30,000 / year</p>
+      <p>Includes updates & technical support</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 style="text-align:center;font-size:40px;">Connect With Us</h2>
+  <p style="text-align:center;color:#555;margin-bottom:30px;">Follow us or contact directly.</p>
+
+  <div style="text-align:center; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/sevabandhu" target="_blank" style="text-decoration:none;">
+      <button class="btn">Instagram</button>
+    </a>
+
+    <!-- Twitter -->
+    <a href="https://twitter.com/sevabandhu" target="_blank" style="text-decoration:none;">
+      <button class="btn">Twitter</button>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919999999999" target="_blank" style="text-decoration:none;">
+      <button class="btn">WhatsApp</button>
+    </a>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>© 2024 SevaBandhu. All rights reserved.</p>
+  <p>A Connected Hospital Staff Management System for India</p>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    function toggleMenu(){
+        const menu = document.getElementById("mobileMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    function openLogin(){
+        window.location.href = "login.html";
+    }
+
+    function openSignup(){
+        window.location.href = "signup.html";
+    }
+
+    function openAdmin(){
+        window.location.href = "dashboard.html";
+    }
+
+    function openStaff(){
+        window.location.href = "staff.html";
+    }
+</script>
+
+</body>
+</html>

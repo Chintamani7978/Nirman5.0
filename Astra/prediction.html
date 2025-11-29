@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Staffing Predictor</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <style>
+        /* Apply Inter font globally and setup background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            
+            /* --- Custom Hospital Management Doodle Background --- */
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cstyle%3E.doodle%7Bfill:none;stroke:%231f2937;stroke-width:0.5;%7D%3C/style%3E%3C/defs%3E%3C!-- Chart (top left) --%3E%3Cpolyline class='doodle' points='4,10 8,14 12,10 16,14' /%3E%3Cline class='doodle' x1='4' y1='18' x2='16' y2='18' /%3E%3C!-- Clock (top right) --%3E%3Ccircle class='doodle' cx='30' cy='10' r='6' /%3E%3Cline class='doodle' x1='30' y1='10' x2='30' y2='6' /%3E%3Cline class='doodle' x1='30' y1='10' x2='33' y2='12' /%3E%3C!-- Staff (bottom left) --%3E%3Ccircle class='doodle' cx='10' cy='30' r='2' /%3E%3Cline class='doodle' x1='10' y1='32' x2='10' y2='36' /%3E%3Cline class='doodle' x1='7' y1='34' x2='13' y2='34' /%3E%3C!-- Cross (bottom right) --%3E%3Cline class='doodle' x1='28' y1='28' x2='32' y2='28' /%3E%3Cline class='doodle' x1='30' y1='26' x2='30' y2='30' /%3E%3C/svg%3E");
+            background-size: 40px 40px; /* Repeating pattern size */
+            /* --- End Doodle Background --- */
+        }
+
+        /* Custom utility for the main blue header gradient */
+        .blue-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb); /* Blue 500 to Blue 700 */
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Hide number spin buttons for cleaner UI */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="app-card" class="w-full max-w-sm bg-white rounded-xl shadow-2xl overflow-hidden transform transition duration-500 hover:scale-[1.01] hover:shadow-3xl">
+
+        <!-- Header Section (Inspired by Dashboard Image) -->
+        <div class="blue-header p-6 rounded-t-xl mb-6">
+            <h1 class="text-2xl font-bold text-white mb-1">Staffing Predictor</h1>
+            <p class="text-sm text-blue-200">
+                Input hospital metrics to assess risk of **understaffing** for this period.
+            </p>
+        </div>
+
+        <div class="p-6 pt-0">
+            <form id="predict-form" class="space-y-5">
+                
+                <!-- Scheduled Shifts -->
+                <div class="space-y-1">
+                    <label for="scheduled_shifts" class="block text-sm font-semibold text-gray-700">Scheduled Staff Shifts</label>
+                    <input
+                        type="number"
+                        id="scheduled_shifts"
+                        min="0"
+                        required
+                        placeholder="e.g. 15"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    />
+                    <p class="text-xs text-gray-500 mt-1">Total staff shifts allocated for this period (e.g., Nurse-Hours).</p>
+                </div>
+
+                <!-- Emergencies Count -->
+                <div class="space-y-1">
+                    <label for="emergencies_count" class="block text-sm font-semibold text-gray-700">Critical Emergencies Count</label>
+                    <input
+                        type="number"
+                        id="emergencies_count"
+                        min="0"
+                        required
+                        placeholder="e.g. 3"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    />
+                    <p class="text-xs text-gray-500 mt-1">Number of expected or active critical cases requiring immediate attention.</p>
+                </div>
+
+                <!-- Patient Count -->
+                <div class="space-y-1">
+                    <label for="patient_count" class="block text-sm font-semibold text-gray-700">Total Patient Count</label>
+                    <input
+                        type="number"
+                        id="patient_count"
+                        min="0"
+                        required
+                        placeholder="e.g. 55"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    />
+                    <p class="text-xs text-gray-500 mt-1">Current total number of inpatients (bed occupancy).</p>
+                </div>
+
+                <button type="submit" id="predict-btn" class="w-full py-3 mt-8 text-white font-bold rounded-full bg-blue-600 hover:bg-blue-700 transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-100 shadow-md hover:shadow-lg">
+                    Run Prediction
+                </button>
+            </form>
+
+            <!-- Status Message Area -->
+            <div id="status" class="text-center mt-4 text-sm font-medium text-gray-600 min-h-[1.5rem]"></div>
+
+            <!-- Result Display Box -->
+            <div id="result-box" class="mt-5 p-4 rounded-xl border-2 border-gray-100 hidden animate-pulse" style="animation: none;">
+                <p class="text-xs font-semibold uppercase text-gray-500 tracking-wider mb-2">Prediction Status</p>
+                <div class="flex items-center justify-between">
+                    <span id="result-text" class="text-xl font-extrabold text-gray-900"></span>
+                    <span id="result-badge" class="px-3 py-1 text-sm font-bold rounded-full"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("predict-form");
+        const statusEl = document.getElementById("status");
+        const resultBox = document.getElementById("result-box");
+        const resultText = document.getElementById("result-text");
+        const resultBadge = document.getElementById("result-badge");
+        const predictBtn = document.getElementById("predict-btn");
+
+        // Helper function to set the result box appearance
+        function updateResultDisplay(isUnderstaffed) {
+            resultBox.classList.remove('hidden');
+            resultBox.style.animation = 'fadeIn 0.5s ease-out forwards';
+            
+            // Reset classes
+            resultBadge.className = 'px-3 py-1 text-sm font-bold rounded-full';
+            resultBox.className = 'mt-5 p-4 rounded-xl border-2';
+
+            if (isUnderstaffed) {
+                // Red/Danger theme
+                resultText.textContent = "HIGH RISK: Understaffed";
+                resultText.classList.remove('text-green-600');
+                resultText.classList.add('text-red-600');
+                resultBadge.textContent = "ACTION NEEDED";
+                resultBadge.classList.add('bg-red-100', 'text-red-700');
+                resultBox.classList.add('border-red-300');
+            } else {
+                // Green/Safe theme (Adequately staffed)
+                resultText.textContent = "LOW RISK: Adequately Staffed";
+                resultText.classList.remove('text-red-600');
+                resultText.classList.add('text-green-600');
+                resultBadge.textContent = "SAFE";
+                resultBadge.classList.add('bg-green-100', 'text-green-700');
+                resultBox.classList.add('border-green-300');
+            }
+        }
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const scheduled_shifts = Number(document.getElementById("scheduled_shifts").value);
+            const emergencies_count = Number(document.getElementById("emergencies_count").value);
+            const patient_count = Number(document.getElementById("patient_count").value);
+
+            // Input Validation
+            if (scheduled_shifts < 0 || emergencies_count < 0 || patient_count < 0) {
+                statusEl.textContent = "Error: All inputs must be zero or positive.";
+                statusEl.classList.remove('text-gray-600', 'text-blue-500', 'text-green-500');
+                statusEl.classList.add('text-red-500');
+                resultBox.classList.add('hidden');
+                return;
+            }
+            if (scheduled_shifts === 0 && (emergencies_count > 0 || patient_count > 0)) {
+                 statusEl.textContent = "Warning: Zero shifts with patients/emergencies indicates definite understaffing.";
+                 statusEl.classList.remove('text-red-500', 'text-blue-500', 'text-green-500');
+                 statusEl.classList.add('text-yellow-600');
+            }
+
+
+            statusEl.textContent = "Running ML model prediction...";
+            statusEl.classList.remove('text-red-500', 'text-green-500', 'text-yellow-600');
+            statusEl.classList.add('text-blue-500');
+            resultBox.classList.add('hidden');
+            resultBox.style.animation = 'none'; // Reset animation state
+            predictBtn.disabled = true;
+            predictBtn.textContent = 'Predicting...';
+
+            // --- MOCK API CALL (Simulating response from /ml/ endpoint) ---
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network latency
+
+            let predictionResult;
+            let isError = false;
+
+            try {
+                // Mock Prediction Logic: Staff-to-Demand Ratio
+                // Demand Factor = (Patient Count * 0.8) + (Emergencies Count * 2.5)
+                const demandFactor = (patient_count * 0.8) + (emergencies_count * 2.5);
+                
+                // Risk Threshold: If scheduled shifts are less than 1/4 of the demand factor, it's high risk.
+                if (scheduled_shifts * 4 < demandFactor) {
+                    predictionResult = 1; // Understaffed
+                } else {
+                    predictionResult = 0; // Adequately Staffed
+                }
+
+                // In a real application, replace the above mock logic with:
+                /*
+                const response = await fetch("/ml/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ scheduled_shifts, emergencies_count, patient_count }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Server responded with an error.");
+                }
+                predictionResult = Number(data.prediction);
+                */
+
+            } catch (err) {
+                isError = true;
+                statusEl.textContent = `Prediction failed: ${err.message || "Network or server error."}`;
+                statusEl.classList.remove('text-blue-500', 'text-green-500', 'text-yellow-600');
+                statusEl.classList.add('text-red-500');
+            } finally {
+                predictBtn.disabled = false;
+                predictBtn.textContent = 'Run Prediction';
+            }
+
+            if (!isError) {
+                statusEl.textContent = "Prediction Complete!";
+                statusEl.classList.remove('text-blue-500', 'text-red-500', 'text-yellow-600');
+                statusEl.classList.add('text-green-500');
+
+                if (predictionResult === 1) {
+                    updateResultDisplay(true);
+                } else if (predictionResult === 0) {
+                    updateResultDisplay(false);
+                } else {
+                    // Handle unexpected codes
+                    resultText.textContent = `Unknown Code: ${predictionResult}`;
+                    resultBadge.textContent = "REVIEW";
+                    resultBadge.classList.add('bg-yellow-100', 'text-yellow-700');
+                    resultBox.classList.remove('hidden');
+                }
+            }
+        });
+
+        // Add CSS keyframe for animation on result box display
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }`;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

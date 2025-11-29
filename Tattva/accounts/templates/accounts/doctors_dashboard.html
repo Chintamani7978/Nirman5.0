@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LifeCord - Doctor's Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        /* --- BRANDING & COLORS --- */
+        :root {
+            --gradient-primary: linear-gradient(135deg, #FF8C42 0%, #FF5E3A 100%);
+            --primary-color: #FF6B35;
+            --primary-dark: #E64A19;
+            --primary-light: #FFF3E0;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-danger: #EF4444;
+            --color-emergency: #8B5CF6;
+            
+            --radius-card: 20px;
+            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.05);
+            --shadow-hover: 0 20px 40px -10px rgba(255, 94, 58, 0.25);
+            --nav-height: 80px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+
+        /* --- LAYOUT --- */
+        .app-container { display: flex; min-height: 100vh; }
+        
+        /* Sidebar (Desktop) */
+        .sidebar {
+            width: 280px;
+            background: white;
+            position: fixed;
+            height: 100%;
+            padding: 30px;
+            border-right: 1px solid #eee;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+        .brand {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 1.6rem; font-weight: 800; color: var(--primary-color);
+            margin-bottom: 50px;
+        }
+        .brand-icon {
+            width: 42px; height: 42px; background: var(--gradient-primary);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; box-shadow: 0 4px 15px rgba(255, 94, 58, 0.3);
+        }
+        .nav-item {
+            display: flex; align-items: center; gap: 15px;
+            padding: 16px; margin-bottom: 8px;
+            color: var(--text-muted); text-decoration: none;
+            border-radius: 16px; transition: all 0.3s; font-weight: 500; cursor: pointer;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary-light); color: var(--primary-color); font-weight: 600;
+        }
+        .nav-item svg { width: 22px; height: 22px; }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px 5%;
+            width: calc(100% - 280px);
+        }
+
+        /* --- VIEWS SYSTEM --- */
+        .app-view { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .app-view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Top Header */
+        .top-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px;
+        }
+        .welcome-text h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; }
+        .welcome-text p { color: var(--text-muted); font-size: 0.95rem; }
+        
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        
+        /* Time Pill */
+        .live-time { font-weight: 600; color: var(--primary-color); background: white; padding: 10px 20px; border-radius: 30px; box-shadow: var(--shadow-soft); font-size: 0.9rem; border: 1px solid #f0f0f0; }
+
+        /* NEW SLIDE TOGGLE BUTTON */
+        .status-wrapper {
+            display: flex; align-items: center; gap: 12px;
+            background: white; padding: 6px 18px 6px 8px;
+            border-radius: 40px; box-shadow: var(--shadow-soft);
+            border: 1px solid #f0f0f0; cursor: pointer; transition: all 0.3s;
+        }
+        .status-wrapper:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        
+        .toggle-track {
+            width: 52px; height: 30px; border-radius: 30px;
+            background: #e5e7eb; position: relative;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-knob {
+            width: 24px; height: 24px; background: white;
+            border-radius: 50%; position: absolute; top: 3px; left: 3px;
+            transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Active State (Green) */
+        .status-wrapper.active .toggle-track { background: var(--color-success); }
+        .status-wrapper.active .toggle-knob { left: 25px; }
+        
+        /* Inactive State (Red) */
+        .status-wrapper.inactive .toggle-track { background: var(--color-danger); }
+        .status-wrapper.inactive .toggle-knob { left: 3px; }
+
+        /* Doc Profile */
+        .doc-profile {
+            display: flex; align-items: center; gap: 15px;
+            background: white; padding: 8px 20px 8px 8px; border-radius: 50px;
+            box-shadow: var(--shadow-soft); cursor: pointer; transition: transform 0.2s; border: 1px solid #f0f0f0;
+        }
+        .doc-profile:hover { transform: translateY(-2px); border-color: var(--primary-light); }
+        .doc-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-light); }
+
+        /* --- DASHBOARD STATS --- */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-bottom: 40px;
+        }
+        .stat-card {
+            background: white; padding: 25px; border-radius: var(--radius-card);
+            box-shadow: var(--shadow-soft); display: flex; justify-content: space-between; align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; overflow: hidden;
+        }
+        .stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: #eee;
+        }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .stat-info h3 { font-size: 2.2rem; font-weight: 700; line-height: 1; margin-bottom: 5px; color: var(--text-main); }
+        .stat-info p { color: var(--text-muted); font-weight: 500; font-size: 0.9rem; }
+        .stat-icon {
+            width: 55px; height: 55px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+        }
+
+        /* --- LAYOUT SPLIT --- */
+        .dashboard-split {
+            display: grid; grid-template-columns: 2fr 1.2fr; gap: 30px;
+        }
+
+        /* Card Styles */
+        .section-card {
+            background: white; border-radius: var(--radius-card); padding: 30px;
+            box-shadow: var(--shadow-soft); height: 100%; border: 1px solid rgba(0,0,0,0.02);
+        }
+        .card-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
+        }
+        .card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
+        
+        /* Queue List */
+        .queue-list { display: flex; flex-direction: column; gap: 15px; }
+        .queue-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px; border: 1px solid #F1F5F9; border-radius: 18px;
+            transition: all 0.2s; cursor: pointer; position: relative; background: white;
+        }
+        .queue-item:hover { background: #FFF8F3; border-color: var(--primary-color); transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .queue-item.active { border-left: 5px solid var(--primary-color); background: #FFF3E0; }
+        
+        .p-info { display: flex; gap: 15px; align-items: center; }
+        .p-avatar { width: 50px; height: 50px; border-radius: 14px; background: #eee; object-fit: cover; }
+        .p-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; color: var(--text-main); }
+        .p-meta { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
+        .p-time { background: #E3F2FD; color: #1976D2; padding: 4px 10px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; }
+        
+        .btn-view {
+            background: white; border: 1px solid #E5E7EB; padding: 8px 18px; border-radius: 10px;
+            font-weight: 600; color: var(--text-main); transition: 0.2s; font-size: 0.9rem;
+        }
+        .btn-view:hover { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+        /* --- ACTION GRID --- */
+        .action-grid { display: flex; flex-direction: column; gap: 25px; }
+        
+        /* Updated QR Tool Card */
+        .tool-card {
+            background: var(--gradient-primary); color: white;
+            padding: 30px 20px; border-radius: var(--radius-card);
+            position: relative; overflow: hidden; cursor: pointer;
+            box-shadow: var(--shadow-hover); text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+        }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 25px 50px -12px rgba(255, 94, 58, 0.5); }
+        .tool-icon { font-size: 2.5rem; margin-bottom: 5px; background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .tool-title { font-weight: 800; font-size: 1.2rem; }
+        .tool-desc { font-size: 0.9rem; opacity: 0.9; max-width: 80%; line-height: 1.4; }
+
+        /* Slot Manager */
+        .slot-manager {
+            background: white; border-radius: var(--radius-card); padding: 25px;
+            box-shadow: var(--shadow-soft); text-align: center; border: 1px solid rgba(0,0,0,0.02);
+        }
+        .slot-controls {
+            display: flex; justify-content: center; align-items: center; gap: 25px; margin-top: 20px;
+        }
+        .slot-btn {
+            width: 45px; height: 45px; border-radius: 12px; border: none;
+            background: #F3F4F6; color: var(--text-main); font-size: 1.4rem; font-weight: 700;
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .slot-btn:hover { background: var(--primary-color); color: white; }
+        .slot-count { font-size: 2.5rem; font-weight: 800; color: var(--primary-color); min-width: 50px; }
+
+        /* Reports List Styling */
+        .report-list { list-style: none; }
+        .report-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
+        .report-item:last-child { border-bottom: none; }
+        .report-details h4 { font-size: 1rem; font-weight: 600; }
+        .report-details p { font-size: 0.85rem; color: #888; }
+        .status-tag { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-ready { background: #DCFCE7; color: #166534; }
+        .status-pending { background: #FEF3C7; color: #92400E; }
+        .status-completed { background: #E0F2FE; color: #0369A1; }
+
+        /* --- MOBILE NAV --- */
+        .mobile-bottom-nav {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+            background: white; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 999;
+            justify-content: space-around; align-items: center; border-top-left-radius: 20px; border-top-right-radius: 20px;
+        }
+        .m-nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: #9CA3AF; text-decoration: none; font-size: 0.75rem; font-weight: 500; width: 25%;
+        }
+        .m-nav-item.active { color: var(--primary-color); }
+        .m-nav-item svg { width: 24px; height: 24px; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .mobile-bottom-nav { display: flex; }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; padding-bottom: 90px; }
+            .top-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .header-right { width: 100%; justify-content: space-between; }
+            .stats-grid { grid-template-columns: 1fr; gap: 15px; }
+            .dashboard-split { grid-template-columns: 1fr; }
+            .section-card, .tool-card, .slot-manager { padding: 20px; }
+            .queue-item { padding: 12px; }
+            .modal-content { width: 95%; padding: 20px; }
+            
+            /* --- FIX FOR SEARCH BAR OVERFLOW --- */
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .card-header input {
+                width: 100% !important; /* Force input to take full width */
+                max-width: 100%;
+            }
+            .card-header .card-title {
+                width: 100%;
+            }
+        }
+
+        /* --- MODALS --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white; width: 90%; max-width: 500px; border-radius: 24px;
+            padding: 30px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #aaa; border: none; background: none; }
+
+        /* Scanner */
+        .scanner-container { width: 100%; height: 280px; background: #000; border-radius: 16px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
+        .scan-laser { width: 100%; height: 2px; background: #00FF00; position: absolute; top: 0; animation: scan 2s infinite linear; box-shadow: 0 0 15px #00FF00; }
+        @keyframes scan { 0% { top: 10%; opacity: 0; } 50% { opacity: 1; } 100% { top: 90%; opacity: 0; } }
+        .camera-text { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+
+        /* Patient Modal */
+        .modal-profile { text-align: center; margin-bottom: 20px; }
+        .modal-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 4px solid #F3F4F6; margin-bottom: 10px; }
+        .modal-tags { display: flex; justify-content: center; gap: 10px; margin-top: 5px; }
+        .tag { font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        .tag-red { background: #FEE2E2; color: #B91C1C; }
+        .tag-blue { background: #E0F2FE; color: #0369A1; }
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #eee; }
+        .info-label { color: #888; font-size: 0.9rem; }
+        .info-val { font-weight: 600; color: var(--text-main); }
+
+        .btn-full { width: 100%; padding: 14px; border-radius: 14px; border: none; font-weight: 700; cursor: pointer; margin-top: 15px; font-size: 1rem; transition: transform 0.1s; }
+        .btn-primary { background: var(--gradient-primary); color: white; box-shadow: 0 8px 20px -5px rgba(255, 94, 58, 0.4); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-secondary { background: #F3F4F6; color: var(--text-main); margin-top: 10px; }
+
+        /* Profile Edit Inputs */
+        .input-group { margin-bottom: 15px; }
+        .input-label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; font-weight: 500; }
+        .form-input { width: 100%; padding: 12px; border: 1px solid #E5E7EB; border-radius: 12px; font-family: inherit; }
+        .form-input:focus { border-color: var(--primary-color); }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Sidebar (Desktop) -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">✚</div>
+                <span>LifeCord Doc</span>
+            </div>
+            <nav>
+                <div class="nav-item active" onclick="switchView('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Dashboard
+                </div>
+                <div class="nav-item" onclick="switchView('reports')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    Reports
+                </div>
+                <div class="nav-item" onclick="switchView('consultations')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    Consultations
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Header -->
+            <header class="top-header">
+                <div class="welcome-text">
+                    <h1 id="greeting">Good Morning, <span id="docNameDisplay">Dr. Sharma</span> 👋</h1>
+                    <p>You have <span id="headerRemaining">7</span> patients remaining today.</p>
+                </div>
+                
+                <!-- HEADER RIGHT SECTION -->
+                <div class="header-right">
+                    <!-- 1. Live Time -->
+                    <div class="live-time" id="liveClock">10:30 AM</div>
+
+                    <!-- 2. Slider Toggle Button -->
+                    <div class="status-wrapper active" id="statusWrapper" onclick="toggleAvailability()">
+                        <div class="toggle-track">
+                            <div class="toggle-knob"></div>
+                        </div>
+                        <span id="statusText" style="font-weight:600; font-size:0.9rem; margin-left:8px; min-width:80px;">Available</span>
+                    </div>
+                    
+                    <!-- 3. Doctor Profile -->
+                    <div class="doc-profile" onclick="openProfileModal()">
+                        <img src="https://ui-avatars.com/api/?name=Dr+Sharma&background=E0F2FE&color=0284C7" class="doc-img" alt="Profile">
+                        <div style="display:none; @media(min-width:768px){display:block;}">
+                            <div style="font-weight:700; font-size:0.9rem;" id="docNavName">Dr. Sharma</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- VIEW 1: DASHBOARD -->
+            <section id="view-dashboard" class="app-view active">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card" style="border-left: 5px solid #FF6B35;">
+                        <div class="stat-info"><h3 id="totalCount">25</h3><p>Total Patients</p></div>
+                        <div class="stat-icon" style="background: #FFF3E0; color: #FF6B35;">👥</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 5px solid #10B981;">
+                        <div class="stat-info"><h3 id="remainingCount">7</h3><p>Remaining</p></div>
+                        <div class="stat-icon" style="background: #ECFDF5; color: #10B981;">⏳</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 5px solid #3B82F6;">
+                        <div class="stat-info"><h3 id="slotsCount">5</h3><p>Open Slots</p></div>
+                        <div class="stat-icon" style="background: #E0F2FE; color: #3B82F6;">📅</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-split">
+                    <!-- Left: Queue -->
+                    <div class="section-card">
+                        <div class="card-header">
+                            <div class="card-title">Queue Tracker</div>
+                            <span style="font-size:0.8rem; color:var(--primary-color); font-weight:600; cursor:pointer;">View All</span>
+                        </div>
+                        <div class="queue-list" id="queueList">
+                            <!-- JS Injected -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Tools -->
+                    <div class="action-grid">
+                        <!-- QR Scanner Tool -->
+                        <div class="tool-card" onclick="openScanModal()">
+                            <div class="tool-icon">📷</div>
+                            <div class="tool-title">Scan Patient QR</div>
+                            <div class="tool-desc">Instantly access patient history & reports</div>
+                        </div>
+
+                        <!-- Prescription Upload -->
+                        <div class="section-card" style="padding: 20px;">
+                            <div class="card-title" style="font-size:1rem; margin-bottom:15px;">Upload Prescription</div>
+                            <input type="text" id="uploadPid" placeholder="Enter Patient ID" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:12px; margin-bottom:10px; background:#FAFAFA;">
+                            <div style="border: 2px dashed #ddd; border-radius: 12px; padding: 15px; text-align: center; color: #999; cursor: pointer; transition:0.2s;" onmouseover="this.style.borderColor='var(--primary-color)'" onmouseout="this.style.borderColor='#ddd'" onclick="alert('File Picker Opened')">
+                                <span style="font-size:1.2rem;">☁️</span> Upload File
+                            </div>
+                            <button class="btn-full btn-primary" style="margin-top:10px; padding:10px;" onclick="uploadPrescription()">Submit</button>
+                        </div>
+
+                        <!-- Slot Manager -->
+                        <div class="slot-manager">
+                            <div class="card-title" style="font-size:1rem;">Walk-in Slots</div>
+                            <div class="slot-controls">
+                                <button class="slot-btn" onclick="adjustSlots(-1)">-</button>
+                                <span class="slot-count" id="slotDisplay">5</span>
+                                <button class="slot-btn" onclick="adjustSlots(1)">+</button>
+                            </div>
+                            <!-- Added Button -->
+                            <button class="btn-full btn-primary" style="margin-top:15px;" onclick="confirmSlotUpdate()">Update Availability</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 2: REPORTS -->
+            <section id="view-reports" class="app-view">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">Recent Lab Reports</div>
+                        <input type="text" placeholder="Search Patient ID..." style="padding:8px 15px; border-radius:20px; border:1px solid #ddd;">
+                    </div>
+                    <ul class="report-list" id="reportList">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- VIEW 3: CONSULTATIONS -->
+            <section id="view-consultations" class="app-view">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">Consultation History</div>
+                    </div>
+                    <div class="queue-list" id="historyList">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Mobile Bottom Nav -->
+        <nav class="mobile-bottom-nav">
+            <div class="m-nav-item active" onclick="switchView('dashboard')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span>Home</span>
+            </div>
+            <div class="m-nav-item" onclick="switchView('reports')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Reports</span>
+            </div>
+            <div class="m-nav-item" onclick="openScanModal()">
+                <div style="background:var(--primary-color); width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-top:-25px; box-shadow:0 5px 15px rgba(255,107,53,0.4); border:4px solid white;">
+                    <svg style="color:white; width:24px; height:24px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
+                </div>
+            </div>
+            <div class="m-nav-item" onclick="switchView('consultations')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <span>Consult</span>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- MODALS -->
+
+    <!-- 1. Patient Details Modal -->
+    <div id="patientModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('patientModal')">&times;</button>
+            <div class="modal-profile">
+                <img src="" id="modalAvatar" class="modal-img" alt="Patient">
+                <h2 id="modalName" style="font-size:1.4rem; margin-bottom:2px;">Name</h2>
+                <p id="modalId" style="color:#888; font-size:0.9rem;">PID: #12345</p>
+                <div class="modal-tags">
+                    <span class="tag tag-blue">Checked In</span>
+                    <span class="tag tag-red">High Priority</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Age / Gender</span><span class="info-val" id="modalAge">28 / F</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Last Visit</span><span class="info-val">12 Oct 2024</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Condition</span><span class="info-val">Hypertension</span>
+            </div>
+            <div style="background:#F9FAFB; padding:15px; border-radius:12px; margin-top:15px; border:1px solid #eee;">
+                <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:5px; color:#555;">Reason for Visit</h4>
+                <p style="font-size:0.9rem; color:#333;">Patient complains of severe headache and dizziness since yesterday morning. BP checked at reception: 145/90.</p>
+            </div>
+            <button class="btn-full btn-primary" onclick="finishConsultation()">✅ Mark Consultation Done</button>
+            <button class="btn-full btn-secondary" onclick="closeModal('patientModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- 2. Doctor Profile Settings Modal -->
+    <div id="doctorProfileModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('doctorProfileModal')">&times;</button>
+            <h2 style="margin-bottom:20px; font-size:1.5rem;">Edit Profile</h2>
+            <div class="input-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" id="editDocName" class="form-input" value="Dr. Rajesh Sharma">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Specialty</label>
+                <input type="text" id="editDocSpec" class="form-input" value="Cardiologist">
+            </div>
+            <!-- Removed Clinic Availability from here as requested -->
+            <button class="btn-full btn-primary" onclick="saveProfile()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- 3. QR Scanner Modal -->
+    <div id="scanModal" class="modal-overlay">
+        <div class="modal-content" style="text-align:center; background: #1a1a1a; color:white;">
+            <button class="close-btn" style="color:white;" onclick="closeModal('scanModal')">&times;</button>
+            <h3 style="margin-bottom:20px;">Scan Patient QR</h3>
+            <div class="scanner-container">
+                <div class="camera-text">[ Camera Feed Initializing... ]</div>
+                <div class="scan-laser"></div>
+            </div>
+            <p style="margin-top:10px; color:#aaa; font-size:0.9rem;">Align the QR code within the frame to access records.</p>
+            <button class="btn-full btn-primary" style="margin-top:20px;" onclick="simulateScanSuccess()">Simulate Scan</button>
+        </div>
+    </div>
+
+<script>
+    // --- GLOBAL VARIABLES (Will be dynamically set by DB fetch) ---
+    let PATIENTS = [
+        // WAITING (7)
+        { id: "LC-9021", name: "Rahul Verma", age: "34 / M", time: "10:30 AM", img: "https://ui-avatars.com/api/?name=Rahul+Verma&background=random", status: "waiting", report: "Blood Work", reportStatus: "ready" },
+        { id: "LC-3321", name: "Priya Das", age: "29 / F", time: "10:45 AM", img: "https://ui-avatars.com/api/?name=Priya+Das&background=random", status: "waiting", report: "Chest X-Ray", reportStatus: "ready" },
+        { id: "LC-8812", name: "Amit Kumar", age: "45 / M", time: "11:00 AM", img: "https://ui-avatars.com/api/?name=Amit+Kumar&background=random", status: "waiting", report: "MRI Scan", reportStatus: "pending" },
+        { id: "LC-1102", name: "Sneha Gupta", age: "62 / F", time: "11:15 AM", img: "https://ui-avatars.com/api/?name=Sneha+Gupta&background=random", status: "waiting", report: "CT Scan", reportStatus: "ready" },
+        { id: "LC-5543", name: "Vikram Singh", age: "40 / M", time: "11:30 AM", img: "https://ui-avatars.com/api/?name=Vikram+Singh&background=random", status: "waiting", report: "Blood Work", reportStatus: "pending" },
+        { id: "LC-2231", name: "Arun Patel", age: "50 / M", time: "11:45 AM", img: "https://ui-avatars.com/api/?name=Arun+Patel&background=random", status: "waiting", report: "ECG", reportStatus: "ready" },
+        { id: "LC-7742", name: "Meera Nair", age: "31 / F", time: "12:00 PM", img: "https://ui-avatars.com/api/?name=Meera+Nair&background=random", status: "waiting", report: "Thyroid Profile", reportStatus: "pending" },
+
+        // COMPLETED (18)
+        { id: "LC-1001", name: "John Doe", age: "40 / M", time: "08:00 AM", img: "https://ui-avatars.com/api/?name=John+Doe&background=random", status: "completed", report: "Complete Blood Count", reportStatus: "ready" },
+        { id: "LC-1002", name: "Jane Smith", age: "35 / F", time: "08:15 AM", img: "https://ui-avatars.com/api/?name=Jane+Smith&background=random", status: "completed", report: "Lipid Profile", reportStatus: "ready" },
+        { id: "LC-1003", name: "Robert Brown", age: "55 / M", time: "08:30 AM", img: "https://ui-avatars.com/api/?name=Robert+Brown&background=random", status: "completed", report: "Liver Function Test", reportStatus: "ready" },
+        { id: "LC-1004", name: "Emily Davis", age: "28 / F", time: "08:45 AM", img: "https://ui-avatars.com/api/?name=Emily+Davis&background=random", status: "completed", report: "Kidney Function Test", reportStatus: "ready" },
+        { id: "LC-1005", name: "Michael Wilson", age: "42 / M", time: "09:00 AM", img: "https://ui-avatars.com/api/?name=Michael+Wilson&background=random", status: "completed", report: "Blood Sugar", reportStatus: "ready" },
+        { id: "LC-1006", name: "Sarah Johnson", age: "30 / F", time: "09:15 AM", img: "https://ui-avatars.com/api/?name=Sarah+Johnson&background=random", status: "completed", report: "Urine Analysis", reportStatus: "ready" },
+        { id: "LC-1007", name: "David Lee", age: "48 / M", time: "09:30 AM", img: "https://ui-avatars.com/api/?name=David+Lee&background=random", status: "completed", report: "X-Ray", reportStatus: "ready" },
+        { id: "LC-1008", name: "Laura White", age: "33 / F", time: "09:45 AM", img: "https://ui-avatars.com/api/?name=Laura+White&background=random", status: "completed", report: "MRI", reportStatus: "ready" },
+        { id: "LC-1009", name: "Kevin Harris", age: "52 / M", time: "10:00 AM", img: "https://ui-avatars.com/api/?name=Kevin+Harris&background=random", status: "completed", report: "CT Scan", reportStatus: "ready" },
+        { id: "LC-1010", name: "Amanda Clark", age: "29 / F", time: "10:15 AM", img: "https://ui-avatars.com/api/?name=Amanda+Clark&background=random", status: "completed", report: "Ultrasound", reportStatus: "ready" },
+        { id: "LC-1011", name: "Brian Lewis", age: "38 / M", time: "10:30 AM", img: "https://ui-avatars.com/api/?name=Brian+Lewis&background=random", status: "completed", report: "ECG", reportStatus: "ready" },
+        { id: "LC-1012", name: "Megan Walker", age: "26 / F", time: "10:45 AM", img: "https://ui-avatars.com/api/?name=Megan+Walker&background=random", status: "completed", report: "Blood Pressure", reportStatus: "ready" },
+        { id: "LC-1013", name: "Jason Hall", age: "41 / M", time: "11:00 AM", img: "https://ui-avatars.com/api/?name=Jason+Hall&background=random", status: "completed", report: "Cholesterol", reportStatus: "ready" },
+        { id: "LC-1014", name: "Stephanie Allen", age: "34 / F", time: "11:15 AM", img: "https://ui-avatars.com/api/?name=Stephanie+Allen&background=random", status: "completed", report: "Vitamin D", reportStatus: "ready" },
+        { id: "LC-1015", name: "Gary Young", age: "58 / M", time: "11:30 AM", img: "https://ui-avatars.com/api/?name=Gary+Young&background=random", status: "completed", report: "Thyroid", reportStatus: "ready" },
+        { id: "LC-1016", name: "Rebecca King", age: "32 / F", time: "11:45 AM", img: "https://ui-avatars.com/api/?name=Rebecca+King&background=random", status: "completed", report: "Iron Profile", reportStatus: "ready" },
+        { id: "LC-1017", name: "Brandon Scott", age: "44 / M", time: "12:00 PM", img: "https://ui-avatars.com/api/?name=Brandon+Scott&background=random", status: "completed", report: "Allergy Test", reportStatus: "ready" },
+        { id: "LC-1018", name: "Melissa Adams", age: "27 / F", time: "12:15 PM", img: "https://ui-avatars.com/api/?name=Melissa+Adams&background=random", status: "completed", report: "Pregnancy Test", reportStatus: "ready" }
+    ];
+
+    let currentSlots = 5;
+    let activePatientIndex = -1;
+    let isAvailable = true; // Placeholder, set by DB on load
+    let DOCTOR_DATA = { name: "Dr. Sharma", specialization: "" }; // Placeholder, set by DB on load
+
+
+    // --- UTILITY FUNCTIONS ---
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Helper to set UI state for the toggle button
+    function updateToggleUI(status) {
+        const wrapper = document.getElementById('statusWrapper');
+        const text = document.getElementById('statusText');
+        
+        // Remove both classes first
+        wrapper.classList.remove('inactive', 'active');
+        
+        if(status) {
+            wrapper.classList.add('active');
+            text.innerText = "Available";
+        } else {
+            wrapper.classList.add('inactive');
+            text.innerText = "Unavailable";
+        }
+    }
+    
+    // --- DATABASE INTEGRATION ---
+
+    async function fetchDoctorData() {
+        // Since we are bypassing login, we need to ensure Django recognizes a session
+        // This function should be called on page load.
+        try {
+            const response = await fetch('/api/doctor/profile/');
+            
+            if (response.status === 404) {
+                 // Happens if Doctor model is not populated for the logged-in user
+                 console.warn("Doctor profile API returned 404. Using placeholder data.");
+                 updateToggleUI(isAvailable);
+                 return;
+            }
+            if (!response.ok) {
+                throw new Error('Failed to fetch doctor profile from API.');
+            }
+            
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                DOCTOR_DATA = data;
+                isAvailable = data.is_available; // Set global status from DB
+                
+                // 1. Update all name displays dynamically
+                document.getElementById('docNameDisplay').innerText = data.name;
+                document.getElementById('docNavName').innerText = data.name;
+                
+                // Set the greeting to use the last name (e.g., Dr. Sharma)
+                const lastName = data.name.split(' ').pop();
+                document.getElementById('greeting').innerHTML = `Good Morning, <span id="docNameDisplay">Dr. ${lastName}</span> 👋`;
+                
+                // 2. Set initial toggle state based on DB
+                updateToggleUI(isAvailable);
+                
+                // Update profile edit inputs (optional)
+                document.getElementById('editDocName').value = data.name;
+                document.getElementById('editDocSpec').value = data.specialization || "N/A";
+
+                renderDashboard(); // Re-render if necessary
+            } else {
+                console.error("Profile API Error:", data.message);
+                alert("Could not load doctor profile. Defaulting to placeholders.");
+            }
+        } catch (error) {
+            console.error('Error fetching doctor data:', error);
+        }
+    }
+    
+
+    // --- TOGGLE AVAILABILITY (API POST REQUEST) ---
+    async function toggleAvailability() {
+        // 1. Toggle status locally first (optimistic update)
+        isAvailable = !isAvailable;
+        updateToggleUI(isAvailable); // Update UI immediately
+
+        // 2. Call the API to update the database
+        try {
+            const response = await fetch('/api/doctor/availability/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Pass the CSRF token for security
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ is_available: isAvailable })
+            });
+            
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                console.log(`DB updated: Doctor is now ${data.is_available ? 'Available' : 'Unavailable'}`);
+            } else {
+                // 3. Revert UI if DB update fails
+                isAvailable = !isAvailable; 
+                updateToggleUI(isAvailable);
+                alert(`Error updating status in DB: ${data.message}`);
+            }
+            
+        } catch (error) {
+            console.error('Network Error during availability update:', error);
+            // 3. Revert UI on network error
+            isAvailable = !isAvailable; 
+            updateToggleUI(isAvailable);
+            alert('Network Error. Could not update status.');
+        }
+    }
+
+
+    // --- VIEW NAVIGATION (remains mostly the same) ---
+    function switchView(viewName) {
+        document.querySelectorAll('.app-view').forEach(el => el.classList.remove('active'));
+        document.getElementById(`view-${viewName}`).classList.add('active');
+        
+        document.querySelectorAll('.sidebar .nav-item').forEach(el => el.classList.remove('active'));
+        const navs = document.querySelectorAll('.sidebar .nav-item');
+        if(viewName === 'dashboard') navs[0].classList.add('active');
+        if(viewName === 'reports') navs[1].classList.add('active');
+        if(viewName === 'consultations') navs[2].classList.add('active');
+
+        document.querySelectorAll('.m-nav-item').forEach(el => el.classList.remove('active'));
+        const mNavs = document.querySelectorAll('.m-nav-item');
+        if(viewName === 'dashboard') mNavs[0].classList.add('active');
+        if(viewName === 'reports') mNavs[1].classList.add('active');
+        if(viewName === 'consultations') mNavs[3].classList.add('active');
+    }
+
+    // --- RENDER FUNCTIONS (remains the same) ---
+    function renderDashboard() {
+        // Update Counters
+        const waiting = PATIENTS.filter(p => p.status === 'waiting');
+        const completed = PATIENTS.filter(p => p.status === 'completed');
+        
+        document.getElementById('totalCount').innerText = PATIENTS.length;
+        document.getElementById('remainingCount').innerText = waiting.length;
+        document.getElementById('headerRemaining').innerText = waiting.length;
+
+        // Render Queue List
+        const list = document.getElementById('queueList');
+        list.innerHTML = '';
+        
+        if (waiting.length === 0) {
+            list.innerHTML = '<div style="text-align:center; padding:20px; color:#999;">No patients waiting! 🎉</div>';
+        } else {
+            waiting.forEach((p) => {
+                // Find original index to pass to click handler
+                const originalIndex = PATIENTS.indexOf(p);
+                const item = document.createElement('div');
+                item.className = `queue-item`;
+                item.innerHTML = `
+                    <div class="p-info">
+                        <img src="${p.img}" class="p-avatar" alt="${p.name}">
+                        <div>
+                            <div class="p-name">${p.name}</div>
+                            <div class="p-meta">
+                                <span class="p-time"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> ${p.time}</span>
+                                <span>#${p.id.split('-')[1]}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-view" onclick="openPatientModal(${originalIndex})">View</button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Render Reports
+        const reportList = document.getElementById('reportList');
+        reportList.innerHTML = '';
+        PATIENTS.forEach(p => {
+            const rItem = document.createElement('li');
+            rItem.className = 'report-item';
+            const statusClass = p.reportStatus === 'ready' ? 'status-ready' : 'status-pending';
+            const iconColor = p.reportStatus === 'ready' ? '#E0F2FE' : '#FEF3C7';
+            const iconTxtColor = p.reportStatus === 'ready' ? '#0369A1' : '#B45309';
+            
+            rItem.innerHTML = `
+                <div class="p-info">
+                    <div style="width:40px; height:40px; background:${iconColor}; color:${iconTxtColor}; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700;">Rx</div>
+                    <div class="report-details">
+                        <h4>${p.name} - ${p.report}</h4>
+                        <p>ID: ${p.id}</p>
+                    </div>
+                </div>
+                <span class="status-tag ${statusClass}">${p.reportStatus}</span>
+            `;
+            reportList.appendChild(rItem);
+        });
+
+        // Render Consultation History
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = '';
+        
+        if (completed.length === 0) {
+            historyList.innerHTML = '<div style="text-align:center; padding:20px; color:#999;">No consultations completed yet.</div>';
+        } else {
+            completed.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'queue-item';
+                item.innerHTML = `
+                    <div class="p-info">
+                        <img src="${p.img}" class="p-avatar">
+                        <div>
+                            <div class="p-name">${p.name}</div>
+                            <div class="p-meta" style="color:var(--color-success);">Completed • ${p.time}</div>
+                        </div>
+                    </div>
+                    <button class="btn-view">Rx</button>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+    }
+
+    // --- MODAL LOGIC (remains the same) ---
+    function openPatientModal(index) {
+        activePatientIndex = index;
+        const p = PATIENTS[index];
+        document.getElementById('modalName').innerText = p.name;
+        document.getElementById('modalId').innerText = `PID: #${p.id}`;
+        document.getElementById('modalAge').innerText = p.age;
+        document.getElementById('modalAvatar').src = p.img;
+        document.getElementById('patientModal').style.display = 'flex';
+    }
+
+    function openProfileModal() {
+        // Ensure profile inputs are updated before opening
+        document.getElementById('editDocName').value = DOCTOR_DATA.name;
+        document.getElementById('editDocSpec').value = DOCTOR_DATA.specialization;
+        document.getElementById('doctorProfileModal').style.display = 'flex';
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    // --- ACTIONS (remains the same, but uses DOCTOR_DATA for saving) ---
+    function finishConsultation() {
+        if(activePatientIndex > -1) {
+            PATIENTS[activePatientIndex].status = 'completed';
+            PATIENTS[activePatientIndex].reportStatus = 'ready'; // Assume report generated
+            renderDashboard();
+            closeModal('patientModal');
+            alert("Consultation Completed! Moved to History.");
+        }
+    }
+
+    function saveProfile() {
+        const name = document.getElementById('editDocName').value;
+        const spec = document.getElementById('editDocSpec').value;
+        
+        // Optimistic UI update
+        DOCTOR_DATA.name = name;
+        DOCTOR_DATA.specialization = spec;
+
+        // Update UI elements
+        document.getElementById('docNameDisplay').innerText = name;
+        document.getElementById('docNavName').innerText = name;
+
+        // **TO DO: Add fetch POST request here to update Doctor model in DB**
+
+        closeModal('doctorProfileModal');
+        alert("Profile Updated Successfully!");
+    }
+
+    function adjustSlots(amount) {
+        currentSlots += amount;
+        if(currentSlots < 0) currentSlots = 0;
+        document.getElementById('slotDisplay').innerText = currentSlots;
+        document.getElementById('slotsCount').innerText = currentSlots;
+    }
+
+    function confirmSlotUpdate() {
+        // **TO DO: Add fetch POST request here to update Doctor's walk-in slots in DB**
+        alert(`✅ Availability Updated! ${currentSlots} walk-in slots are now live.`);
+    }
+
+    function uploadPrescription() {
+        const pid = document.getElementById('uploadPid').value;
+        if(!pid) { alert("⚠️ Please enter a Patient ID."); return; }
+        alert(`✅ Uploaded successfully to Patient Record #${pid}`);
+        document.getElementById('uploadPid').value = '';
+    }
+
+    // --- SCANNER / CLOCK (remains the same) ---
+    function openScanModal() {
+        document.getElementById('scanModal').style.display = 'flex';
+    }
+
+    function simulateScanSuccess() {
+        closeModal('scanModal');
+        switchView('dashboard');
+        // Find first waiting patient for demo
+        const waitingIdx = PATIENTS.findIndex(p => p.status === 'waiting');
+        if (waitingIdx !== -1) openPatientModal(waitingIdx);
+        else alert("Patient Found: No active appointment.");
+    }
+
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('liveClock').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchDoctorData(); // Start by fetching data from the DB
+        renderDashboard();
+        updateTime(); 
+        setInterval(updateTime, 1000);
+    });
+
+    // Close Modals on Outside Click
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal-overlay')) {
+            event.target.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

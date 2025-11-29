@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Mac
+.DS_Store
+
+# Data
+*.csv
+*.tar.gz
+frontend/frames/
+models/

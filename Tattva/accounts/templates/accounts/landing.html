@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LifeCord – Unified Health Interface</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for specific colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            orange: '#F97316',
+                            light: '#FB923C',
+                            dark: '#EA580C',
+                            purple: '#673AB7', // PhonePe-ish base
+                            deep: '#4C1D95'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.3s ease-out forwards',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for Glassmorphism and Scrollbar */
+        body {
+            -webkit-tap-highlight-color: transparent;
+            background-color: #f8fafc;
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-bg {
+            background: radial-gradient(circle at top right, #fff7ed 0%, #f3e8ff 40%, #ffffff 100%);
+        }
+
+        .mesh-gradient {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.1) 0%, rgba(103, 58, 183, 0.05) 50%, transparent 100%);
+            z-index: 0;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hide scrollbar for clean UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal specific */
+        .modal-overlay {
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-brand-orange selection:text-white pb-20 md:pb-0">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-40 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand -->
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-orange to-red-500 flex items-center justify-center text-white text-lg font-bold shadow-lg">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-slate-900">LifeCord</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                    <a href="#" class="hover:text-brand-orange transition-colors">Home</a>
+                    <a href="#features" class="hover:text-brand-orange transition-colors">Features</a>
+                    <a href="#" class="hover:text-brand-orange transition-colors">ABHA</a>
+                    <a href="#" class="hover:text-brand-orange transition-colors">Support</a>
+                </div>
+
+                <!-- Mobile Menu Icon -->
+                <div class="md:hidden text-slate-600 text-xl">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-28 pb-12 lg:pt-36 lg:pb-24 overflow-hidden hero-bg min-h-[90vh] flex flex-col justify-center">
+        <!-- Background decorative mesh -->
+        <div class="mesh-gradient"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 text-brand-orange text-xs font-bold uppercase tracking-wider mb-6 animate-fade-in shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
+                Unified Health Interface
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-4 animate-fade-in" style="animation-delay: 0.1s;">
+                Connect. <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-pink-500">Care.</span> Cure.
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-slate-600 animate-fade-in" style="animation-delay: 0.2s;">
+                India’s Unified Digital Health Ecosystem powered by <span class="font-semibold text-slate-800">ABHA & UHI</span>. Access your records, finance, and care in one tap.
+            </p>
+
+            <!-- Buttons Container -->
+            <div class="mt-10 flex flex-col md:flex-row justify-center items-center gap-4 max-w-md mx-auto md:max-w-none animate-fade-in" style="animation-delay: 0.3s;">
+                
+                <!-- Patient Login Button -->
+                <button onclick="window.location.href='{% url 'send_otp_page' %}'"
+        class="group w-full md:w-auto relative px-8 py-4 bg-gradient-to-r from-brand-orange to-red-500 rounded-2xl shadow-lg shadow-orange-200 text-white font-bold text-lg overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1 active:scale-95">
+    
+    <div class="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full"></div>
+    
+    <div class="flex items-center justify-center gap-3">
+        <i class="fa-solid fa-user-shield"></i>
+        <span>Login as Patient</span>
+    </div>
+</button>
+
+                <!-- Provider Login Button -->
+                <button onclick="openProviderModal()" class="w-full md:w-auto px-8 py-4 bg-white border-2 border-slate-100 rounded-2xl text-slate-700 font-bold text-lg shadow-sm hover:border-brand-orange hover:text-brand-orange transition-all active:scale-95 active:bg-slate-50">
+                    <div class="flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-hospital-user"></i>
+                        <span>Login as Provider</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Illustration / Floating Elements -->
+            <div class="mt-16 md:mt-20 relative h-48 md:h-64 animate-fade-in" style="animation-delay: 0.5s;">
+                <!-- Card 1 -->
+                <div class="absolute left-1/2 -translate-x-1/2 top-0 bg-white p-4 rounded-2xl shadow-xl shadow-slate-200 border border-slate-100 flex items-center gap-4 w-64 animate-float z-20">
+                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                        <i class="fa-solid fa-file-medical-alt text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400">ABHA Health ID</div>
+                        <div class="font-bold text-slate-800">Linked Successfully</div>
+                    </div>
+                    <div class="ml-auto text-green-500"><i class="fa-solid fa-check-circle"></i></div>
+                </div>
+
+                <!-- Card 2 (Background) -->
+                <div class="absolute left-1/2 -translate-x-[60%] top-12 bg-white/60 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-white w-64 z-10 scale-95">
+                    <div class="flex items-center justify-between opacity-50">
+                        <div class="h-4 w-24 bg-slate-200 rounded"></div>
+                        <div class="h-8 w-8 bg-blue-100 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrated Healthcare Section -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Integrated Healthcare for Everyone</h2>
+            </div>
+
+            <!-- Highlights Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+                <!-- Block 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-3">🔗</div>
+                    <h4 class="font-bold text-slate-800 mb-1">UHI Connected</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Seamless interoperability between hospitals, pharmacies, labs & patient apps.</p>
+                </div>
+                <!-- Block 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-3">💳</div>
+                    <h4 class="font-bold text-slate-800 mb-1">Smart Payments</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Integrated UPI, card, insurance & EMI based hospital bill financing.</p>
+                </div>
+                <!-- Block 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-3">📦</div>
+                    <h4 class="font-bold text-slate-800 mb-1">Pharmacy Locator</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Find real-time availability of medicines & order instantly nearby.</p>
+                </div>
+                <!-- Block 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-3">🧾</div>
+                    <h4 class="font-bold text-slate-800 mb-1">AI Bill Analyzer</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Upload medical bill & detect fraud, overpricing, or hidden charges.</p>
+                </div>
+            </div>
+
+            <!-- Stats & CTA Container -->
+            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-orange-50/50 to-purple-50/50 opacity-50"></div>
+                <div class="relative z-10">
+                    <!-- Mini Counters -->
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-16 border-b border-slate-100 pb-6 mb-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-extrabold text-brand-orange">120+</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Hospitals Connected</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-extrabold text-brand-purple">450+</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Pharmacies Linked</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-extrabold text-blue-500">80+</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Lab Partners</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Strip -->
+                    <p class="text-slate-600 font-medium italic text-sm md:text-base">
+                        “India’s fastest growing digital health network — experience the power of real-time care.”
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-12 pb-24 md:pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center text-brand-orange">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <span class="font-bold text-white text-xl">LifeCord</span>
+                </div>
+                <div class="flex gap-6 text-sm font-medium">
+                    <a href="#" class="hover:text-white transition-colors">About</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Help</a>
+                    <a href="#" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
+                &copy; 2025 LifeCord UHI. All rights reserved. <br class="md:hidden"> Powered by National Health Authority.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Provider Login Modal -->
+    <div id="providerModal" class="fixed inset-0 z-50 hidden">
+        <!-- Overlay -->
+        <div class="absolute inset-0 modal-overlay opacity-0 transition-opacity duration-300" id="modalOverlay" onclick="closeProviderModal()"></div>
+        
+        <!-- Modal Content (Bottom sheet on mobile, center on desktop) -->
+        <div class="absolute bottom-0 left-0 right-0 md:top-1/2 md:left-1/2 md:bottom-auto md:right-auto md:-translate-x-1/2 md:-translate-y-1/2 w-full md:w-[480px] bg-white md:rounded-3xl rounded-t-3xl shadow-2xl transform transition-transform duration-300 translate-y-full md:translate-y-10 scale-95 opacity-0" id="modalContent">
+            
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Select Provider Role</h3>
+                        <p class="text-sm text-slate-500">Access your professional dashboard</p>
+                    </div>
+                    <button onclick="closeProviderModal()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Grid Options -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Option: Hospital -->
+                    <div onclick="window.location.href='{% url 'hospital_login_page' %}'" class="cursor-pointer p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-colors flex flex-col items-center gap-3 text-center active:scale-95">
+                        <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-blue-500 text-xl">
+                            <i class="fa-solid fa-hospital"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-slate-700">Hospital</span>
+                    </div>
+
+                    <!-- Option: Doctor -->
+                    <div onclick="window.location.href='{% url 'doctors_loginpage' %}'" class="cursor-pointer p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-colors flex flex-col items-center gap-3 text-center active:scale-95">
+                        <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-green-500 text-xl">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-slate-700">Doctor</span>
+                    </div>
+
+                    <!-- Option: Pharmacy -->
+                    <div onclick="redirect('Pharmacy Inventory')" class="cursor-pointer p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-colors flex flex-col items-center gap-3 text-center active:scale-95">
+                        <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-orange-500 text-xl">
+                            <i class="fa-solid fa-prescription-bottle-medical"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-slate-700">Pharmacy</span>
+                    </div>
+
+                    <!-- Option: Lab -->
+                    <div onclick="redirect('Diagnostic Lab Interface')" class="cursor-pointer p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-colors flex flex-col items-center gap-3 text-center active:scale-95">
+                        <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-purple-500 text-xl">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-slate-700">Diagnostic Lab</span>
+                    </div>
+
+                     <!-- Option: Health Worker -->
+                     <div onclick="redirect('Field Health Worker App')" class="col-span-2 cursor-pointer p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-colors flex flex-row items-center justify-center gap-4 text-center active:scale-95">
+                        <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-teal-500 text-lg">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-slate-700">ASHA / Health Worker</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                    <a href="#" class="text-xs text-brand-orange font-semibold">Register your facility with UHI &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+
+        // Patient Login Simulation
+        function loginPatient() {
+            // Show a nice loading effect or alert
+            const btn = event.currentTarget;
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating via ABHA...';
+            btn.classList.add('opacity-90', 'pointer-events-none');
+
+            setTimeout(() => {
+                alert("Redirecting to Patient PHR Portal...");
+                btn.innerHTML = originalContent;
+                btn.classList.remove('opacity-90', 'pointer-events-none');
+            }, 1500);
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('providerModal');
+        const overlay = document.getElementById('modalOverlay');
+        const content = document.getElementById('modalContent');
+
+        function openProviderModal() {
+            modal.classList.remove('hidden');
+            // Small timeout to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                
+                // Reset transform classes based on screen size logic handled via CSS, 
+                // but we trigger the active state here
+                content.classList.remove('translate-y-full', 'scale-95', 'opacity-0');
+                
+                // Desktop specific override
+                if(window.innerWidth >= 768) {
+                   content.style.transform = "translate(-50%, -50%)"; 
+                } else {
+                   content.style.transform = "translateY(0)";
+                }
+            }, 10);
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeProviderModal() {
+            overlay.classList.add('opacity-0');
+            
+            if(window.innerWidth >= 768) {
+                content.style.transform = "translate(-50%, -40%) scale(0.95)";
+                content.classList.add('opacity-0');
+            } else {
+                content.classList.add('translate-y-full');
+            }
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Redirect Simulation
+        function redirect(destination) {
+            // Add a click ripple effect simulation
+            alert(`Redirecting to ${destination} secure portal...`);
+            closeProviderModal();
+        }
+
+        // Handle Resize events to reset inline styles on modal
+        window.addEventListener('resize', () => {
+            if (modal.classList.contains('hidden')) return;
+            
+            // Re-adjust active modal position if screen is resized while open
+            if(window.innerWidth >= 768) {
+                content.style.transform = "translate(-50%, -50%)";
+            } else {
+                content.style.transform = "translateY(0)";
+            }
+        });
+    </script>
+</body>
+</html>

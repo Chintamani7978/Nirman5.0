@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LifeCord - Your Personal Digital Health Twin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Added FontAwesome for the new Logo Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- BASE COLORS --- */
+        :root {
+            --gradient-primary: linear-gradient(135deg, #3A7BFF 0%, #60A5FA 100%);
+            --primary-color: #3A7BFF;
+            --primary-dark: #2563EB;
+            --primary-light: #EBF3FF;
+            
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            
+            --color-medicine: #10B981; 
+            --color-emergency: #EF4444; 
+            --color-lab: #8B5CF6; 
+            --color-abha: #F97316; 
+            --color-insurance: #EC4899; 
+            
+            --radius-card: 24px;
+            --radius-btn: 14px;
+            --shadow-soft: 0 4px 20px rgba(0,0,0,0.03);
+            --shadow-float: 0 20px 50px -12px rgba(58, 123, 255, 0.2); 
+            --nav-height: 80px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            padding-bottom: calc(var(--nav-height) + 40px);
+            scroll-behavior: smooth;
+        }
+
+        /* --- Global Layouts --- */
+        .main-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 5%;
+        }
+
+        /* --- Desktop Navbar --- */
+        nav.desktop-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: var(--nav-height);
+            padding: 0 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        /* Updated Logo Icon Style to match Landing Page Shape but Keep Homepage Color */
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 8px; /* Changed from 50% to 8px to match Landing Page rounded-lg */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(58, 123, 255, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+        .nav-links a.active { color: var(--primary-color); font-weight: 700; }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .location-pill-desktop {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: #F1F5F9;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .location-pill-desktop:hover {
+            background: #E3F2FD;
+            color: var(--primary-color);
+        }
+
+        .btn-sos {
+            background: var(--color-emergency);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+            animation: pulse-red 2s infinite;
+        }
+        
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(211, 47, 47, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
+        }
+
+        .notif-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: white;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main);
+            position: relative;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+            cursor: pointer;
+        }
+        .notif-btn:hover { background: #F8FAFC; color: var(--primary-color); }
+        .notif-badge {
+            position: absolute; top: -2px; right: -2px;
+            background: var(--color-emergency); color: white;
+            font-size: 0.7rem; font-weight: 700;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid white;
+        }
+
+        .profile-btn-desktop {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid var(--primary-color);
+            overflow: hidden;
+        }
+        .profile-btn-desktop img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- UPDATED DROPDOWNS (FIXED POSITIONING FOR MOBILE/PC) --- */
+        .dropdown-menu {
+            position: fixed; /* Fixed to work on mobile and desktop regardless of parent */
+            top: 70px;
+            right: 20px;
+            width: 280px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            z-index: 9999;
+            border: 1px solid #F1F5F9;
+            animation: fadeDown 0.2s ease;
+        }
+        /* Mobile specific position tweak */
+        @media (max-width: 768px) {
+            .dropdown-menu { top: 65px; right: 10px; width: 300px; }
+        }
+
+        .dropdown-menu.show { display: flex; }
+        
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex; align-items: center; gap: 12px;
+            font-size: 0.9rem; font-weight: 500;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .dropdown-item:hover { background: #F8FAFC; }
+        .dropdown-item.danger { color: var(--color-emergency); }
+        .dropdown-item.danger:hover { background: #FEF2F2; }
+
+        .notif-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #F1F5F9;
+            display: flex; gap: 12px; align-items: start;
+        }
+        .notif-item:last-child { border-bottom: none; }
+        .notif-dot { width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%; margin-top: 6px; flex-shrink: 0;}
+        .notif-content h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+        .notif-content p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+
+        /* --- Mobile Header --- */
+        .app-header-mobile {
+            display: none; 
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .location-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            background: var(--bg-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .location-pill svg { color: var(--primary-color); }
+
+        .user-actions-mobile { display: flex; gap: 15px; align-items: center; }
+
+        .icon-btn-mobile {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: none;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-img-mobile { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #eee; }
+        
+        /* --- Search Bar --- */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 30px 20px 60px;
+            border-radius: 20px;
+            border: 1px solid #E2E8F0;
+            background: white;
+            font-family: inherit;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            box-shadow: var(--shadow-soft);
+            outline: none;
+            transition: all 0.3s;
+        }
+        .search-input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 5px rgba(58, 123, 255, 0.15); }
+        .search-icon { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); color: var(--primary-color); }
+
+        /* --- DASHBOARD SPLIT --- */
+        .dashboard-split {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .abha-card {
+            background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -12px rgba(249, 115, 22, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
+        }
+        
+        .abha-bg-icon {
+            position: absolute; right: -20px; top: -20px; width: 180px; height: 180px; opacity: 0.15; color: white; transform: rotate(15deg);
+        }
+
+        .abha-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .abha-chip { width: 50px; height: 35px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.3); backdrop-filter: blur(5px); }
+        .abha-logo-area { text-align: right; }
+        .abha-logo-text { font-weight: 800; font-size: 1.4rem; letter-spacing: 1px; }
+        .abha-sub-text { font-size: 0.75rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+        .abha-number { font-size: 1.8rem; font-weight: 700; letter-spacing: 3px; margin: 20px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1); font-family: monospace; }
+        .abha-footer { display: flex; justify-content: space-between; align-items: flex-end; }
+        .abha-holder-label { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; margin-bottom: 4px; }
+        .abha-holder-name { font-size: 1.1rem; font-weight: 600; }
+        .abha-qr { width: 50px; height: 50px; background: white; padding: 4px; border-radius: 8px; }
+
+        .data-control-card {
+            background: white; padding: 30px; border-radius: 30px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .access-row { 
+            display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 12px; background: #F8FAFC; border-radius: 12px; cursor: pointer; transition: background 0.2s;
+        }
+        .access-row:hover { background: #F1F5F9; }
+        .access-avatar { width: 32px; height: 32px; border-radius: 50%; background: #E2E8F0; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: #64748B; }
+        .access-info { flex: 1; }
+        .access-name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .access-role { font-size: 0.75rem; color: var(--text-muted); }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; margin-left: auto; box-shadow: 0 0 0 3px rgba(255,255,255,0.8); }
+        .status-dot.green { background: #10B981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+        .status-dot.red { background: #EF4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); }
+
+        /* --- Health Insights --- */
+        .insights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 50px; }
+        .insight-card { background: white; padding: 20px; border-radius: 20px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: transform 0.3s; position: relative; overflow: hidden; }
+        .insight-card:hover { transform: translateY(-5px); }
+        .insight-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 10px; }
+        .insight-val { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+        .insight-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .insight-pill { font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin-top: 8px; }
+        .icon-remind { background: #E0F2FE; color: #0284C7; }
+        .icon-score { background: #DCFCE7; color: #16A34A; }
+        .icon-steps { background: #F3E8FF; color: #9333EA; }
+        .icon-cals { background: #FFEDD5; color: #EA580C; }
+
+        /* --- Recent Activity --- */
+        .activity-section { background: white; border-radius: 24px; padding: 25px; box-shadow: var(--shadow-soft); margin-bottom: 60px; }
+        .activity-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid #F1F5F9; }
+        .activity-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .act-left { display: flex; align-items: center; gap: 15px; }
+        .act-icon-box { width: 48px; height: 48px; border-radius: 14px; background: #F8FAFC; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.2rem; }
+        .act-details h4 { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+        .act-details span { font-size: 0.85rem; color: var(--text-muted); }
+        .act-status { font-size: 0.8rem; font-weight: 600; padding: 6px 12px; border-radius: 8px; }
+        .status-done { background: #DCFCE7; color: #16A34A; }
+        .status-pending { background: #FFEDD5; color: #C2410C; }
+        .status-file { background: #E0F2FE; color: #0284C7; cursor: pointer; }
+
+        /* --- Service Grid --- */
+        .grid-section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .grid-section-title a { color: var(--primary-color); font-size: 1rem; font-weight: 600; text-decoration: none; padding: 8px 16px; background: white; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 60px; background: white; padding: 40px; border-radius: 30px; box-shadow: var(--shadow-soft); }
+        .service-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: var(--text-main); gap: 15px; cursor: pointer; transition: transform 0.3s; padding: 15px; border-radius: 20px; }
+        .service-item:hover { transform: translateY(-10px); background: #F8FAFC; }
+        .icon-box { width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.06); transition: transform 0.3s; }
+        .service-item:hover .icon-box { transform: scale(1.1) rotate(5deg); }
+        .service-label { font-size: 1rem; font-weight: 600; }
+        .bg-blue { background: #E3F2FD; color: var(--primary-color); }
+        .bg-green { background: #E8F5E9; color: var(--color-medicine); }
+        .bg-purple { background: #EDE7F6; color: var(--color-lab); }
+        .bg-orange { background: #FFEBEE; color: var(--color-abha); }
+        .bg-red { background: #FFEBEE; color: var(--color-emergency); }
+        .bg-pink { background: #FCE4EC; color: var(--color-insurance); }
+        .bg-teal { background: #E0F2F1; color: #00695C; }
+        .bg-indigo { background: #E8EAF6; color: #283593; }
+
+        /* --- Upcoming Appointment --- */
+        .appt-section { margin-top: 20px; margin-bottom: 40px; }
+        .appt-card { background: white; border-radius: var(--radius-card); padding: 25px; display: flex; align-items: center; gap: 25px; box-shadow: var(--shadow-float); border-left: 6px solid var(--primary-color); transition: transform 0.3s ease; cursor: pointer; }
+        .appt-card:hover { transform: translateY(-3px); }
+        .doc-thumb { width: 70px; height: 70px; border-radius: 16px; object-fit: cover; }
+        .appt-info { flex: 1; }
+        .appt-info h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
+        .appt-info p { font-size: 0.95rem; color: var(--text-muted); }
+        .status-pill { font-size: 0.8rem; background: #EFF6FF; color: var(--primary-color); padding: 6px 12px; border-radius: 8px; font-weight: 600; }
+
+        /* --- Explore Nearby --- */
+        .nearby-scroller { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scrollbar-width: none; margin-bottom: 60px; }
+        .nearby-scroller::-webkit-scrollbar { display: none; }
+        .location-card { min-width: 160px; background: white; padding: 20px; border-radius: 24px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; gap: 12px; border: 2px solid transparent; cursor: pointer; transition: all 0.3s; }
+        .location-card:hover { transform: translateY(-5px); }
+        .location-card:active { border-color: var(--primary-color); }
+        .loc-icon { width: 45px; height: 45px; background: #F1F5F9; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+        .loc-title { font-size: 1rem; font-weight: 600; }
+        .loc-sub { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* --- UPDATED SPECIALIST SECTION (GRID LAYOUT) --- */
+        /* Changed from slider to responsive grid to fix cutting issue */
+        .specialist-slider-container {
+            position: relative;
+            margin-bottom: 60px;
+        }
+        
+        .specialist-scroller {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive Grid */
+            gap: 30px;
+            padding: 10px;
+        }
+
+        .specialist-card {
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            border-top: 5px solid transparent;
+            /* Removed fixed min-width to allow flexibility */
+        }
+        .specialist-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); border-top-color: var(--primary-color); }
+        .spec-avatar { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px; border: 4px solid var(--bg-color); }
+        .spec-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; }
+        .spec-role { font-size: 1rem; color: var(--primary-color); font-weight: 600; margin-bottom: 20px; }
+        .spec-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--bg-color); padding: 15px; border-radius: 20px; }
+        .spec-stat svg { width: 24px; height: 24px; color: var(--text-muted); margin-bottom: 4px; }
+        .spec-stat-value { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+        .spec-stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+        .specialist-dots { display: none; } /* Dots hidden as it is now a grid */
+
+        /* --- Footer --- */
+        footer { background: white; padding: 60px 5% 20px; margin-top: 60px; border-top: 1px solid #eee; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: var(--text-main); }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--primary-color); }
+        .social-icons { display: flex; gap: 15px; }
+        .social-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-color); display: flex; align-items: center; justify-content: center; color: var(--primary-color); transition: all 0.2s; text-decoration: none; }
+        .social-icon:hover { background: var(--gradient-primary); color: white; }
+        .footer-bottom { border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- Chatbot & UI --- */
+        .chatbot-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; display: flex; align-items: center; }
+        .chatbot-btn { width: 65px; height: 65px; border-radius: 50%; background: var(--gradient-primary); color: white; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(58, 123, 255, 0.4); cursor: pointer; transition: transform 0.3s; border: 4px solid white; }
+        .chatbot-btn:hover { transform: scale(1.1) rotate(-10deg); }
+        .chat-window { position: fixed; bottom: 110px; right: 30px; width: 350px; height: 450px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 1999; display: none; flex-direction: column; overflow: hidden; animation: fadeUp 0.3s ease; }
+        .chat-header { background: var(--gradient-primary); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { flex: 1; padding: 15px; background: #f5f5f5; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; word-wrap: break-word; white-space: pre-wrap; }
+        .msg-bot { background: white; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg-user { background: #E0F2FE; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .chat-input-area { padding: 10px; background: white; border-top: 1px solid #eee; display: flex; gap: 10px; }
+        .chat-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
+        .chat-send-btn { background: var(--primary-color); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 9999; display: none; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 30px; width: 90%; max-width: 500px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; max-height: 90vh; overflow-y: auto; }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--text-muted); z-index: 10; }
+        .btn-confirm-booking { width: 100%; background: var(--gradient-primary); color: white; padding: 15px; border-radius: 16px; font-weight: 700; font-size: 1.1rem; border: none; margin-top: 25px; cursor: pointer; box-shadow: 0 10px 20px rgba(58, 123, 255, 0.25); transition: background 0.3s, transform 0.2s; }
+        .btn-confirm-booking:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        .btn-reschedule { background: white; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 12px; border-radius: 12px; font-weight: 600; width: 100%; margin-top: 10px; cursor: pointer; }
+        .btn-cancel { background: #FFEBEE; color: var(--color-emergency); border: none; padding: 12px; border-radius: 12px; font-weight: 600; width: 100%; margin-top: 10px; cursor: pointer; }
+        .btn-book-hero { background: var(--gradient-primary); color: white; padding: 12px 24px; border-radius: 14px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(58, 123, 255, 0.3); }
+
+        /* --- Desktop Specifics --- */
+        @media (min-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(8, 1fr); }
+            .insights-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* --- Mobile Nav --- */
+        .bottom-nav { display: none; }
+        
+        /* --- MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 768px) {
+            .main-container { padding: 15px; width: 100%; max-width: 100%; overflow-x: hidden; }
+            nav.desktop-nav { display: none !important; } 
+            .app-header-mobile { display: flex; }
+            
+            .bottom-nav { 
+                display: flex !important; 
+                position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; 
+                background: white; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); 
+                justify-content: space-around; align-items: center; z-index: 9999; 
+                border-top-left-radius: 20px; border-top-right-radius: 20px; 
+            }
+            
+            .dashboard-split { grid-template-columns: 1fr; gap: 20px; }
+            .insights-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .insight-card { padding: 15px; }
+            .insight-val { font-size: 1.2rem; }
+            .activity-section { padding: 20px; }
+            .activity-item { flex-wrap: wrap; gap: 10px; }
+            .act-status { margin-left: auto; }
+            .services-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; margin-bottom: 40px; overflow-x: auto; }
+            .service-item { padding: 5px; gap: 8px; min-width: 60px; }
+            .icon-box { width: 50px; height: 50px; font-size: 1.5rem; border-radius: 16px; }
+            .service-label { font-size: 0.7rem; white-space: nowrap; }
+            .appt-card { padding: 15px; gap: 15px; }
+            .location-card { min-width: 140px; padding: 15px; }
+            .loc-icon { width: 40px; height: 40px; }
+            .chatbot-container { bottom: 90px; right: 20px; } 
+            .chat-window { width: 90%; bottom: 100px; right: 5%; height: 60vh; }
+            .search-wrapper { margin-bottom: 30px; }
+            .search-input { padding: 15px 20px 15px 50px; font-size: 0.9rem; }
+            .search-icon { left: 15px; width: 20px; height: 20px; }
+            .grid-section-title { font-size: 1.3rem; margin-bottom: 20px; }
+            .grid-section-title a { font-size: 0.8rem; padding: 6px 12px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; text-align: center; padding-bottom: 80px; }
+        }
+        
+        .nav-item-mobile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #94A3B8; text-decoration: none; width: 20%; height: 100%; }
+        .nav-item-mobile.active { color: var(--primary-color); }
+        .nav-item-mobile svg { width: 22px; height: 22px; }
+        .nav-label { font-size: 10px; font-weight: 500; }
+        
+        .nav-fab { width: 56px; height: 56px; background: var(--color-emergency); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.4); transform: translateY(-25px); border: 4px solid var(--bg-color); animation: pulse 2s infinite; font-weight: 800; font-size: 1rem; letter-spacing: 1px; text-decoration: none; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
+        .profile-modal-overlay { position: fixed; top: 0; left: 100%; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2001; display: none; align-items: center; justify-content: center; }
+        .profile-card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 24px; text-align: center; position: relative; animation: popUp 0.3s; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .profile-big-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--primary-light); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .profile-details-box { background: #F8FAFC; border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; }
+        .profile-row { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 8px; }
+        .profile-row:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+        .profile-label { color: var(--text-muted); font-size: 0.9rem; }
+        .profile-value { font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
+
+        /* Search Results Modal */
+        .result-list { max-height: 400px; overflow-y: auto; }
+        .result-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; transition: background 0.2s; }
+        .result-item:hover { background: #F8FAFC; }
+        .result-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+        .result-info p { font-size: 0.85rem; color: var(--text-muted); }
+        .btn-navigate { background: var(--primary-color); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 0.8rem; font-weight: 600; }
+
+        /* Calendar Styles */
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 20px; }
+        .day-cell { padding: 10px; text-align: center; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .day-cell:hover { background: var(--primary-light); }
+        .day-cell.selected { background: var(--primary-color); color: white; }
+        .day-cell.disabled { color: #ccc; }
+        .time-slots { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        .time-slot { padding: 8px 16px; border: 1px solid #eee; border-radius: 10px; cursor: pointer; }
+        .time-slot.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+        <div class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <span>LifeCord</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Doctors</a></li>
+            <li><a href="#">Records</a></li>
+            <li><a href="#">Mental Health</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <div class="location-pill-desktop" onclick="fetchCurrentLocation()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span id="desktopLocationText">Locating...</span>
+            </div>
+            
+            <a href="#" class="btn-sos" onclick="alert('Calling Emergency Services...')">SOS</a>
+
+            <!-- Notification Bell -->
+            <div class="nav-icon-wrapper">
+                <div class="notif-btn" onclick="toggleNotifMenu(event)">
+                    <div class="notif-badge">4</div>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </div>
+            </div>
+
+            <!-- Profile Icon -->
+            <div class="nav-icon-wrapper">
+                <div class="profile-btn-desktop" onclick="toggleProfileMenu(event)">
+                    <div class="profile-btn-desktop" onclick="toggleProfileMenu(event)">
+    <img src="https://ui-avatars.com/api/?name={{ patient.name }}&background=3A7BFF&color=fff" alt="Profile">
+</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Dropdown Menus (Fixed Position for All Devices) -->
+    
+    <!-- 1. Notification Dropdown -->
+    <div class="dropdown-menu" id="notifDropdown">
+        <div class="notif-item">
+            <div class="notif-dot"></div>
+            <div class="notif-content">
+                <h4>Appointment Reminder</h4>
+                <p>Dr. Anjali at 2:00 PM tomorrow.</p>
+            </div>
+        </div>
+        <div class="notif-item">
+            <div class="notif-dot" style="background:orange;"></div>
+            <div class="notif-content">
+                <h4>Lab Report Ready</h4>
+                <p>Your blood test report is ready.</p>
+            </div>
+        </div>
+        <div class="notif-item">
+            <div class="notif-dot" style="background:green;"></div>
+            <div class="notif-content">
+                <h4>Pill Reminder</h4>
+                <p>Time to take Vitamin C.</p>
+            </div>
+        </div>
+        <div class="notif-item">
+            <div class="notif-dot" style="background:blue;"></div>
+            <div class="notif-content">
+                <h4>New Insurance Offer</h4>
+                <p>Check out family plans.</p>
+            </div>
+        </div>
+        <div style="text-align:center; padding-top:10px; font-size:0.8rem; color:var(--primary-color); cursor:pointer;">See all notifications</div>
+    </div>
+
+    <!-- 2. Profile Dropdown -->
+    <div class="dropdown-menu" id="profileDropdown" style="width: 220px;">
+        <div style="padding: 10px 15px; border-bottom:1px solid #eee; margin-bottom:5px;">
+            <div style="font-weight:700;">{{ patient.name }}</div>
+            <div style="font-size:0.8rem; color:gray;">{{ patient.phone }}</div>
+        </div>
+        <a href="#" class="dropdown-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Dashboard
+        </a>
+        <a href="{% url 'landing' %}" class="dropdown-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Settings
+        </a>
+        <a  href="{% url 'landing' %}" class="dropdown-item danger" >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Logout
+        </a>
+    </div>
+
+    <!-- Mobile Header -->
+    <header class="app-header-mobile">
+        <div class="location-pill" id="locationBtn" onclick="fetchCurrentLocation()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span id="mobileLocationText">Locating...</span>
+        </div>
+        
+        <div class="user-actions-mobile">
+            <!-- Mobile Notification -->
+            <button class="icon-btn-mobile" onclick="toggleNotifMenu(event)">
+                <div style="position:absolute; top:8px; right:8px; width:8px; height:8px; background:var(--color-emergency); border-radius:50%; border:1px solid white;"></div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </button>
+            <img src="https://ui-avatars.com/api/?name=Kirti&background=3A7BFF&color=fff" alt="Profile" class="profile-img-mobile" onclick="toggleProfileMenu(event)">
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <!-- Wide Search Bar -->
+        <div class="search-wrapper">
+            <div class="search-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <input type="text" class="search-input" placeholder="Search for doctors, clinics, symptoms, or medicines...">
+        </div>
+
+        <!-- ABHA ID Card & Data Access Control -->
+        <div class="dashboard-split">
+            <!-- ABHA ID Card -->
+            <div class="abha-card">
+                <div style="z-index: 2;">
+                    <h3 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 10px;">ABHA ID</h3>
+                    <p style="font-size: 1rem; opacity: 0.95; margin-bottom: 25px; max-width: 80%;">Create your Digital Health ID under Ayushman Bharat Mission.</p>
+                    <div style="background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4); padding: 12px 24px; border-radius: 50px; font-weight: 600; width: fit-content; cursor: pointer; backdrop-filter: blur(5px);">Create Now</div>
+                </div>
+                <svg style="position: absolute; right: -10px; bottom: -20px; opacity: 0.25; width: 180px; height: 180px; color: white;" viewBox="0 0 24 24" fill="currentColor"><path d="M20 7h-7L10 .5 0 9h7l3 6.5L20 7z"/></svg>
+            </div>
+
+            <!-- Interactive Data Access Control -->
+            <div class="data-control-card">
+                <h4 style="font-size: 1.1rem; font-weight: 700;">Data Access Control</h4>
+                <p style="font-size: 0.85rem; color: #666;">Tap a user to manage access.</p>
+                
+                <div style="margin-top: 15px;">
+                    <!-- Active User -->
+                    <div class="access-row" onclick="openAccessModal('Dr. Kavita S.', 'active')">
+                        <div class="access-avatar">KS</div>
+                        <div class="access-info" style="flex:1;">
+                            <div class="access-name" style="font-size:0.9rem; font-weight:600;">Dr. Kavita S.</div>
+                            <div class="access-role" style="font-size:0.75rem; color:#666;">Family Physician</div>
+                        </div>
+                        <div class="status-dot green"></div>
+                    </div>
+                    
+                    <!-- Revoked User -->
+                    <div class="access-row" onclick="openAccessModal('City Labs', 'revoked')">
+                        <div class="access-avatar">CL</div>
+                        <div class="access-info" style="flex:1;">
+                            <div class="access-name" style="font-size:0.9rem; font-weight:600;">City Labs</div>
+                            <div class="access-role" style="font-size:0.75rem; color:#666;">Diagnostic Ctr</div>
+                        </div>
+                        <div class="status-dot red"></div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: var(--primary-color); font-weight: 600; cursor: pointer;" onclick="openManagePermissions()">
+                    Manage All Permissions →
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Insights -->
+        <div class="grid-section-title">
+            <span>🔹 Health Insights</span>
+            <span style="font-size:0.9rem; color:var(--primary-color); cursor:pointer;">View Details</span>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="insight-icon icon-remind"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div>
+                <div class="insight-val">2:00 PM</div>
+                <div class="insight-label">Take Vitamin C</div>
+                <div class="insight-pill" style="background:#E0F2FE; color:#0284C7;">Next Pill</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-icon icon-score"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="insight-val">85/100</div>
+                <div class="insight-label">Daily Health Score</div>
+                <div class="insight-pill" style="background:#DCFCE7; color:#16A34A;">Excellent</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-icon icon-steps"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 5.5c0 3.08-1.63 6-5 6"></path><path d="M14 13.84v-2.38c10.57 6.34 2.83 14.05-1.54 11.23-1.66-1.08-4.32-6.52-1.96-9.61 1.76-2.31 5.42-1.25 3.5 1.54Z"></path></svg></div>
+                <div class="insight-val">6,430</div>
+                <div class="insight-label">Steps Walked</div>
+                <div class="insight-pill" style="background:#F3E8FF; color:#9333EA;">Goal: 8k</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-icon icon-cals"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg></div>
+                <div class="insight-val">420</div>
+                <div class="insight-label">Kcal Burned</div>
+                <div class="insight-pill" style="background:#FFEDD5; color:#EA580C;">Active</div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid-section-title">
+            <span>🔹 Recent Activity</span>
+            <span style="font-size:0.9rem; color:var(--primary-color); cursor:pointer;">History</span>
+        </div>
+
+        <div class="activity-section">
+            <div class="activity-item">
+                <div class="act-left">
+                    <div class="act-icon-box" style="color:#0284C7; background:#E0F2FE;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                    </div>
+                    <div class="act-details">
+                        <h4>Dr. Anjali Gupta</h4>
+                        <span>Yesterday • Cardiologist Consultation</span>
+                    </div>
+                </div>
+                <div class="act-status status-done">Completed</div>
+            </div>
+
+            <div class="activity-item">
+                <div class="act-left">
+                    <div class="act-icon-box" style="color:#7E57C2; background:#EDE7F6;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    </div>
+                    <div class="act-details">
+                        <h4>Blood Test Report</h4>
+                        <span>2 days ago • City Labs</span>
+                    </div>
+                </div>
+                <div class="act-status status-file" onclick="alert('Downloading PDF...')">Download PDF</div>
+            </div>
+
+            <div class="activity-item">
+                <div class="act-left">
+                    <div class="act-icon-box" style="color:#EA580C; background:#FFEDD5;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="11" x2="12" y2="17"></line><line x1="12" y1="7" x2="12.01" y2="7"></line></svg>
+                    </div>
+                    <div class="act-details">
+                        <h4>Apollo Pharmacy Bill</h4>
+                        <span>Scan ID: #9872 • ₹ 450.00</span>
+                    </div>
+                </div>
+                <div class="act-status status-pending">Processing</div>
+            </div>
+
+            <div class="activity-item">
+                <div class="act-left">
+                    <div class="act-icon-box" style="color:#16A34A; background:#DCFCE7;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.8 2.3A.3.3 0 1 0 4.5 2H2a.3.3 0 0 0-.3.3v2.4a.3.3 0 1 0 .6 0V2.5h1.8a.3.3 0 0 0 .3-.3v-.5z"></path><path d="M2 12a10 10 0 1 0 20 0 10 10 0 1 0-20 0zm8-3a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h2zm6 0a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h2z"></path></svg>
+                    </div>
+                    <div class="act-details">
+                        <h4>New Prescription</h4>
+                        <span>Added by Dr. Niharika • Antibiotics</span>
+                    </div>
+                </div>
+                <div class="act-status status-done">Added</div>
+            </div>
+        </div>
+
+        <!-- Essential Services -->
+        <div class="grid-section-title">
+            <span>Essential Services</span>
+            <a href="#">See All Services →</a>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="icon-box bg-blue">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                </div>
+                <span class="service-label">Doctors</span>
+            </div>
+            <div class="service-item">
+                <div class="icon-box bg-green">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                </div>
+                <span class="service-label">Medicines</span>
+            </div>
+            <div class="service-item">
+                <div class="icon-box bg-purple">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31"></path><path d="M14 2v7.31"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path></svg>
+                </div>
+                <span class="service-label">Lab Tests</span>
+            </div>
+            <div class="service-item">
+                <div class="icon-box bg-red">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                </div>
+                <span class="service-label">Ambulance</span>
+            </div>
+             <div class="service-item">
+                <div class="icon-box bg-orange">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+                <span class="service-label">ABHA ID</span>
+            </div>
+            <div class="service-item">
+                <div class="icon-box bg-teal">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                </div>
+                <span class="service-label">Records</span>
+            </div>
+            <div class="service-item">
+                <div class="icon-box bg-pink">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <span class="service-label">Insurance</span>
+            </div>
+            <div class="service-item">
+                <div class="icon-box bg-indigo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <span class="service-label">Pay Bills</span>
+            </div>
+        </div>
+
+        <!-- Upcoming Appointment -->
+        <div id="nextAppointmentContainer" class="appt-section" style="display:none;">
+            <div class="grid-section-title"><span>Upcoming Appointment</span></div>
+            <div class="appt-card" onclick="openApptDetails()">
+                <img src="" id="apptImg" class="doc-thumb" alt="Doctor">
+                <div class="appt-info">
+                    <h4 id="apptName">Dr. Name</h4>
+                    <p id="apptDetail">Specialty • Time</p>
+                </div>
+                <div class="status-pill">CONFIRMED</div>
+            </div>
+        </div>
+
+        <!-- Explore Nearby -->
+        <div style="margin-top: 30px;">
+            <div class="grid-section-title">
+                <span>Explore Nearby</span>
+                <a href="#">View Map</a>
+            </div>
+            <div class="nearby-scroller">
+                <div class="location-card" onclick="searchNearby('Pharmacy')">
+                    <div class="loc-icon" style="color: var(--color-medicine);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Pharmacy</div>
+                        <div class="loc-sub">Find Medical Stores</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Hospitals')">
+                    <div class="loc-icon" style="color: var(--primary-color);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"></path><path d="M5 21V7l8-4 8 4v14"></path><path d="M8 21v-9a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v9"></path></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Hospitals</div>
+                        <div class="loc-sub">Clinics & Care</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Blood Bank')">
+                    <div class="loc-icon" style="color: var(--color-emergency);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Blood Bank</div>
+                        <div class="loc-sub">Life Saving</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Diagnostic Labs')">
+                    <div class="loc-icon" style="color: var(--color-lab);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31"></path><path d="M14 2v7.31"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Labs</div>
+                        <div class="loc-sub">Diagnostics</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Emergency Services')">
+                    <div class="loc-icon" style="color: var(--color-emergency);">
+                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Emergency</div>
+                        <div class="loc-sub">Quick Help</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Vaccination Centre')">
+                    <div class="loc-icon" style="color: #009688;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2l3 3-3 3-3-3 3-3z"></path><path d="M15 5l-4 4"></path><path d="M11 9l-7 7 2 2 7-7"></path><path d="M9 11l-4 4"></path><path d="M2 22l3-3"></path></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Vaccine</div>
+                        <div class="loc-sub">Immunization</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Specialist Doctor')">
+                    <div class="loc-icon" style="color: #1976D2;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Specialists</div>
+                        <div class="loc-sub">Expert Care</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Home Healthcare')">
+                    <div class="loc-icon" style="color: #388E3C;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Home Care</div>
+                        <div class="loc-sub">Visit at Home</div>
+                    </div>
+                </div>
+
+                <div class="location-card" onclick="searchNearby('Wellness Centre')">
+                    <div class="loc-icon" style="color: #C2185B;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                    </div>
+                    <div>
+                        <div class="loc-title">Wellness</div>
+                        <div class="loc-sub">Yoga & Spa</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Specialists Section (Updated to Responsive Grid) -->
+        <div style="margin-top: 60px;">
+            <div class="grid-section-title">
+                <span>Top Rated Specialists</span>
+                <a href="#">Explore All Specialists →</a>
+            </div>
+            <div class="specialist-slider-container">
+                <!-- Using grid layout instead of scroller -->
+                <div class="specialist-scroller" id="bestDoctors">
+                    <!-- JS will inject specialist cards here -->
+                </div>
+                <!-- Specialist Dots (Hidden for Grid) -->
+                <div class="specialist-dots" id="specDots"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="main-container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand & About -->
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 15px;">
+                        <div class="logo-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <span>LifeCord</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
+                        Your personal digital health twin. Connecting you with the best healthcare services seamlessly.
+                    </p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="footer-col">
+                    <h4>About Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Annual Checkup</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Support -->
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Get Diagnosis</a></li>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Insurances -->
+                <div class="footer-col">
+                    <h4>Top Insurances</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Aetna</a></li>
+                        <li><a href="#">Blue Shield</a></li>
+                        <li><a href="#">Health Net</a></li>
+                        <li><a href="#">View More</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5: Socials -->
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 LifeCord. All rights reserved.</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot FAB -->
+    <div class="chatbot-container" onclick="toggleChatWindow()">
+        <div class="chatbot-btn">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        </div>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>LifeCord Assistant</span>
+            <span onclick="toggleChatWindow()" style="cursor:pointer;">×</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg msg-bot">
+                Hello! 👋 I'm your LifeCord AI. How can I help you with your health today?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" placeholder="Type a message..." id="chatInput" onkeypress="handleChatInput(event)">
+            <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <!-- Appointment Details Modal -->
+    <div id="apptDetailModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeApptModal()">×</button>
+            <div id="apptDetailContent"></div>
+            <button class="btn-reschedule" onclick="rescheduleAppt()">Reschedule Appointment</button>
+            <button class="btn-cancel" onclick="cancelAppt()">Cancel Appointment</button>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div id="calendarModalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCalendarModal()">×</button>
+            <div class="modal-header" style="margin-bottom: 20px;">
+                <h4 id="modalDoctorName" style="font-size: 1.5rem;">Book Appointment</h4>
+            </div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+            <div id="timeSlots" class="time-slots"></div>
+            <button class="btn-confirm-booking" onclick="confirmBooking()">Confirm</button>
+        </div>
+    </div>
+
+    <!-- Search Results Modal -->
+    <div id="searchResultsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSearchResults()">×</button>
+            <h3 id="resultsTitle" style="margin-bottom:20px;">Nearby Locations</h3>
+            <div id="resultsList" class="result-list"></div>
+        </div>
+    </div>
+
+    <!-- Access Control Modal -->
+    <div id="accessControlModal" class="modal-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <button class="modal-close" onclick="closeAccessModal()">×</button>
+            <div style="width: 60px; height: 60px; background: #F1F5F9; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: var(--text-muted);" id="modalAccessAvatar"></div>
+            <h3 id="modalAccessName" style="margin-bottom: 5px;">User Name</h3>
+            <p id="modalAccessStatus" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px;">Current Status: Active</p>
+            
+            <button class="btn-confirm-booking" id="revokeBtn" style="background: var(--color-emergency); box-shadow: 0 10px 20px rgba(239, 68, 68, 0.25);" onclick="revokeAccess()">Revoke Access</button>
+            <button class="btn-reschedule" style="margin-top: 10px; border-color: #ddd; color: #666;" onclick="closeAccessModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Manage Permissions Modal -->
+    <div id="permissionsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePermissionsModal()">×</button>
+            <h3 style="margin-bottom: 20px;">Manage Permissions</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div><div style="font-weight: 600;">Location Access</div><div style="font-size: 0.8rem; color: #666;">Allow app to access location</div></div>
+                    <div style="width: 40px; height: 24px; background: #10B981; border-radius: 20px; position: relative;"><div style="width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px;"></div></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div><div style="font-weight: 600;">Data Sharing</div><div style="font-size: 0.8rem; color: #666;">Share anonymous data</div></div>
+                    <div style="width: 40px; height: 24px; background: #E2E8F0; border-radius: 20px; position: relative;"><div style="width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></div></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div><div style="font-weight: 600;">Notifications</div><div style="font-size: 0.8rem; color: #666;">Receive health alerts</div></div>
+                    <div style="width: 40px; height: 24px; background: #10B981; border-radius: 20px; position: relative;"><div style="width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px;"></div></div>
+                </div>
+            </div>
+            <button class="btn-confirm-booking" style="margin-top: 25px;" onclick="closePermissionsModal()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModalOverlay" class="profile-modal-overlay">
+        <div class="profile-card">
+            <button class="modal-close" onclick="closeProfileModal()">×</button>
+            <img src="https://ui-avatars.com/api/?name=Kirti&background=3A7BFF&color=fff" class="profile-big-img" alt="Profile">
+            <h3 style="margin-bottom:5px;">{{ patient.name }}</h3>
+            <p style="color:var(--text-muted); margin-bottom:20px; font-size:0.9rem;">Premium Member</p>
+            
+            <div class="profile-details-box">
+                <div class="profile-row">
+                    <span class="profile-label">Email</span>
+                    <span class="profile-value">kirti@example.com</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Phone</span>
+                    <span class="profile-value">+91 98765 43210</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Blood Group</span>
+                    <span class="profile-value">B+</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Location</span>
+                    <span class="profile-value">Bangalore</span>
+                </div>
+            </div>
+            
+            <button class="btn-book-hero" style="width:100%; justify-content:center;">Edit Profile</button>
+            <button class="btn-cancel" style="width:100%; margin-top:10px;" onclick="window.location.href='login.html'">Logout</button>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Nav (Updated with SOS Button) -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item-mobile active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <span class="nav-label">Home</span>
+        </a>
+        <a href="#" class="nav-item-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span class="nav-label">Search</span>
+        </a>
+        <!-- Emergency SOS Button (Replaced Bell) -->
+        <a href="#" class="nav-fab" onclick="alert('Calling Emergency Ambulance 108 ')">
+            SOS
+        </a>
+        <a href="#" class="nav-item-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+            <span class="nav-label">Records</span>
+        </a>
+         <a href="#" class="nav-item-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+            <span class="nav-label">History</span>
+        </a>
+    </nav>
+
+    <script>
+        // REAL LOCATION DETECTION & SEARCH LOGIC
+        
+        let userLat = null;
+        let userLng = null;
+        const locationDesktop = document.getElementById('desktopLocationText');
+        const locationMobile = document.getElementById('mobileLocationText');
+
+        // --- MOCK DATABASE (Simulation) ---
+        const HOSPITAL_DB = [
+            { name: "Apollo Hospital", lat: 12.9716, lng: 77.5946, address: "Central Bangalore, KA" },
+            { name: "Manipal Hospital", lat: 12.9716, lng: 77.6412, address: "Old Airport Road, Bangalore" },
+            { name: "AIIMS Delhi", lat: 28.5672, lng: 77.2100, address: "Ansari Nagar, New Delhi" },
+            { name: "Fortis Hospital", lat: 28.628, lng: 77.277, address: "Okhla Road, Delhi" },
+            { name: "Tata Memorial", lat: 19.015, lng: 72.843, address: "Parel, Mumbai" },
+            { name: "Apollo Bhubaneswar", lat: 20.296, lng: 85.818, address: "Gajapati Nagar, Bhubaneswar" },
+            { name: "Kalinga Institute of Medical Sciences", lat: 20.353, lng: 85.818, address: "Patia, Bhubaneswar" },
+            { name: "AMRI Hospitals", lat: 20.264, lng: 85.792, address: "Khandagiri, Bhubaneswar" }
+        ];
+
+        // Helper: Calculate Distance (Haversine Formula)
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);
+            var dLon = deg2rad(lon2-lon1);
+            var a =
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = R * c; // Distance in km
+            return d;
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI/180)
+        }
+
+        // 1. Auto-fetch location on load
+        function fetchCurrentLocation() {
+            if(locationDesktop) locationDesktop.innerText = "Locating...";
+            if(locationMobile) locationMobile.innerText = "Locating...";
+            
+            if (navigator.geolocation) {
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        userLat = position.coords.latitude;
+                        userLng = position.coords.longitude;
+                        
+                        // Reverse Geocode to get City Name
+                        try {
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${userLat}&lon=${userLng}&addressdetails=1`,
+                                { headers: { 'User-Agent': 'LifeCord/1.0' } }
+                            );
+                            const data = await response.json();
+                            const address = data.address;
+                            const city = address.city || address.town || address.village || address.suburb || address.county;
+                            const state = address.state;
+                            const locationName = city ? `${city}, ${state || ''}` : (address.country || 'Location Set');
+                            
+                            updateLocationUI(locationName);
+                        } catch (error) {
+                            console.error("Geocoding failed", error);
+                            updateLocationUI("Location Active");
+                        }
+                    },
+                    (error) => {
+                        console.warn("Geolocation failed or denied. Using demo location.", error.message);
+                        updateLocationUI("Bangalore (Demo)");
+                        // Fallback coordinates if blocked (Demo)
+                        userLat = 12.9716; 
+                        userLng = 77.5946;
+                    },
+                    options
+                );
+            } else {
+                updateLocationUI("Bangalore (Demo)");
+                // Fallback
+                userLat = 12.9716; 
+                userLng = 77.5946;
+            }
+        }
+
+        function updateLocationUI(text) {
+            if(locationDesktop) locationDesktop.innerText = text;
+            if(locationMobile) locationMobile.innerText = text;
+        }
+
+        // 2. Dynamic Nearby Search
+        function searchNearby(category) {
+            // If category is Hospitals, we try to use our simulated DB first
+            if (category === 'Hospitals' && userLat && userLng) {
+                
+                // Filter Database by Distance (<50km)
+                let matches = HOSPITAL_DB.filter(h => {
+                    const dist = getDistanceFromLatLonInKm(userLat, userLng, h.lat, h.lng);
+                    return dist < 50;
+                });
+
+                // DEMO LOGIC: If NO matches found (user is far away), generate fake local results to show the feature works
+                if (matches.length === 0) {
+                    matches = [
+                        { name: "City General Hospital (Demo)", address: "1.2 km away • Open 24 Hours", lat: userLat + 0.005, lng: userLng + 0.005 },
+                        { name: "LifeCare Medical Center (Demo)", address: "3.5 km away • Multi-specialty", lat: userLat - 0.008, lng: userLng - 0.008 },
+                        { name: "Sunrise Emergency Care (Demo)", address: "5.0 km away • Trauma Center", lat: userLat + 0.01, lng: userLng - 0.01 }
+                    ];
+                }
+
+                // Show results in custom modal
+                showResultsModal(category, matches);
+            } else {
+                // Fallback for other categories or if no location (Google Maps)
+                if (userLat && userLng) {
+                    const url = `https://www.google.com/maps/search/${encodeURIComponent(category)}/@${userLat},${userLng},14z`;
+                    window.open(url, '_blank');
+                } else {
+                    const url = `https://www.google.com/maps/search/${encodeURIComponent(category)}+near+me`;
+                    window.open(url, '_blank');
+                }
+            }
+        }
+
+        function showResultsModal(title, items) {
+            const modal = document.getElementById('searchResultsModal');
+            const list = document.getElementById('resultsList');
+            const titleEl = document.getElementById('resultsTitle');
+            
+            titleEl.innerText = `Nearby ${title}`;
+            list.innerHTML = '';
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                div.innerHTML = `
+                    <div class="result-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.address}</p>
+                    </div>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="btn-navigate">Directions ➤</a>
+                `;
+                list.appendChild(div);
+            });
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSearchResults() {
+            document.getElementById('searchResultsModal').style.display = 'none';
+        }
+
+        // Start location service immediately
+        window.addEventListener('load', fetchCurrentLocation);
+
+
+        // --- SPECIALIST DATA ---
+        const SPECIALISTS = [
+            { name: "Dr. Niharika Rao", role: "Neuro Surgeon", exp: "18 Yrs", patients: "1.5K+", avatar: "https://placehold.co/120x120/FAE8FF/8B5CF6?text=NR" },
+            { name: "Dr. Sanjay Kumar", role: "Orthopedic", exp: "22 Yrs", patients: "2.1K+", avatar: "https://placehold.co/120x120/E0F2FE/00bcd4?text=SK" },
+            { name: "Dr. Meena Verma", role: "Cardiologist", exp: "14 Yrs", patients: "950+", avatar: "https://placehold.co/120x120/DCFCE7/10B981?text=MV" },
+            { name: "Dr. Rahul Joshi", role: "Oncologist", exp: "25 Yrs", patients: "3K+", avatar: "https://placehold.co/120x120/FFEDD5/F97316?text=RJ" }
+        ];
+
+        function renderSpecialists() {
+            const container = document.getElementById('bestDoctors');
+            const dotsContainer = document.getElementById('specDots');
+            if(!container) return;
+            
+            container.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            SPECIALISTS.forEach((spec, index) => {
+                const card = document.createElement('div');
+                card.className = 'specialist-card';
+                card.id = `spec-card-${index}`;
+                card.innerHTML = `
+                    <img src="${spec.avatar}" class="spec-avatar" alt="${spec.name}">
+                    <div class="spec-name">${spec.name}</div>
+                    <div class="spec-role">${spec.role}</div>
+                    <div class="spec-stats">
+                        <div class="spec-stat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span class="spec-stat-value">${spec.exp}</span>
+                            <span class="spec-stat-label">Experience</span>
+                        </div>
+                        <div class="spec-stat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span class="spec-stat-value">${spec.patients}</span>
+                            <span class="spec-stat-label">Patients</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+
+                const dot = document.createElement('div');
+                dot.className = 'spec-dot';
+                if (index === 0) dot.classList.add('active');
+                // Removed scrollIntoView logic as it's now a grid
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Upcoming Appointment Logic
+        const apptContainer = document.getElementById('nextAppointmentContainer');
+        const apptName = document.getElementById('apptName');
+        const apptDetail = document.getElementById('apptDetail');
+        const apptImg = document.getElementById('apptImg');
+
+        const demoAppt = {
+            id: 12345,
+            doctorName: "Dr. Anjali Gupta",
+            specialty: "Cardiologist",
+            date: "Tomorrow, 10:30 AM",
+            avatar: "https://ui-avatars.com/api/?name=Anjali+Gupta&background=e2e8f0&color=333"
+        };
+        
+        let currentAppt = JSON.parse(localStorage.getItem('nextAppointment'));
+        if(!currentAppt) {
+            localStorage.setItem('nextAppointment', JSON.stringify(demoAppt));
+            currentAppt = demoAppt;
+        }
+
+        function renderApptCard() {
+            if (currentAppt && apptContainer) {
+                apptContainer.style.display = 'block';
+                apptName.innerText = currentAppt.doctorName;
+                apptDetail.innerText = `${currentAppt.specialty} • ${currentAppt.date}`;
+                apptImg.src = currentAppt.avatar;
+            } else if (apptContainer) {
+                apptContainer.style.display = 'none';
+            }
+        }
+        renderApptCard();
+
+        // Appointment Actions
+        function openApptDetails() {
+            const content = document.getElementById('apptDetailContent');
+            content.innerHTML = `
+                <div style="text-align:center;">
+                    <img src="${currentAppt.avatar}" class="detail-img" alt="${currentAppt.doctorName}">
+                    <h3 style="font-size:1.5rem; margin-bottom:5px;">${currentAppt.doctorName}</h3>
+                    <span style="background:#E0F2FE; color:#00bcd4; padding:4px 12px; border-radius:10px; font-size:0.9rem; font-weight:600;">${currentAppt.specialty}</span>
+                </div>
+                <div style="margin-top:20px;">
+                    <div class="detail-row">
+                        <span class="detail-label">Date & Time</span>
+                        <span class="detail-val">${currentAppt.date}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Appt Number</span>
+                        <span class="detail-val">#${currentAppt.id || Math.floor(Math.random()*10000)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-val" style="color:#10B981">Confirmed</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('apptDetailModal').style.display = 'flex';
+        }
+
+        function closeApptModal() {
+            document.getElementById('apptDetailModal').style.display = 'none';
+        }
+
+        function cancelAppt() {
+            if(confirm("Are you sure you want to cancel this appointment?")) {
+                localStorage.removeItem('nextAppointment');
+                currentAppt = null;
+                renderApptCard();
+                closeApptModal();
+            }
+        }
+
+        function rescheduleAppt() {
+            closeApptModal();
+            document.getElementById('modalDoctorName').innerText = "Reschedule: " + currentAppt.doctorName;
+            document.getElementById('calendarModalOverlay').style.display = 'flex';
+            renderCalendarDays();
+            renderTimeSlots();
+            window.isRescheduling = true;
+        }
+
+        // --- Calendar Logic ---
+        let selectedDate = null;
+        let selectedTime = null;
+
+        function closeCalendarModal() {
+            document.getElementById('calendarModalOverlay').style.display = 'none';
+            window.isRescheduling = false;
+        }
+
+        function renderCalendarDays() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+            // Render Day Headers
+            ['S','M','T','W','T','F','S'].forEach(d => {
+                grid.innerHTML += `<div style="color:#aaa; font-size:0.8rem; text-align:center;">${d}</div>`;
+            });
+            // Render Days
+            for(let i=1; i<=30; i++) {
+                const d = document.createElement('div');
+                d.className = 'day-cell';
+                d.innerText = i;
+                d.onclick = () => {
+                    document.querySelectorAll('.day-cell').forEach(c=>c.classList.remove('selected'));
+                    d.classList.add('selected');
+                    selectedDate = `Day ${i}`;
+                }
+                grid.appendChild(d);
+            }
+        }
+
+        function renderTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+            ['10:00 AM', '11:30 AM', '02:00 PM', '04:30 PM'].forEach(t => {
+                const s = document.createElement('div');
+                s.className = 'time-slot';
+                s.innerText = t;
+                s.onclick = () => {
+                     document.querySelectorAll('.time-slot').forEach(c=>c.classList.remove('selected'));
+                     s.classList.add('selected');
+                     selectedTime = t;
+                }
+                container.appendChild(s);
+            });
+        }
+
+        function confirmBooking() {
+            if (!selectedDate || !selectedTime) {
+                alert("Please select date and time");
+                return;
+            }
+            
+            if (window.isRescheduling) {
+                currentAppt.date = `${selectedDate}, ${selectedTime}`;
+                localStorage.setItem('nextAppointment', JSON.stringify(currentAppt));
+                renderApptCard();
+                alert("Appointment Rescheduled Successfully!");
+            } else {
+                alert("Booking Confirmed! Redirecting to payment...");
+            }
+            closeCalendarModal();
+        }
+
+        // Chat Window Logic
+        function toggleChatWindow() {
+            const chat = document.getElementById('chatWindow');
+            const fab = document.querySelector('.chatbot-container');
+            
+            if (chat.style.display === 'flex') {
+                chat.style.display = 'none';
+                fab.style.display = 'flex';
+            } else {
+                chat.style.display = 'flex';
+                fab.style.display = 'none';
+            }
+        }
+
+        function handleChatInput(e) {
+            if(e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const body = document.getElementById('chatBody');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            // User Msg
+            body.innerHTML += `<div class="chat-msg msg-user">${msg}</div>`;
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+
+            // Bot Reply
+            setTimeout(() => {
+                const reply = "I can help you find doctors, book labs, or check your records. What do you need?";
+                body.innerHTML += `<div class="chat-msg msg-bot">${reply}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 1000);
+        }
+
+        // Profile Modal Logic
+        function openProfileModal() {
+            document.getElementById('profileModalOverlay').style.display = 'flex';
+        }
+        function closeProfileModal() {
+            document.getElementById('profileModalOverlay').style.display = 'none';
+        }
+
+        // --- NEW LOGIC: Dropdown Toggles ---
+        function toggleProfileMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('profileDropdown');
+            const notifMenu = document.getElementById('notifDropdown');
+            if (notifMenu) notifMenu.classList.remove('show'); // Close other
+            menu.classList.toggle('show');
+        }
+
+        function toggleNotifMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('notifDropdown');
+            const profileMenu = document.getElementById('profileDropdown');
+            if (profileMenu) profileMenu.classList.remove('show'); // Close other
+            menu.classList.toggle('show');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileMenu = document.getElementById('profileDropdown');
+            const notifMenu = document.getElementById('notifDropdown');
+            
+            // Check if click was inside menu or on trigger button
+            if (profileMenu && profileMenu.classList.contains('show') && !event.target.closest('.profile-btn-desktop') && !event.target.closest('.icon-btn-mobile')) {
+                profileMenu.classList.remove('show');
+            }
+            if (notifMenu && notifMenu.classList.contains('show') && !event.target.closest('.notif-btn') && !event.target.closest('.icon-btn-mobile')) {
+                notifMenu.classList.remove('show');
+            }
+        });
+
+        // --- NEW LOGIC: Data Access Control ---
+        let currentAccessUser = null;
+
+        function openAccessModal(name, status) {
+            currentAccessUser = name;
+            document.getElementById('modalAccessName').innerText = name;
+            document.getElementById('modalAccessAvatar').innerText = name.substring(0,2).toUpperCase();
+            
+            const statusEl = document.getElementById('modalAccessStatus');
+            const revokeBtn = document.getElementById('revokeBtn');
+
+            if (status === 'active') {
+                statusEl.innerText = "Current Status: Access Granted (Active)";
+                statusEl.style.color = "green";
+                revokeBtn.innerText = "Revoke Access / Logout";
+                revokeBtn.style.background = "var(--color-emergency)";
+                revokeBtn.onclick = function() { revokeAccess(name); };
+            } else {
+                statusEl.innerText = "Current Status: Access Revoked";
+                statusEl.style.color = "red";
+                revokeBtn.innerText = "Grant Access";
+                revokeBtn.style.background = "var(--primary-color)";
+                revokeBtn.onclick = function() { grantAccess(name); };
+            }
+            
+            document.getElementById('accessControlModal').style.display = 'flex';
+        }
+
+        function closeAccessModal() {
+            document.getElementById('accessControlModal').style.display = 'none';
+        }
+
+        function revokeAccess(name) {
+            alert(`Access revoked for ${name}. You have successfully logged them out.`);
+            closeAccessModal();
+            // In a real app, update UI state here
+        }
+
+        function grantAccess(name) {
+            alert(`Access granted for ${name}.`);
+            closeAccessModal();
+        }
+
+        function openManagePermissions() {
+            document.getElementById('permissionsModal').style.display = 'flex';
+        }
+        function closePermissionsModal() {
+            document.getElementById('permissionsModal').style.display = 'none';
+        }
+
+        renderSpecialists();
+    </script>
+</body>
+</html>

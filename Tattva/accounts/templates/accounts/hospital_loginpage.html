@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LifeCord Hospital - Institutional Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- THEME CONFIGURATION --- */
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E64A19;
+            --gradient-primary: linear-gradient(135deg, #FF8C42 0%, #FF5E3A 100%);
+            --bg-body: #F8FAFC;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border: #E2E8F0;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+            --success: #10B981;
+            --error: #EF4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        /* Mobile-First Base Layout */
+        body { 
+            min-height: 100vh; 
+            width: 100%; 
+            display: flex; 
+            background-color: var(--bg-body);
+            overflow-x: hidden;
+        }
+
+        /* --- SPLIT LAYOUT --- */
+        .split-container { display: flex; width: 100%; min-height: 100vh; }
+        
+        /* LEFT SIDE: BRANDING (Hidden on Mobile) */
+        .brand-section {
+            flex: 1;
+            background: var(--gradient-primary);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+        
+        /* Abstract background shapes */
+        .brand-section::before {
+            content: ''; position: absolute; top: -10%; right: -10%; width: 400px; height: 400px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+        }
+        .brand-section::after {
+            content: ''; position: absolute; bottom: -5%; left: -5%; width: 300px; height: 300px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+        }
+
+        .brand-content { position: relative; z-index: 10; max-width: 500px; animation: slideRight 0.8s ease-out; }
+        .brand-logo { font-size: 3rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .brand-desc { font-size: 1.2rem; line-height: 1.6; opacity: 0.9; font-weight: 300; }
+        .feature-list { margin-top: 40px; list-style: none; }
+        .feature-list li { margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 15px; }
+        .feature-list i { background: rgba(255,255,255,0.2); width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+
+        /* RIGHT SIDE: LOGIN FORM */
+        .login-section {
+            flex: 1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+            /* Ensure card is above decorative elements on mobile */
+            position: relative;
+            z-index: 2; 
+        }
+
+        .login-header { margin-bottom: 40px; }
+        .login-header h2 { font-size: 2rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+        .login-header p { color: var(--text-muted); }
+
+        /* Form Groups */
+        .form-group { margin-bottom: 25px; position: relative; }
+        .form-label {
+            position: absolute; left: 15px; top: 15px;
+            color: var(--text-muted); font-size: 0.9rem;
+            transition: 0.2s; pointer-events: none;
+            background: white; padding: 0 5px;
+        }
+        
+        .form-input {
+            width: 100%; padding: 15px; border: 2px solid var(--border);
+            border-radius: 12px; font-size: 1rem; background: transparent;
+            transition: 0.2s;
+        }
+        
+        /* Input Focus State */
+        .form-input:focus { border-color: var(--primary); }
+        .form-input:focus + .form-label,
+        .form-input:not(:placeholder-shown) + .form-label {
+            top: -10px; font-size: 0.8rem; color: var(--primary); font-weight: 600;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute; right: 15px; top: 15px;
+            color: var(--text-muted); cursor: pointer;
+        }
+
+        /* Button */
+        .btn-login {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            background: var(--gradient-primary); color: white;
+            font-size: 1rem; font-weight: 700; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            margin-top: 20px;
+        }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 107, 53, 0.4); }
+        .btn-login:active { transform: scale(0.98); }
+
+        .footer-links { margin-top: 30px; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+        .footer-links a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+        /* Security Badge */
+        .security-badge {
+            margin-top: 40px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--text-muted); font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* --- MODALS (General & Support) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-box {
+            background: white; width: 90%; max-width: 450px;
+            padding: 30px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            text-align: center; 
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        /* Modal Styles */
+        .modal-icon { font-size: 3rem; margin-bottom: 10px; }
+        .modal-icon.success { color: var(--success); }
+        .modal-icon.error { color: var(--error); }
+
+        /* --- RESPONSIVE MOBILE THEME --- */
+        @media (max-width: 900px) {
+            .brand-section { display: none; } /* Hide large branding */
+            
+            .login-section { 
+                width: 100%; 
+                background: #FDFDFD; 
+                padding: 0; /* Reset padding to allow full width header */
+                align-items: flex-start; /* Align content to top */
+            }
+            
+            /* Decorative Header Background for Mobile */
+            .login-section::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 280px;
+                background: var(--gradient-primary);
+                border-bottom-left-radius: 40px;
+                border-bottom-right-radius: 40px;
+                z-index: 0;
+            }
+            
+            /* Add a mobile logo above the card */
+            .login-section::after {
+                content: 'LifeCord Hospital';
+                position: absolute;
+                top: 60px; left: 0; width: 100%;
+                text-align: center;
+                color: white;
+                font-size: 1.8rem;
+                font-weight: 800;
+                z-index: 1;
+                letter-spacing: -0.5px;
+            }
+
+            .login-card { 
+                background: white; 
+                border-radius: 24px; 
+                padding: 40px 30px; 
+                box-shadow: 0 20px 60px rgba(0,0,0,0.15); 
+                margin: 140px auto 40px auto; /* Push down to overlap header */
+                width: 90%;
+            }
+            
+            .login-header { text-align: center; margin-bottom: 30px; }
+            .login-header h2 { font-size: 1.6rem; }
+            
+            .security-badge { position: relative; bottom: 0; margin-bottom: 30px; width: 100%; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="split-container">
+        
+        <!-- LEFT: Branding -->
+        <div class="brand-section">
+            <div class="brand-content">
+                <div class="brand-logo"><i class="fas fa-hospital-alt"></i> LifeCord Hospital</div>
+                <p class="brand-desc">The Next-Gen Clinical Operating System.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-magic"></i> AI Ambient Scribe</li>
+                    <li><i class="fas fa-chart-line"></i> Real-time Vitals Monitoring</li>
+                    <li><i class="fas fa-shield-alt"></i> HIPAA Compliant Security</li>
+                    <li><i class="fas fa-file-medical-alt"></i> Seamless Digital Prescriptions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RIGHT: Login Form -->
+        <div class="login-section">
+            <div class="login-card">
+                <div class="login-header">
+                    <h2>Facility Access</h2>
+                    <p>Enter your National Health Facility ID (NIN).</p>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    
+                    <!-- NIN Input -->
+                    <div class="form-group">
+                        <input type="text" id="ninId" class="form-input" placeholder=" " required maxlength="10">
+                        <label class="form-label">NIN (10-digit)</label>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <input type="password" id="docPass" class="form-input" placeholder=" " required>
+                        <label class="form-label">Password</label>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                    </div>
+
+                    <!-- Button -->
+                    <button type="submit" class="btn-login">Access Dashboard <i class="fas fa-arrow-right" style="margin-left:8px;"></i></button>
+
+                </form>
+
+                <div class="footer-links">
+                    <p><a href="#" onclick="openModal('supportModal')">Need Technical Help?</a></p>
+                </div>
+            </div>
+
+            <div class="security-badge">
+                <i class="fas fa-lock"></i> End-to-End Encrypted
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 1. SUPPORT MODAL -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon" style="color:var(--text-main);"><i class="fas fa-headset"></i></div>
+            <h3 style="font-size:1.5rem; margin-bottom:10px;">Support Team</h3>
+            <p style="color:var(--text-muted); margin-bottom:20px;">For login issues, please contact your administrator or call <strong>+91-1800-LIFE-CORD</strong>.</p>
+            <button class="btn-login" onclick="closeModal('supportModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- 2. GENERAL MESSAGE MODAL (Replaces alerts) -->
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal-box">
+            <div id="messageIcon" class="modal-icon"></div>
+            <h3 id="messageTitle" style="font-size:1.5rem; margin-bottom:10px;"></h3>
+            <p id="messageBody" style="color:var(--text-muted); margin-bottom:20px;"></p>
+            <button class="btn-login" onclick="closeModal('messageModal')">OK</button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- MODAL UTILITIES ---
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function showMessage(title, body, type = 'error') {
+            const modal = document.getElementById('messageModal');
+            const icon = document.getElementById('messageIcon');
+            const titleEl = document.getElementById('messageTitle');
+            const bodyEl = document.getElementById('messageBody');
+
+            icon.className = 'modal-icon'; // Reset icon classes
+            icon.classList.add(type);
+            
+            if (type === 'success') {
+                icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else if (type === 'error') {
+                icon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            } else {
+                icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            }
+
+            titleEl.textContent = title;
+            bodyEl.textContent = body;
+            openModal('messageModal');
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(event.target.id);
+            }
+        }
+        
+        // --- PASSWORD TOGGLE (No change) ---
+        function togglePassword() {
+            const passInput = document.getElementById('docPass');
+            const icon = document.querySelector('.password-toggle');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // --- LOGIN LOGIC (FIXED) ---
+        async function handleLogin(e) {
+            e.preventDefault();
+            const nin = document.getElementById('ninId').value.trim();
+            const pass = document.getElementById('docPass').value;
+            const btn = document.querySelector('.btn-login');
+            const originalText = btn.innerHTML;
+
+            if (nin.length !== 10) {
+                showMessage("Input Error", "Please enter a valid 10-digit NIN (Facility ID).", 'error');
+                return;
+            }
+
+            // Show loading state
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+            btn.style.opacity = '0.8';
+            btn.disabled = true;
+
+            try {
+                // FIX: Use the correct Django API path defined in accounts/urls.py
+                const response = await fetch('/api/login/', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        // Send the NIN field as 'nin', which the backend uses as 'owner_username'
+                        nin: nin, 
+                        password: pass
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Authentication successful!
+                    showMessage("Access Granted", data.message || `Welcome to ${data.facilityName} Dashboard!`, 'success');
+                    
+                    // Redirect after a slight delay to allow the user to see the success message
+                    setTimeout(() => {
+                         // FIX: Redirect using the redirectUrl provided by the server
+                         window.location.href = data.redirectUrl; 
+                    }, 800);
+                    
+                } else {
+                    // Authentication failed (401 Unauthorized, 400 Bad Request, etc.)
+                    showMessage("Login Failed", data.message || 'Invalid Facility ID or Password.', 'error');
+                }
+
+            } catch (error) {
+                console.error('API Connection Error:', error);
+                // FIX: Use custom modal instead of alert()
+                showMessage('Connection Error', 'A network connection error occurred. Please try again or check the server status.', 'error');
+            } finally {
+                // Reset button state
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+</html>

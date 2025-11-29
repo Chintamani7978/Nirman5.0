@@ -1,0 +1,7 @@
+{
+  "name": "Agri-Sentry",
+  "description": "A modern agricultural AI dashboard for crop monitoring, supply verification, and disease diagnosis.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

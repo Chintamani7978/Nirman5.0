@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="style5.css">
+</head>
+
+<body>
+    <img src="logo.jpg" alt="logo" class="small-logo">
+    <script src="script.js"></script>
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="profile-box">
+            <h2>Doctor's Profile</h2>
+            </br>
+            <div class="photo-box">
+                <div class="circle" onclick="document.getElementById('fileInput').click();">
+                    <img id="profileImage" src="" alt="" style="display:none;">
+                    <img id="previewPhoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
+                    <label for="upLoadPhoto" class="plus-btn"></label>
+                    <input type="file" id="fileInput" accept="image/*" hidden onchange="previewPhoto(event)">
+                </div>
+            </div>
+            <form action="/action.php">
+                </br>
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Name">
+                </br>
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email Address">
+                </br>
+                <label for="Qualification">Qualification</label>
+                <input type="text" id="text1" placeholder="Qualification">
+                </br>
+                <label for="Licence ID">Licence ID</label>
+                <input type="text" id="text2" placeholder="Licence ID">
+                </br>
+                <label for="Contact number">Contact Number</label>
+
+                </br>
+                <input type="number" id="number" placeholder="Contact Number">
+
+                <button onclick="window.location.href='save.html'" class="save-btn">Save</button>
+                <button onclick="window.location.href='logout.html'" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

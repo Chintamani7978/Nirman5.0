@@ -1,0 +1,26 @@
+cat_disease_cls_runs/
+cat_disease_yolo_dataset/
+cat_emotion_base_dataset/
+cat_emotion_cls_runs/
+data/
+dataset/
+Dog Disease Detection.v2i.yolov8/
+Dog Emotion/
+Dog Skin Disease Dataset.v2i.folder/
+dog_disease_cls_runs/
+dog_disease_yolo_dataset/
+master_disease_dataset/
+Nirman5.0/
+primary/
+runs/
+Skin Lesion Dataset/
+SkinDisNet/
+yolo_gpu_test_data/
+baby_disease_base_dataset/
+baby_disease_cls_runs/
+baby_disease_final/
+baby_disease_yolo_dataset_model1/
+baby_disease_yolo_ear_dataset/
+baby_emotion_cls_runs/
+baby_emotion_dataset/
+BabyEar4k/

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LifeCord | Secure Health Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3A7BFF;
+            --primary-dark: #2563EB;
+            --accent: #F97316; /* ABHA Orange */
+            --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #F8FAFC;
+            --text-dark: #1E293B;
+            --radius-xl: 32px;
+            --radius-md: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        /* --- Background Decoration --- */
+        .bg-mesh {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .mesh-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 10s infinite alternate;
+        }
+        .orb-1 { top: -100px; left: -100px; width: 600px; height: 600px; background: #3A7BFF; }
+        .orb-2 { bottom: -100px; right: -100px; width: 500px; height: 500px; background: #6366F1; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 40px); }
+        }
+
+        /* --- Main Container --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 1200px;
+            max-width: 95%;
+            height: 85vh; /* Fixed height frame on desktop */
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        /* --- Left Side: Branding & Info --- */
+        .brand-panel {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo-box {
+            width: 44px;
+            height: 44px;
+            background: white;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .value-prop h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+        .value-prop p {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 400px;
+            margin-bottom: 40px;
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 20px;
+            opacity: 0.9;
+        }
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .badge-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+        .badge-img { height: 40px; background: white; border-radius: 6px; padding: 4px 8px; display: flex; align-items: center; justify-content: center; color: #1E293B; font-weight: 700; font-size: 14px; }
+
+        /* --- Right Side: Login Card --- */
+        .login-panel {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: white; /* Contrast: Solid white like PhonePe */
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            color: var(--text-dark);
+        }
+
+        .card-header { margin-bottom: 32px; }
+        .card-header h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .card-header p { font-size: 14px; color: #64748B; }
+
+        .form-group { margin-bottom: 24px; position: relative; }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .prefix {
+            position: absolute;
+            left: 16px;
+            font-weight: 600;
+            color: #64748B;
+            pointer-events: none;
+        }
+
+        .main-input {
+            width: 100%;
+            padding: 16px 16px 16px 50px; /* Space for prefix */
+            font-size: 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: var(--radius-md);
+            background: #F8FAFC;
+            transition: all 0.2s;
+            font-family: inherit;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .main-input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(58, 123, 255, 0.1);
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-main:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-main:active { transform: translateY(0); }
+
+        .btn-abha {
+            width: 100%;
+            padding: 14px;
+            background: #FFF7ED; /* Orange tint */
+            color: #C2410C;
+            border: 1px solid #FFEDD5;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            margin-top: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .btn-abha:hover { background: #FFEDD5; }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            width: 100%; height: 1px;
+            background: #E2E8F0;
+        }
+        .divider span {
+            position: relative;
+            background: white;
+            padding: 0 10px;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .links-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            font-size: 13px;
+        }
+        .links-row a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .links-row a:hover { text-decoration: underline; }
+
+        /* --- Footer Info --- */
+        .login-footer {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 11px;
+            color: #94A3B8;
+        }
+        .login-footer img { height: 12px; vertical-align: middle; margin-left: 4px; opacity: 0.6; }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 900px) {
+            body { background: white; align-items: flex-start; }
+            .bg-mesh { display: none; }
+            
+            .container {
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+                border: none;
+                border-radius: 0;
+                background: white;
+                box-shadow: none;
+            }
+
+            .brand-panel {
+                flex: none;
+                padding: 40px 24px;
+                background: var(--primary);
+                color: white;
+                border-radius: 0 0 30px 30px;
+            }
+
+            .logo-box { color: var(--primary); background: white; }
+            .value-prop h1 { font-size: 28px; }
+            .value-prop p { font-size: 14px; opacity: 0.9; margin-bottom: 20px; }
+            .trust-badges { display: none; } /* Hide on mobile to save space */
+
+            .login-panel { padding: 40px 24px; align-items: flex-start; }
+            .auth-card { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background (Desktop) -->
+    <div class="bg-mesh">
+        <div class="mesh-orb orb-1"></div>
+        <div class="mesh-orb orb-2"></div>
+    </div>
+
+    <!-- Main Gateway Container -->
+    <main class="container">
+        
+        <!-- Left: Brand Vision -->
+        <section class="brand-panel">
+            <div class="logo">
+                <div class="logo-box">+</div>
+                LifeCord
+            </div>
+
+            <div class="value-prop">
+                <h1>India's Own<br>Health Super App</h1>
+                <p>Link your ABHA ID, manage doctor appointments, and pay medical bills. Simple, Secure, and Government approved.</p>
+                
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <span class="badge-label">Powered By</span>
+                        <div class="badge-img">ABDM</div>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="badge-label">Security</span>
+                        <div class="badge-img">ISO 27001</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="font-size: 12px; opacity: 0.6;">© 2025 LifeCord Ecosystem</div>
+        </section>
+
+        <!-- Right: Login Interface -->
+        <section class="login-panel">
+            <div class="auth-card">
+                <div class="card-header">
+                    <h2>Get Started</h2>
+                    <p>Enter your details to access your health locker.</p>
+                </div>
+
+                <form id="gatewayForm">
+                    <div class="form-group">
+                        <label for="userIdentifier" style="display:block; margin-bottom:8px; font-size:13px; font-weight:600; color:#475569;">Mobile Number / ABHA ID</label>
+                        <div class="input-wrapper">
+                            <span class="prefix">+91</span>
+                            <input type="text" id="userIdentifier" class="main-input" placeholder="Enter number" autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-main" onclick="proceedToLogin()">
+                        Proceed Securely
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </form>
+
+                <div class="divider"><span>OR</span></div>
+
+                <button class="btn-abha" onclick="createABHA()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Create New ABHA ID
+                </button>
+
+                <div class="links-row">
+                    <a href="#">Forgot ID?</a>
+                    <a href="#">Help & Support</a>
+                </div>
+
+                <div class="login-footer">
+                    Your data is encrypted & stored securely.<br>
+                    LifeCord adheres to National Health Authority norms.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+   <script>
+    // Simple input formatting script
+    const input = document.getElementById('userIdentifier');
+    const prefix = document.querySelector('.prefix');
+
+    input.addEventListener('input', (e) => {
+        const val = e.target.value;
+        
+        // Logic: If user types letters (ABHA address), hide +91 prefix. 
+        // If digits (Phone), show +91.
+        if (/[a-zA-Z]/.test(val)) {
+            prefix.style.display = 'none';
+            input.style.paddingLeft = '16px';
+        } else {
+            prefix.style.display = 'block';
+            input.style.paddingLeft = '50px';
+        }
+    });
+
+    function proceedToLogin() {
+        const phone = input.value.trim();
+        const btn = document.querySelector('.btn-main');
+        const originalText = btn.innerHTML;
+        const phoneRegex = /^\d{10}$/; // Only checking for 10 digits
+
+        // --- 1. Basic Validation ---
+        if (!phone || !phoneRegex.test(phone)) {
+            alert('Please enter a valid 10-digit phone number.');
+            input.focus();
+            input.style.borderColor = "#EF4444";
+            return;
+        }
+
+        // --- 2. Disable Button and Show Loading ---
+        btn.innerHTML = 'Checking record...';
+        btn.disabled = true;
+        input.style.borderColor = "#E2E8F0"; // Reset border color
+
+        // --- 3. First Fetch: Check if Patient Exists ---
+        fetch("/check_patient_exists/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // You must include the CSRF token for any non-GET requests in Django
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: JSON.stringify({ phone: phone })
+        })
+        .then(res => {
+            if (!res.ok) {
+                // Handle HTTP errors (e.g., 500 server error)
+                throw new Error('Server check failed with status: ' + res.status);
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (data.exists) {
+                // --- 4. Patient Exists: Proceed to Send OTP ---
+                sendOtp(phone, btn, originalText);
+            } else {
+                // --- 5. Patient Does Not Exist: Prompt and Revert ---
+                alert("This phone number is not registered as a patient. Please create a new ABHA ID or contact support.");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                input.style.borderColor = "#EF4444";
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error during patient check:', error);
+            alert("Network or server error during patient check. Check console and try again.");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }
+
+    function sendOtp(phone, btn, originalText) {
+        btn.innerHTML = 'Sending OTP...';
+        
+        // --- Second Fetch: Send OTP ---
+        fetch("/send_otp/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // Include CSRF token
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: JSON.stringify({ phone: phone })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log('Response data:', data);
+            
+            if (data.status === "success") {
+                // Success: Save phone and redirect
+                sessionStorage.setItem("phone", phone);
+                window.location.href = "/verify_otp_page/";
+            } else {
+                // Failure during OTP send
+                alert("Failed to send OTP: " + (data.message || "Unknown error"));
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error during OTP send:', error);
+            alert("Network error during OTP send. Check console and try again.");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }
+
+    // Function to retrieve CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function createABHA() {
+        alert("Redirecting to Govt ABHA Creation Portal...");
+    }
+</script>
+
+
+</body>
+</html>

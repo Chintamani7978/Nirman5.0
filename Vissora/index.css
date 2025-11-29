@@ -1,0 +1,242 @@
+@font-face{
+	font-family: sand;
+	src: url(quicksand.ttf);
+}
+*{
+	margin: 0;
+	outline: none;
+	font-family: google sans text;
+	letter-spacing: 1px;
+	color:white;
+	letter-spacing: 1px;
+	scrollbar-width: none;
+}
+body{
+	background: #12183a;
+	overflow: hidden;
+}
+.flex{
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+small{
+	color:#cccccc;
+	font-family: calibri;
+	font-weight: lighter;
+}
+.pfl{
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background: url(me.webp);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.banner{
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	background: white;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	flex-flow: nowrap;
+	align-items: center;
+	justify-content: space-around;
+	height: 10vh;
+	z-index: 3;
+}
+.banner .icon{
+	width: 50px;
+	height: 50px;
+	background-image: url(images/house.png);
+	background-size: 70% 70%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border-radius: 100%;
+	transition: .5s ease;
+}
+.h-card, .d-card{
+	width: 100%;
+	padding: 40px 20px;
+	box-sizing: border-box;
+	background: white;
+	bottom:-50vh;
+	height: 50vh;
+	overflow-y: hidden;
+	position: fixed;
+	border-radius: 30px 30px 0 0;
+	text-align: center;
+	transition: .75s ease;
+}
+.h-card strong, .d-card strong{
+	color: black;
+}
+#card{
+	width: 100%;
+	padding: 15px;
+	box-sizing: border-box;
+	background: #e6e6e6;
+	border-radius: 20px;
+	margin-top: 20px;
+	transition: 1s;
+}
+#card:hover{
+	background: #cccccc;
+}
+#card:not(:hover){
+	background: #e6e6e6;
+}
+#card small{
+	color:#333333;
+	font-size: 12px;
+}
+#card strong{
+	font-size: 14px;
+}
+#card div{
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background: url(images/play.png);
+	background-size: 50% 50%;
+	background-color: white;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.add-n{
+	width: 65px;
+	height: 65px;
+	background: #12183a;
+	border-radius: 100%;
+	position: fixed;
+	bottom:calc(60vh - 30px);
+	right:10vw;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: .75s ease;
+}
+.add-n .pfl{
+	width: 45px;
+	height: 45px;
+	background-color: white;
+	background-image: url(images/plus.png);
+	background-size: 60% 60%;
+}
+#circle{
+	position: relative;
+	bottom: 15vw;
+	right: 5vw;
+}
+.l{
+	width: 35vw;
+	height: 35vw;
+	background: salmon;
+	border-radius: 100%;
+}
+.s{
+	width: 20vw;
+	height: 20vw;
+	background: #e6e600;
+	border-radius: 100%;
+	top:5vh;
+	left:90vw;
+}
+.inpbox{
+	width:100%;
+	border-radius: 15px;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+.inpbox input{
+	text-align: center;
+	width:100%;
+	padding: 10px;
+	color:#333333;
+	box-sizing: border-box;
+	border:3px solid #202020;
+	background: transparent;
+	font-family: manrope;
+	letter-spacing: 1px;
+	font-weight: bolder;
+}
+.d-card .icon{
+	width: 30vw;
+	height: 30vw;
+	background-color: white;
+	background-image: url("me.webp");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 100%;
+	margin: 0 calc(30vw - 10px) 20px;
+	border:5px solid white;
+}
+.range{
+	width: 80%;
+	border-radius: 20px;
+	height: 30px;
+	background: #cccccc;
+	margin: 20px 10%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+}
+.range *{
+	width:30px;
+	height: 30px;
+	background: #999999;
+	border-radius: 20px;
+}
+.dot{
+	position: absolute;
+	background: navy;
+	left:calc(50% - 15px);
+	transition: .5s ease;
+}
+.desc{
+	width: 80%;
+	margin: 10px 10%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.desc p{
+	font-family: manrope;
+	letter-spacing: 1px;
+	transition: .5s ease;
+	font-size: 14px;
+	color:#202020;
+	font-weight: bolder;
+	opacity: .5;
+}
+.icn{
+	width: 40px;
+	height: 40px;
+	background-position: center;
+	background-size: 80% 80%;
+	background-repeat: no-repeat;
+	background-image: url(images/save.png);
+}
+.work{
+	overflow-y: scroll;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	z-index: 10;
+	background: #121212;
+	padding: 20px;
+	opacity: 0;
+	box-sizing: border-box;
+	left:100vw;
+	transition: .5s;
+}

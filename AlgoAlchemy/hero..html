@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hawked AI - Instant Fraud & Scam Detection</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (For Icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <video autoplay muted loop
+      style="position:fixed; top:0; left:0; min-width:100%; min-height:100%; object-fit:cover; z-index:-1;">
+      <source src="galaxy.mp4" type="video/mp4">
+    </video>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #075cb1;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #003366, #0066cc,black);
+      color: #ffffff;
+      padding: 100px 0;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero .btn-primary {
+      background-color: #0066cc;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      transition: background-color 0.3s ease;
+    }
+
+    .hero .btn-primary:hover {
+      background-color: #004d99;
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+      background-color:linear-gradient(135deg, #003366, #0066cc,black);
+      padding: 60px 0;
+      animation: fadeUp 1.3s ease-in-out;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      background-color:white;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .how-it-works:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .how-it-works .container {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #44a0fc;
+      margin-bottom: 40px;
+    }
+
+    .how-it-works .step {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .how-it-works .step-icon {
+      font-size: 3rem;
+      color: #4aa4fd;
+      margin-bottom: 20px;
+    }
+
+    /* Features Section */
+    .features {
+      background-color:linear-gradient(135deg, #003366, #0066cc,black);
+      padding: 60px 0;
+      color:white;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 40px;
+    }
+
+    .features .feature {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .features .feature-icon {
+      font-size: 3rem;
+      color: #4ca3fb;
+      margin-bottom: 20px;
+    }
+    .features .container{
+        color:white;
+    }
+
+    /* Statistics Section */
+    .statistics {
+      color:white;
+      padding: 60px 0;
+      background-color: linear-gradient(135deg, #003366, #0066cc,black);
+    }
+
+    .statistics h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 40px;
+      padding-bottom: 50px;
+    }
+
+    .statistics .stat-item {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* Call to Action */
+    .cta {
+      background: linear-gradient(135deg, #003366, #0066cc,black);
+      background-color:linear-gradient(135deg, #003366, #0066cc,black);
+      color: white;
+      text-align: center;
+      padding: 60px 0;
+      margin-top: 40px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+
+    .cta .btn-primary {
+      background-color: #ffffff;
+      color: #0066cc;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      margin-top: 20px;
+    }
+
+    .cta .btn-primary:hover {
+      background-color: #f4f7fa;
+      color: #003366;
+    }
+
+    /* Footer Section */
+    .footer {
+      background-color: linear-gradient(135deg, #003366, #0066cc,black);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+   <header style="display:flex; justify-content:space-between; align-items:center; background:#000; color:#fff; padding:1rem 2rem;">
+    <div style="display:flex; align-items:center;">
+      <img src="logo.png" alt="Gym Logo" style="height:60px; width:auto;"/>
+    </div>
+    <div style="display:flex; align-items:center;">
+      <nav style="display:flex;">
+        <a style="
+        display: flex;
+        margin-top: 25px;
+        padding: 14px 28px 20px;
+        color: #f4efef;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 20px;
+        transition: background 0.3s ease;
+      " onmouseover="this.style.backgroundColor='#01323fff'" onmouseout="this.style.backgroundColor='#085160ff'"href="about.html" style="margin:0 1rem; color:#D4AF37; text-decoration:none;">About Us</a>
+        <a style="
+        display: inline-block;
+        margin-top: 25px;
+        padding: 14px 28px;
+        color: #f4efef;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 20px;
+        transition: background 0.3s ease;
+      " onmouseover="this.style.backgroundColor='#01323fff'" onmouseout="this.style.backgroundColor='#085160ff'"href="service.html" style="margin:0 1rem; color:#D4AF37; text-decoration:none;">Services</a>
+        <a style="
+        display: inline-block;
+        margin-top: 25px;
+        padding: 14px 28px;
+        color: #f4efef;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 20px;
+        transition: background 0.3s ease;
+      " onmouseover="this.style.backgroundColor='#01323fff'" onmouseout="this.style.backgroundColor='#085160ff'" href="contact.html" style="margin:0 1rem; color:#D4AF37; text-decoration:none;">Contact Us</a>
+        <a style="
+        display: inline-block;
+        margin-top: 25px;
+        padding: 14px 28px;
+        color: #f4efef;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 20px;
+        transition: background 0.3s ease;
+      " onmouseover="this.style.backgroundColor='#01323fff'" onmouseout="this.style.backgroundColor='#085160ff'"href="hero.html" style="margin:0 1rem; color:#D4AF37; text-decoration:none;">Scan now</a>
+      </nav>
+      <button style="background:#D4AF37; color:#0a0101; border:none; padding:0.5rem 1rem; cursor:pointer; border-radius:5px; margin-left:1rem;">Join Now</button>
+    
+    </div>
+  </header>
+  <section class="hero">
+    <div class="container">
+      <h1>Instant Fraud & Scam Detection Powered by AI</h1>
+      <p>HawkeyeAI protects you from dangerous websites, phishing pages, fake shops, and online scams — instantly.</p>
+      <a href="app.py" class="btn btn-primary">Start Scanning</a>
+      <br><br>
+      <a href="#how-it-works" class="text-white">Learn How It Works</a>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <h2>How Hawkeye AI Protects You</h2>
+      <div class="row">
+        <div class="col-md-4 step">
+          <div class="step-icon"><i class="fas fa-link"></i></div>
+          <h4>Step 1: Enter Website URL</h4>
+          <p>Type or paste any website you want to check.</p>
+        </div>
+        <div class="col-md-4 step">
+          <div class="step-icon"><i class="fas fa-brain"></i></div>
+          <h4>Step 2: AI Scans for Threats</h4>
+          <p>Our advanced algorithms analyze risk, fraud patterns, and hidden red flags.</p>
+        </div>
+        <div class="col-md-4 step">
+          <div class="step-icon"><i class="fas fa-shield-alt"></i></div>
+          <h4>Step 3: Get Instant Safety Report</h4>
+          <p>Receive a detailed report with a trust score, warnings, and recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2>Why Choose Hawkeye AI?</h2>
+      <div class="row">
+        <div class="col-md-4 feature">
+          <div class="feature-icon"><i class="fas fa-shield-virus"></i></div>
+          <h4>Real-Time Scam Detection</h4>
+          <p>Detect phishing, fake e-commerce, malware, and fraud websites in seconds.</p>
+        </div>
+        <div class="col-md-4 feature">
+          <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+          <h4>AI Trust Score</h4>
+          <p>Get a risk level: Safe, Suspicious, or Dangerous for each website.</p>
+        </div>
+        <div class="col-md-4 feature">
+          <div class="feature-icon"><i class="fas fa-history"></i></div>
+          <h4>URL & Domain History Tracking</h4>
+          <p>Check domain age, previous fraud reports, hosting risk, and more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section class="statistics">
+    <div class="container">
+      <h2>Trusted by Users Worldwide</h2>
+      <div class="row">
+        <div class="col-md-3 stat-item">⭐ 98% Detection Accuracy</div>
+        <div class="col-md-3 stat-item">🔒 2,50,000+ Websites Scanned</div>
+        <div class="col-md-3 stat-item">🛡 Stops 100+ Scam Types</div>
+        <div class="col-md-3 stat-item">⏱ Analysis Time: Under 2 Seconds</div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA Section -->
+  <section id="scan" class="cta">
+    <div class="container">
+      <h2>Stay Safe. Stay Smart. Use Hawked AI.</h2>
+      <a href="#how-it-works" class="btn btn-primary">Start Scanning — It’s Free</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" style=" color:#fff; padding:60px 20px; font-family:Arial, sans-serif;">
+    <video autoplay muted loop
+      style="position:fixed; top:0; left:0; min-width:100%; min-height:100%; object-fit:cover; z-index:-1;">
+      <source src="galaxy.mp4" type="video/mp4">
+    </video>
+  <div style="max-width:1200px; margin:auto; text-align:center;">
+    <img src="logo.png" alt="Logo" style="height:100px;border-color: #000; margin-bottom:20px;">
+    <p style="max-width:600px; margin:10px auto; line-height:1.6;">
+    Stay safe in our cyberspace
+    </p>
+    <div style="margin:30px auto; max-width:600px;">
+      <iframe
+        src="https://www.google.com/maps?q=Silicon University,+Patia,+Bhubaneswar,+Odisha,+India&output=embed"
+        width="100%"
+        height="250"
+        style="border:0; border-radius:8px;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+
+  <div style="max-width:1200px; margin:40px auto 0; display:flex; flex-wrap:wrap; justify-content:space-around; gap:30px; text-align:left;">
+    <div style="flex:1 1 180px;">
+      <h3>Quick Links</h3>
+      <ul style="list-style:none; padding:0;">
+        <li><a href="aboutus.html" style="color:#ccc; text-decoration:none;">About Us</a></li>
+        <li><a href="services.html" style="color:#ccc; text-decoration:none;">Services</a></li>
+        <li><a href="contact.html" style="color:#ccc; text-decoration:none;">Contact</a></li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 180px;">
+      <h3>Follow Us</h3>
+      <ul style="list-style:none; padding:0;">
+        <li><a href="#" style="color:#00ffd5; text-decoration:none;">Facebook</a></li>
+        <li><a href="#" style="color:#00ffd5; text-decoration:none;">Instagram</a></li>
+        <li><a href="#" style="color:#00ffd5; text-decoration:none;">Twitter</a></li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 250px;">
+      <h3>Subscribe to Our Newsletter</h3>
+      <form>
+        <input type="email" placeholder="Your email" style="padding:10px; width:100%; border:none; border-radius:4px; margin-bottom:10px;">
+        <button type="submit" style="padding:10px; width:100%; background:#ff3278; color:white; border:none; border-radius:4px;">Subscribe</button>
+      </form>
+      <p style="margin-top:10px;">📧 info@pulsefit.in</p>
+    </div>
+
+    <div style="flex:1 1 300px;">
+      <h3>Our Location</h3>
+      <p>📍 Silicon university, Patia, Bhubaneswar, Odisha, India</p>
+    </div>
+  </div>
+
+  <hr style="margin:40px 0; border-color:#333;">
+
+  <div style="text-align:center;">
+    <p>&copy; 2025 Hawkeye AI. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

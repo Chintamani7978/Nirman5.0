@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjeevani Live - Healthcare Platform</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="login.html" class="nav-login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <div class="mode-toggle">
+                <button id="themeToggleBtn" class="theme-btn" title="Toggle light / dark">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Search -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Find Healthcare Services Near You</h1>
+            <p>Real-time hospital availability, emergency services, and medical assistance at your fingertips</p>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for nearby hospitals, clinics, or medical facilities...">
+                <button class="search-btn"><i class="fas fa-location-dot"></i> Search</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Cards -->
+    <section class="quick-access">
+        <div class="container">
+            <h2 class="section-title">Quick Access</h2>
+            <div class="cards-grid">
+                <div class="feature-card" onclick="navigateTo('hospital-profiles.html')">
+                    <div class="card-icon"><i class="fas fa-hospital"></i></div>
+                    <h3>Hospital Profiles</h3>
+                    <p>View detailed information about hospitals and their services</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('pharmacy.html')">
+                    <div class="card-icon"><i class="fas fa-pills"></i></div>
+                    <h3>Medicine Checker</h3>
+                    <p>Check medicine availability at nearby pharmacies</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('doctor-verification.html')">
+                    <div class="card-icon"><i class="fas fa-user-md"></i></div>
+                    <h3>Doctor Verification</h3>
+                    <p>Verify doctor credentials and qualifications</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('teleconsulation.html')">
+                    <div class="card-icon"><i class="fas fa-video"></i></div>
+                    <h3>Teleconsultation</h3>
+                    <p>Book online consultations with verified doctors</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('ambulance-booking.html')">
+                    <div class="card-icon"><i class="fas fa-ambulance"></i></div>
+                    <h3>Ambulance Booking</h3>
+                    <p>Book emergency ambulance services instantly</p>
+                </div>
+                <div class="feature-card" onclick="navigateTo('patient-portal.html')">
+                    <div class="card-icon"><i class="fas fa-user-circle"></i></div>
+                    <h3>Patient Portal</h3>
+                    <p>Access your medical records and appointments</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Sanjeevani Live</h3>
+                    <p>Your trusted healthcare companion for real-time medical services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hospital-profiles.html">Hospitals</a></li>
+                        <li><a href="pharmacy.html">Pharmacy</a></li>
+                        <li><a href="ambulance-booking.html">Emergency</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                        <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                        <li><a href="patient-portal.html">Patient Portal</a></li>
+                        <li><a href="admin-panel.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency</h4>
+                    <p><i class="fas fa-phone"></i> 108 - Emergency</p>
+                    <p><i class="fas fa-phone"></i> 102 - Ambulance</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

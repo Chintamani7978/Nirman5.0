@@ -1,0 +1,117 @@
+/* Page Setup */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+/* Main Card */
+
+.profile-card {
+    background: white;
+    width: 350px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+
+/* Profile Photo Circle */
+
+.photo-circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px;
+    cursor: pointer;
+    border: 3px solid rgba(3, 53, 70);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Input Box */
+
+.input-box {
+    text-align: left;
+    margin: 15px 0;
+}
+
+.input-box label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.input-box input,
+.input-box select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-size: 14px;
+    outline: none;
+}
+
+
+/* Button Styling */
+
+.button-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-btn,
+.logout-btn {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn {
+    background: #4c88ff;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #2f6fff;
+}
+
+.logout-btn {
+    background: #ff4c4c;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #e63c3c;
+}
+
+.small-logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 120px;
+    border-radius: 4px;
+    z-index: 9999;
+}

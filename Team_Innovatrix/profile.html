@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMesh - Mental Wellness for Students</title>
+    <meta name="description"
+        content="Digital mental health and psychological support system for students in higher education">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style_login.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <div id="auth-page" class="auth-page">
+            <div class="auth-container">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1>Your Mental Wellness Journey Starts Here</h1>
+                        <p>Join thousands of students who prioritize their mental health with MindMesh - a supportive
+                            platform designed specifically for higher education.</p>
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <i class="fas fa-robot"></i>
+                                <span>AI-powered mental health support</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-user-shield"></i>
+                                <span>Confidential counselor booking</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-users"></i>
+                                <span>Peer support community</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-book-open"></i>
+                                <span>Wellness resources & guides</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-section">
+                    <div class="back-to-home">
+                        <button onclick="window.location.href='index.html'" class="btn-back-home">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Home
+                        </button>
+                    </div>
+                    <div id="login-form" class="auth-form active">
+                        <div class="form-header">
+                            <div class="brand">
+                                <i class="fas fa-heart"></i>
+                                <h2>MindMesh</h2>
+                            </div>
+                            <p>Welcome back to your mental wellness journey</p>
+                        </div>
+                        <form id="loginForm" class="form">
+                            <div class="form-group">
+                                <label for="loginEmail">Email Address</label>
+                                <div class="input-group">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="loginEmail" placeholder="your.email@university.edu"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <div class="input-group">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="loginPassword" placeholder="Enter your password"
+                                        required>
+                                    <button type="button" class="toggle-password"
+                                        onclick="togglePassword('loginPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="btn-group">
+                                <button id="privateBtn" type="button">Private</button>
+                                <button id="publicBtn" type="button">Public</button>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age">Enter Your Age:</label>
+                                <input type="number" id="age" placeholder="Type your age" min="10" max="100">
+                                <p id="ageError" class="error"></p>
+                            </div>
+
+                            <button type="submit" class="btn-primary">
+                                <span class="btn-text">Sign In</span>
+                                <span class="btn-loading" style="display: none;">Signing In...</span>
+                            </button>
+                        </form>
+                        <div class="form-footer">
+                            <a href="#" class="link">Forgot your password?</a>
+                            <p>Don't have an account? <a href="#" class="link" onclick="switchToSignup()">Create one
+                                    now</a></p>
+                        </div>
+                    </div>
+                    <div id="signup-form" class="auth-form">
+                        <div class="form-header">
+                            <div class="brand">
+                                <i class="fas fa-heart"></i>
+                                <h2>Join MindMesh</h2>
+                            </div>
+                            <p>Start your journey to better mental wellness</p>
+                        </div>
+
+                        <form id="signupForm" class="form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <div class="input-group">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="firstName" placeholder="John" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" placeholder="Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupEmail">University Email</label>
+                                <div class="input-group">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="signupEmail" placeholder="your.email@university.edu"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="university">University/College</label>
+                                <div class="input-group">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <input type="text" id="university" placeholder="Your University Name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="academicYear">Academic Year</label>
+                                <select id="academicYear" required>
+                                    <option value="">Select your year</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                    <option value="Masters 1st Year">Masters 1st Year</option>
+                                    <option value="Masters 2nd Year">Masters 2nd Year</option>
+                                    <option value="PhD Student">PhD Student</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupAge">Age</label>
+                                <div class="input-group">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <input type="number" id="signupAge" placeholder="Enter your age" min="10" max="100"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupPassword">Password</label>
+                                <div class="input-group">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="signupPassword" placeholder="Create a strong password"
+                                        required>
+                                    <button type="button" class="toggle-password"
+                                        onclick="togglePassword('signupPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <div class="input-group">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="confirmPassword" placeholder="Confirm your password"
+                                        required>
+                                    <button type="button" class="toggle-password"
+                                        onclick="togglePassword('confirmPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <span class="btn-text">Create Account</span>
+                                <span class="btn-loading" style="display: none;">Creating Account...</span>
+                            </button>
+                        </form>
+                        <div class="form-footer">
+                            <p>Already have an account? <a href="#" class="link" onclick="switchToLogin()">Sign in
+                                    here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="profile-page" class="profile-page" style="display: none;">
+            <div class="dashboard-container">
+                <header class="dashboard-header">
+                    <div class="header-brand" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                        <i class="fas fa-heart"></i>
+                        <h1>MindMesh</h1>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-icon" onclick="showSettings()">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="btn-icon" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </header>
+                <div class="welcome-section">
+                    <div class="user-info">
+                        <div class="avatar">
+                            <span id="userInitials">JD</span>
+                        </div>
+                        <div class="user-details">
+                            <h2 id="welcomeMessage">Welcome back, John!</h2>
+                            <p id="userMeta">Example University • 3rd Year</p>
+                            <div class="badges">
+                                <span class="badge active">
+                                    <i class="fas fa-chart-line"></i>
+                                    Active Today
+                                </span>
+                                <span class="badge streak">
+                                    <i class="fas fa-award"></i>
+                                    Wellness Streak: 7 days
+                                </span>
+                            </div>
+                        </div>
+                        <div class="welcome-actions">
+                            <button class="edit-profile-btn">
+                                <i class="fas fa-edit"></i>
+                                Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-tabs">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+                        <button class="tab-btn" onclick="switchTab('sessions')">Sessions</button>
+                        <button class="tab-btn" onclick="switchTab('resources')">Resources</button>
+                        <button class="tab-btn" onclick="switchTab('community')">Community</button>
+                    </div>
+                    <div id="overview-tab" class="tab-content active">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h3>Wellness Score</h3>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="score">78</div>
+                                    <div class="score-label">out of 100</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 78%"></div>
+                                    </div>
+                                    <p>Great progress! Keep up the good work.</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <i class="fas fa-target"></i>
+                                    <h3>Weekly Goal</h3>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="score success">3/5</div>
+                                    <div class="score-label">sessions</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill success" style="width: 60%"></div>
+                                    </div>
+                                    <p>2 more to reach your goal!</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <i class="fas fa-calendar"></i>
+                                    <h3>Next Session</h3>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="next-session">
+                                        <div class="session-day">Today</div>
+                                        <div class="session-time">3:00 PM</div>
+                                        <div class="session-type">Weekly Check-in</div>
+                                    </div>
+                                    <button class="btn-primary small">
+                                        <i class="fas fa-clock"></i>
+                                        Join Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-grid">
+                            <div class="activity-card">
+                                <div class="card-header">
+                                    <h3>Recent Activity</h3>
+                                    <p>Your latest wellness activities</p>
+                                </div>
+                                <div class="activity-list">
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-comment"></i>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-title">Completed Mood Check-in</span>
+                                            <span class="activity-time">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-title">Read: Managing Study Stress</span>
+                                            <span class="activity-time">1 day ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-title">Mindfulness Session</span>
+                                            <span class="activity-time">2 days ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-title">Counselor Appointment Booked</span>
+                                            <span class="activity-time">3 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-card">
+                                <div class="card-header">
+                                    <h3>Upcoming Events</h3>
+                                    <p>Don't miss your scheduled activities</p>
+                                </div>
+                                <div class="activity-list">
+                                    <div class="upcoming-item">
+                                        <div class="upcoming-details">
+                                            <span class="upcoming-title">Weekly Check-in</span>
+                                            <span class="upcoming-time">Today, 3:00 PM</span>
+                                        </div>
+                                        <span class="badge upcoming">Upcoming</span>
+                                    </div>
+                                    <div class="upcoming-item">
+                                        <div class="upcoming-details">
+                                            <span class="upcoming-title">Group Meditation</span>
+                                            <span class="upcoming-time">Tomorrow, 10:00 AM</span>
+                                        </div>
+                                        <span class="badge upcoming">Upcoming</span>
+                                    </div>
+                                    <div class="upcoming-item">
+                                        <div class="upcoming-details">
+                                            <span class="upcoming-title">Counselor Session</span>
+                                            <span class="upcoming-time">Friday, 2:00 PM</span>
+                                        </div>
+                                        <span class="badge upcoming">Upcoming</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="sessions-tab" class="tab-content">
+                        <div class="section-header">
+                            <h3><i class="fas fa-calendar-alt"></i> My Sessions</h3>
+                            <p>Track your mental wellness sessions and progress</p>
+                        </div>
+                        <div id="bookedSessionsContainer" style="display: none; margin-bottom: 20px;">
+                            <h4 style="margin-bottom: 15px; color: var(--primary-color);">
+                                <i class="fas fa-calendar-check"></i> Recently Booked Sessions
+                            </h4>
+                            <div id="bookedSessionsList"></div>
+                        </div>
+                        <div class="sessions-list">
+                            <div class="session-card">
+                                <div class="session-info">
+                                    <h4>Stress Management Session</h4>
+                                    <p><i class="fas fa-clock"></i> March 15, 2024 - 2:00 PM</p>
+                                    <p><i class="fas fa-user"></i> Dr. Sarah Johnson</p>
+                                </div>
+                                <div class="session-status completed">
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+                            <div class="session-card">
+                                <div class="session-info">
+                                    <h4>Mindfulness & Meditation</h4>
+                                    <p><i class="fas fa-clock"></i> March 20, 2024 - 10:00 AM</p>
+                                    <p><i class="fas fa-user"></i> Dr. Michael Chen</p>
+                                </div>
+                                <div class="session-status upcoming">
+                                    <span>Upcoming</span>
+                                </div>
+                            </div>
+                            <div class="session-card">
+                                <div class="session-info">
+                                    <h4>Anxiety Coping Strategies</h4>
+                                    <p><i class="fas fa-clock"></i> March 25, 2024 - 3:30 PM</p>
+                                    <p><i class="fas fa-user"></i> Dr. Emily Rodriguez</p>
+                                </div>
+                                <div class="session-status scheduled">
+                                    <span>Scheduled</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-primary" style="margin-top: 20px;" onclick="openBookSessionModal()">
+                            <i class="fas fa-plus"></i> Book New Session
+                        </button>
+                    </div>
+                    <div id="resources-tab" class="tab-content">
+                        <div class="section-header">
+                            <h3><i class="fas fa-book-open"></i> Learning Resources</h3>
+                            <p>Access wellness guides, videos, and educational content</p>
+                        </div>
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-play-circle"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Guided Meditation Videos</h4>
+                                    <p>5-20 minute guided sessions for relaxation and mindfulness</p>
+                                    <span class="resource-type">Video Series</span>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Stress Management Guide</h4>
+                                    <p>Comprehensive PDF guide with practical stress reduction techniques</p>
+                                    <span class="resource-type">PDF Guide</span>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-headphones"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Sleep & Relaxation Audio</h4>
+                                    <p>Calming soundscapes and sleep stories for better rest</p>
+                                    <span class="resource-type">Audio Content</span>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Mental Health Toolkit</h4>
+                                    <p>Evidence-based exercises and self-assessment tools</p>
+                                    <span class="resource-type">Interactive Tools</span>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Academic Wellness Tips</h4>
+                                    <p>Strategies for managing academic stress and performance anxiety</p>
+                                    <span class="resource-type">Study Guide</span>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="resource-content">
+                                    <h4>Self-Care Routine Builder</h4>
+                                    <p>Create personalized daily wellness routines</p>
+                                    <span class="resource-type">Planning Tool</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="community-tab" class="tab-content">
+                        <div class="section-header">
+                            <h3><i class="fas fa-users"></i> Community Support</h3>
+                            <p>Connect with peers and share your wellness journey</p>
+                        </div>
+                        <div class="community-section">
+                            <div class="community-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">1,247</span>
+                                    <span class="stat-label">Active Members</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">89</span>
+                                    <span class="stat-label">Discussion Topics</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">324</span>
+                                    <span class="stat-label">Support Messages</span>
+                                </div>
+                            </div>
+                            <div class="discussion-topics">
+                                <h4>Recent Discussions</h4>
+                                <div id="createdDiscussionsContainer" style="display: none; margin-bottom: 20px;">
+                                    <h5 style="margin-bottom: 15px; color: var(--primary-color);">
+                                        <i class="fas fa-comments"></i> Your Recent Discussions
+                                    </h5>
+                                    <div id="createdDiscussionsList"></div>
+                                </div>
+                                <div class="topic-card">
+                                    <div class="topic-info">
+                                        <h5>Managing Exam Anxiety</h5>
+                                        <p>Tips and strategies for staying calm during finals week</p>
+                                        <div class="topic-meta">
+                                            <span><i class="fas fa-user"></i> Anonymous Student</span>
+                                            <span><i class="fas fa-comments"></i> 12 replies</span>
+                                            <span><i class="fas fa-clock"></i> 2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="topic-card">
+                                    <div class="topic-info">
+                                        <h5>Healthy Study Habits</h5>
+                                        <p>Share your best practices for maintaining work-life balance</p>
+                                        <div class="topic-meta">
+                                            <span><i class="fas fa-user"></i> Sarah M.</span>
+                                            <span><i class="fas fa-comments"></i> 8 replies</span>
+                                            <span><i class="fas fa-clock"></i> 5 hours ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="topic-card">
+                                    <div class="topic-info">
+                                        <h5>Mindfulness for Beginners</h5>
+                                        <p>Getting started with meditation and mindfulness practices</p>
+                                        <div class="topic-meta">
+                                            <span><i class="fas fa-user"></i> Alex Chen</span>
+                                            <span><i class="fas fa-comments"></i> 15 replies</span>
+                                            <span><i class="fas fa-clock"></i> 1 day ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="topic-card">
+                                    <div class="topic-info">
+                                        <h5>Dealing with Homesickness</h5>
+                                        <p>Support for students adjusting to college life</p>
+                                        <div class="topic-meta">
+                                            <span><i class="fas fa-user"></i> Maria Rodriguez</span>
+                                            <span><i class="fas fa-comments"></i> 6 replies</span>
+                                            <span><i class="fas fa-clock"></i> 2 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-primary" style="margin-top: 20px;" onclick="openDiscussionModal()">
+                                <i class="fas fa-plus"></i> Start New Discussion
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <div id="bookSessionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-alt"></i> Book New Session</h3>
+                <span class="close" onclick="closeBookSessionModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="bookSessionForm">
+                    <div class="form-group">
+                        <label for="sessionType">Session Type</label>
+                        <select id="sessionType" required>
+                            <option value="">Select session type</option>
+                            <option value="individual">Individual Counseling</option>
+                            <option value="group">Group Therapy</option>
+                            <option value="stress">Stress Management</option>
+                            <option value="anxiety">Anxiety Support</option>
+                            <option value="mindfulness">Mindfulness & Meditation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredDate">Preferred Date</label>
+                        <input type="date" id="preferredDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredTime">Preferred Time</label>
+                        <select id="preferredTime" required>
+                            <option value="">Select time</option>
+                            <option value="09:00">9:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionNotes">Additional Notes (Optional)</label>
+                        <textarea id="sessionNotes" rows="3"
+                            placeholder="Any specific concerns or topics you'd like to discuss..."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closeBookSessionModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Book Session</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="discussionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-comments"></i> Start New Discussion</h3>
+                <span class="close" onclick="closeDiscussionModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="discussionForm">
+                    <div class="form-group">
+                        <label for="discussionTitle">Discussion Title</label>
+                        <input type="text" id="discussionTitle"
+                            placeholder="Enter a descriptive title for your discussion..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="discussionCategory">Category</label>
+                        <select id="discussionCategory" required>
+                            <option value="">Select category</option>
+                            <option value="general">General Support</option>
+                            <option value="academic">Academic Stress</option>
+                            <option value="anxiety">Anxiety & Worry</option>
+                            <option value="depression">Depression Support</option>
+                            <option value="relationships">Relationships</option>
+                            <option value="self-care">Self-Care Tips</option>
+                            <option value="mindfulness">Mindfulness & Meditation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="discussionContent">Your Message</label>
+                        <textarea id="discussionContent" rows="4"
+                            placeholder="Share your thoughts, ask questions, or start a meaningful conversation..."
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="anonymousPost" style="margin-right: 8px;">
+                            Post anonymously
+                        </label>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closeDiscussionModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Start Discussion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/script_login.js"></script>
+</body>
+</html>

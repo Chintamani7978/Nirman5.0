@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vissora Mobile</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div class="container">
+		<div id="circle"class="flex">
+			<div class="l"></div>
+			<div class="s"></div>
+		</div>
+		<div class="add-n">
+			<div class="pfl"></div>
+		</div>
+		<div class="flex"style="padding: 40px 20px 20px; box-sizing: border-box;">
+			<strong>Hello Amar!<br><small>Good Morning developer</small></strong>
+			<div class="pfl"></div>
+		</div>
+		<div class="h-card"style="bottom: 9.5vh;">
+			<strong>All Sessions</strong>
+			<div style="overflow: scroll;height:38vh;margin-top: 10px;">
+				<div id="card"class="flex"onclick="openDetector()">
+					<strong>3RD YEAR - SEC: A<br><small>Silicon University, BBSR</small></strong>
+					<div></div>
+				</div>
+				<div id="card"class="flex">
+					<strong>3RD YEAR - SEC: A<br><small>Silicon University, BBSR</small></strong>
+					<div></div>
+				</div>
+				<div id="card"class="flex">
+					<strong>3RD YEAR - SEC: A<br><small>Silicon University, BBSR</small></strong>
+					<div></div>
+				</div>
+				<div id="card"class="flex">
+					<strong>3RD YEAR - SEC: A<br><small>Silicon University, BBSR</small></strong>
+					<div></div>
+				</div>
+				<div id="card"class="flex">
+					<strong>3RD YEAR - SEC: A<br><small>Silicon University, BBSR</small></strong>
+					<div></div>
+				</div>
+			</div>
+		</div>
+		<div class="d-card"style="height:75vh;overflow: hidden;bottom: -150vh;">
+			<div class="icon"onclick="callPython('pImage',[])"></div><br>
+			<strong style="font-size: 16px;">Profile</strong><br><br>
+			<div class="inpbox">
+				<input value="User"style="border-bottom: 0;border-radius: 15px 15px 0 0;">
+				<input value="LOCK: OFF"style="border-bottom: 0;border-radius: 0;display: none;"onclick="callPython('lock',[])" readonly>
+				<input value="Contact Us" style="border-bottom: 0;border-radius: 15px 15px 0 0;" readonly>
+				<input style="border-bottom: 0;border-radius: 15px 15px 0 0;" value="Liscence" readonly>
+			</div><br><br>
+			<strong style="font-size: 16px;text-align: left;letter-spacing: 1px;">Scale Factor</strong>
+			<div class="range">
+				<div onclick="setScale(0)"></div>
+				<div onclick="setScale(1)"></div>
+				<div onclick="setScale(2)"></div>
+				<div class="dot"></div>
+			</div>
+			<div class="desc">
+				<p>Low</p>
+				<p style="opacity: 1;">&nbsp;Normal</p>
+				<p>High</p>
+			</div>
+		</div>
+		<div class="banner">
+			<div class="icon"onclick="nav(0)"></div>
+			<div class="icon"onclick="nav(1)"style="background-image: url(images/account.png);"></div>
+			<div class="icon"onclick="nav(3)"style=""></div>
+		</div>
+	</div>
+	<div class="work">
+		<div class="banner"style="margin-top: 25px;">
+			<img draggable=false src="back.png"onclick="$('.work').style='left:100vw;opacity:0';screen = 'home';">
+			<div class="banner"style="justify-content: flex-end;width:auto">
+				<div class="image"id="arrow"style="background-image: url('history.png');animation: none;border-radius: 100%;"onclick="callPython('his',[inst, sec])"></div>
+				<div class="image"id="arrow"style="background-image: url('reload.png');animation: none;border-radius: 100%;"onclick="sv = false;callPython('reset',[]);$('.grph').style.backgroundImage = 'url(monkey.png)';$('.graph').style.height = '100px';$('.graph').style.opacity = 0;"></div>
+			</div>
+		</div><br>
+		<div class="card"onclick="callPython('raw',[])">
+			<div class="banner"style="width: auto;">
+				<img src="camera.png"draggable=false>
+				<strong>Take a photo</strong>
+			</div>
+			<img src="signal.png"style="filter: invert(0);"draggable=false>
+		</div>
+		<div class="card"onclick="callPython('base',[])">
+			<div class="banner"style="width: auto;">
+				<img src="photo.png"draggable=false>
+				<strong>Choose from gallery</strong>
+			</div>
+			<img src="signal.png"style="filter: invert(0);"draggable=false>
+		</div>
+		<div class="card"id="cmp">
+			<div>
+				
+			</div>
+			<hr>
+			<div class="ok">
+				
+			</div>
+		</div>
+		<div style="position: fixed;bottom: 60px;">
+			<button onclick="sv = false;callPython('detect',[inst, sec]);$('.grph').style.backgroundImage = 'url(monkey.png)';$('.graph').style.height = '100px';$('.graph').style.opacity = 0;"style="background: #202020;color:#ff1a8c">Start Detecting</button>
+			<button onclick="showResult()">Show Result</button>
+		</div>
+	</div>
+</body>
+<script src="index.js"></script>
+</html>

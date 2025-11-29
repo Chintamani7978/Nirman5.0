@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Indian flag inspired color palette */
+    --background: 0 0% 100%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Deep Navy Blue - Trust & Government */
+    --primary: 215 85% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Saffron Orange - Energy & Action */
+    --secondary: 25 95% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 215 20% 96%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Forest Green - Growth & Solutions */
+    --accent: 140 60% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 215 85% 25%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors for VoiceUp */
+    --hero-gradient-start: 215 85% 25%;
+    --hero-gradient-end: 195 85% 45%;
+    --glass: 0 0% 100% / 0.6;
+    
+    --success: 140 60% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 45 95% 55%;
+    --warning-foreground: 215 25% 15%;
+    
+    --info: 210 80% 55%;
+    --info-foreground: 0 0% 100%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 215 25% 25%;
+    --sidebar-primary: 215 85% 25%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 215 20% 96%;
+    --sidebar-accent-foreground: 215 85% 25%;
+    --sidebar-border: 215 20% 88%;
+    --sidebar-ring: 215 85% 25%;
+  }
+
+  .dark {
+    --background: 215 30% 8%;
+    --foreground: 0 0% 95%;
+    --glass: 215 25% 12% / 0.5;
+    --card: 215 25% 12% / 0.5;
+    --card-foreground: 0 0% 95%;
+    --popover: 215 25% 12% / 0.8;
+    --popover-foreground: 0 0% 95%;
+    --primary: 215 75% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 25 90% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 215 25% 18%;
+    --muted-foreground: 215 10% 65%;
+    --accent: 140 55% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 25% 18%;
+    --input: 215 25% 18%;
+    --ring: 215 75% 55%;
+    --success: 140 55% 50%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 90% 60%;
+    --warning-foreground: 215 30% 8%;
+    --info: 210 75% 60%;
+    --info-foreground: 0 0% 100%;
+    --sidebar-background: 215 30% 10%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 215 75% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 25% 18%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 215 25% 18%;
+    --sidebar-ring: 215 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Glassmorphism card utility */
+  .glass {
+    background-color: hsl(var(--glass));
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    border: 1px solid hsl(var(--border) / 0.2);
+  }
+  /* Glassmorphism navbar utility */
+  .glass-nav {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  }
+
+  /* Dark mode variant for glass-nav */
+  .dark .glass-nav {
+    background-color: rgba(3, 7, 18, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Utility to ensure page content is not hidden under the fixed header.
+     Use this spacer directly after the header or rely on the utility class. */
+  .nav-spacer {
+    height: 64px; /* matches header height (py-4 + font size) */
+  }
+
+  /* Shiny button effect */
+  .shiny-button {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shiny-button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .shiny-button:hover::after {
+    left: 100%;
+  }
+
+  /* Gooey button effect */
+  .goo-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+  }
+
+  .goo-button:hover::before {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@layer utilities {
+  .custom-scroll {
+    @apply glass-scrollbar;
+  }
+  .glass-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+  .glass-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .glass-scrollbar::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--glass) / 0.7);
+    border-radius: 6px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  .glass-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
+  }
+  .animate-goo {
+    animation: goo 1s infinite alternate;
+  }
+  @keyframes goo {
+    from {
+      filter: url("#goo");
+    }
+    to {
+      filter: url("#goo");
+    }
+  }
+}

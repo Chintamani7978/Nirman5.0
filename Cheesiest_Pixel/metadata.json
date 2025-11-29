@@ -1,0 +1,9 @@
+{
+  "name": "Copy of Copy  SamhitaFusion Healthcare Platform 14",
+  "description": "A multi-portal (Patient, Doctor, Researcher, Admin) healthcare platform bridging modern and traditional medicine with AI-driven insights, telemedicine, and data visualization.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

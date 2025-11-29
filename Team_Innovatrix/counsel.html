@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMesh - Counsellors</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_peer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            MINDMESH
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="peer.html">Peer Community</a></li>
+            <li><a href="counsel.html">Counsellors</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a></li>
+        </ul>
+        <div class="menu-toggle">☰</div> <!-- Optional mobile menu icon -->
+    </nav>
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Connect with Expert Counsellors</h1>
+            <p>Get professional, confidential mental health support from qualified counsellors who understand the unique
+                challenges of student life.</p>
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <i class="fas fa-video"></i>
+                    <span>Video Sessions</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-phone"></i>
+                    <span>24/7 Support</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-comments"></i>
+                    <span>Confidential</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="text-align: center; margin-top: 30px;">
+    </div>
+     <div style="text-align: center; margin-top: 30px;">
+  <a href="counsel_profile.html" class="login-btn">Counsellor Login</a>
+</div>
+    <section class="counsellors">
+        <div class="card">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Counsellor">
+            <h3>Dr. Anjali Sharma</h3>
+            <p>Psychology Dept</p>
+            <p><i class="fa-solid fa-star" style="color:#f59f00;"></i> Anxiety, Stress</p>
+            <a href="book.html" class="book-btn">Book Slot</a>
+            <a href="call.html" class="call-btn">Call</a>
+        </div>
+        <div class="card">
+            <img src="https://randomuser.me/api/portraits/men/43.jpg" alt="Counsellor">
+            <h3>Mr. Ramesh Kumar</h3>
+            <p>Student Counsellor</p>
+            <p><i class="fa-solid fa-star" style="color:#f59f00;"></i> Motivation, Career</p>
+            <a href="book.html" class="book-btn">Book Slot</a>
+            <a href="call.html" class="call-btn">Call</a>
+        </div>
+        <div class="card">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Counsellor">
+            <h3>Dr. Neha Verma</h3>
+            <p>Wellness Specialist</p>
+            <p><i class="fa-solid fa-star" style="color:#f59f00;"></i> Relationships, Depression</p>
+            <a href="book.html" class="book-btn">Book Slot</a>
+            <a href="call.html" class="call-btn">Call</a>
+        </div>
+    </section>
+    <div class="floating-btn" onclick="alert('📞 Dialing 24x7 Helpline...')">
+        <i class="fa-solid fa-phone"></i>
+    </div>
+    <div id="callModal" class="modal"
+        style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+        <div
+            style="background:#fff; border-radius:16px; box-shadow:0 6px 24px rgba(76,110,245,0.12); padding:32px 24px; max-width:320px; margin:auto; text-align:center;">
+            <h3 style="color:#364fc7; margin-bottom:18px;">Choose Call Type</h3>
+            <button class="cta-btn" style="width:100%; margin-bottom:12px;" onclick="proceedCall('voice')"><i
+                    class="fas fa-microphone"></i> Voice Call</button>
+            <button class="cta-btn" style="width:100%;" onclick="proceedCall('video')"><i class="fas fa-video"></i>
+                Video Call</button>
+            <br><br>
+            <button onclick="closeCallModal()"
+                style="background:#eee; color:#364fc7; border:none; border-radius:8px; padding:8px 18px; margin-top:8px;">Cancel</button>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 MindMesh | Team Innovatrix</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>

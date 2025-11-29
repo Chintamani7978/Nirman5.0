@@ -1,0 +1,20 @@
+//cloudinary For Storing Images and Videos and 360 views
+const cloudinary = require('cloudinary').v2;
+
+//Fetch Cloudinary credentials from .env file
+if (
+  process.env.CLOUDINARY_CLOUD_NAME &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_SECRET
+) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+  console.log('Cloudinary configured successfully');
+} else {
+  console.log('Cloudinary credentials not configured - file uploads disabled');
+}
+
+module.exports = cloudinary;

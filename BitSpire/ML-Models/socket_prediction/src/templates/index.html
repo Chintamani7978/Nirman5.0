@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Type Prediction</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Suitable Socket Detection</h1>
+        <p class="text-gray-600 mb-8 text-center">Enter the details of a charging station to predict if it's a DC-type socket.</p>
+        
+        <form id="predictionForm" action="/predict" method="post" class="space-y-4">
+            <!-- Latitude & Longitude -->
+            <div class="flex space-x-4">
+                <div class="flex-1">
+                    <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                    <input type="text" id="latitude" name="latitude" placeholder="e.g., 28.6" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+                <div class="flex-1">
+                    <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                    <input type="text" id="longitude" name="longitude" placeholder="e.g., 77.2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+            </div>
+
+            <!-- Available & Capacity -->
+            <div class="flex space-x-4">
+                <div class="flex-1">
+                    <label for="available" class="block text-sm font-medium text-gray-700">Available Sockets</label>
+                    <input type="number" id="available" name="available" placeholder="e.g., 10.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+                <div class="flex-1">
+                    <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity (Total Sockets)</label>
+                    <input type="number" id="capacity" name="capacity" placeholder="e.g., 15.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+            </div>
+
+            <!-- Total & Capacity Num -->
+            <div class="flex space-x-4">
+                <div class="flex-1">
+                    <label for="total" class="block text-sm font-medium text-gray-700">Total</label>
+                    <input type="number" id="total" name="total" placeholder="e.g., 15.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+                <div class="flex-1">
+                    <label for="capacity_num" class="block text-sm font-medium text-gray-700">Capacity Num</label>
+                    <input type="number" id="capacity_num" name="capacity_num" placeholder="e.g., 15.0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+            </div>
+
+            <!-- CPU Num & Vehicle Types -->
+            <div class="flex space-x-4">
+                <div class="flex-1">
+                    <label for="cpu_num" class="block text-sm font-medium text-gray-700">CPU Num</label>
+                    <input type="text" id="cpu_num" name="cpu_num" placeholder="e.g., 3.5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+                <div class="flex-1">
+                    <label for="n_vehicle_types" class="block text-sm font-medium text-gray-700">Num. Vehicle Types</label>
+                    <input type="number" id="n_vehicle_types" name="n_vehicle_types" placeholder="e.g., 1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                </div>
+            </div>
+
+            <!-- Supports Checkboxes -->
+            <div class="flex items-center space-x-4 mt-2">
+                <div class="flex items-center">
+                    <input id="supports_4w" name="supports_4w" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="supports_4w" class="ml-2 block text-sm text-gray-900">Supports 4-wheelers</label>
+                </div>
+                <div class="flex items-center">
+                    <input id="supports_2w" name="supports_2w" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="supports_2w" class="ml-2 block text-sm text-gray-900">Supports 2-wheelers</label>
+                </div>
+            </div>
+
+            <!-- Vendor Name -->
+            <div>
+                <label for="vendor_name" class="block text-sm font-medium text-gray-700">Vendor Name</label>
+                <select id="vendor_name" name="vendor_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                    <option value="">Select a vendor</option>
+                    <option value="BSES">BSES</option>
+                    <option value="BatterySmart">BatterySmart</option>
+                    <option value="BluSmart">BluSmart</option>
+                    <option value="E-Fill Electric">E-Fill Electric</option>
+                    <option value="EEE">EEE</option>
+                    <option value="EESL">EESL</option>
+                    <option value="ElectriVa">ElectriVa</option>
+                    <option value="GensolCharge Pvt. Ltd.">GensolCharge Pvt. Ltd.</option>
+                    <option value="HPCL">HPCL</option>
+                    <option value="JBM Renewables">JBM Renewables</option>
+                    <option value="Jio-bp">Jio-bp</option>
+                    <option value="PlugNgo">PlugNgo</option>
+                    <option value="Powerbank">Powerbank</option>
+                    <option value="Pvt. Ltd.">Pvt. Ltd.</option>
+                    <option value="REIL">REIL</option>
+                    <option value="REVOS">REVOS</option>
+                    <option value="Smart E">Smart E</option>
+                    <option value="Sun Mobility">Sun Mobility</option>
+                    <option value="TPDDL">TPDDL</option>
+                    <option value="Verdemobility">Verdemobility</option>
+                </select>
+            </div>
+            
+            <!-- Station Type -->
+            <div>
+                <label for="station_type" class="block text-sm font-medium text-gray-700">Station Type</label>
+                <select id="station_type" name="station_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border" required>
+                    <option value="charging">Charging</option>
+                </select>
+            </div>
+
+            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Predict Socket Type
+            </button>
+        </form>
+        <div id="predictionResult" class="mt-6 p-4 rounded-md text-center hidden">
+            <!-- Prediction result will be displayed here -->
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById('predictionForm');
+        const resultDiv = document.getElementById('predictionResult');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Handle checkboxes which are only sent on 'on'
+            data['supports_4w'] = formData.has('supports_4w');
+            data['supports_2w'] = formData.has('supports_2w');
+
+            // Send data to the Flask API
+            fetch('/predict', {
+                method: 'POST',
+                body: new URLSearchParams(data),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    resultDiv.className = 'mt-6 p-4 bg-red-100 text-red-700 rounded-md text-center';
+                    resultDiv.textContent = `Error: ${result.error}`;
+                } else {
+                    resultDiv.className = 'mt-6 p-4 bg-green-100 text-green-700 rounded-md text-center';
+                    resultDiv.textContent = `Prediction: ${result.prediction}`;
+                }
+                resultDiv.classList.remove('hidden');
+            })
+            .catch(error = {
+                resultDiv.className = 'mt-6 p-4 bg-red-100 text-red-700 rounded-md text-center';
+                resultDiv.textContent = `An error occurred: ${error}`;
+                resultDiv.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SevaBandhu - Hospital Staff Management System Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            background: #ffffff;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            flex: 1;
+            background: linear-gradient(135deg, hsl(195, 85%, 45%), hsl(195, 85%, 40%), hsl(190, 75%, 50%));
+            color: white;
+            padding: 3rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: hsl(43, 90%, 60%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-item:hover .feature-icon {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-content h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .feature-content p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .hero-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.875rem;
+            opacity: 0.75;
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+            background: #fafafa;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .mobile-logo {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-logo .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: hsl(195, 85%, 45%);
+        }
+
+        .mobile-logo .logo-text {
+            font-size: 1.5rem;
+            color: hsl(0, 0%, 20%);
+        }
+
+        .login-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .login-header {
+            margin-bottom: 2rem;
+        }
+
+        .login-header h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: hsl(0, 0%, 20%);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: hsl(0, 0%, 45%);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: hsl(0, 0%, 20%);
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .forgot-link {
+            font-size: 0.875rem;
+            color: hsl(195, 85%, 45%);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 44px;
+            padding: 0.75rem;
+            border: 1px solid hsl(0, 0%, 85%);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: hsl(195, 85%, 45%);
+            box-shadow: 0 0 0 3px rgba(0, 160, 220, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            height: 44px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: hsl(195, 85%, 45%);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: hsl(0, 0%, 20%);
+            border: 1px solid hsl(0, 0%, 85%);
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: hsl(0, 0%, 85%);
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 0.75rem;
+            font-size: 0.75rem;
+            color: hsl(0, 0%, 55%);
+        }
+
+        .signup-text {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: hsl(0, 0%, 55%);
+        }
+
+        .signup-link {
+            color: hsl(195, 85%, 45%);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-section {
+                display: none;
+            }
+
+            .mobile-logo {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="logo-section">
+                    <div class="logo-icon">⚕️</div>
+                    <h1 class="logo-text">SevaBandhu</h1>
+                </div>
+                <p class="hero-subtitle">
+                    Connected Hospital Staff Management System for India
+                </p>
+
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-content">
+                            <h3>Secure & Reliable</h3>
+                            <p>Aadhaar/QR-based attendance with bank-grade security</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-content">
+                            <h3>Real-Time Coordination</h3>
+                            <p>Instant staff availability and emergency alerts</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">⏰</div>
+                        <div class="feature-content">
+                            <h3>Smart Scheduling</h3>
+                            <p>Automatic shift scheduling and leave management</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-footer">
+                    Trusted by hospitals across India • Serving healthcare professionals nationwide
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Section -->
+        <div class="login-section">
+            <div class="login-container">
+
+                <div class="mobile-logo">
+                    <div class="logo-icon">⚕️</div>
+                    <h1 class="logo-text">SevaBandhu</h1>
+                </div>
+
+                <div class="login-card">
+                    <div class="login-header">
+                        <h2>Welcome back</h2>
+                        <p>Sign in to your account to continue</p>
+                    </div>
+
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="form-input" 
+                                placeholder="you@hospital.com"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label class="form-label" for="password">Password</label>
+                                <a href="#" class="forgot-link">Forgot password?</a>
+                            </div>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="form-input" 
+                                placeholder="Enter your password"
+                                required
+                            >
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="remember" class="checkbox-input">
+                            <label for="remember" class="checkbox-label">Remember me for 30 days</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Sign In
+                        </button>
+
+                        <div class="divider">
+                            <span></span>
+                        </div>
+
+                        <!-- CREATE ACCOUNT BUTTON → OPENS signup.html -->
+                        <button type="button" class="btn btn-outline" id="createAccountBtn">
+                            ➕ Create Account
+                        </button>
+
+                    </form>
+
+                    <!-- <p class="signup-text">
+                        Don’t have an account?  
+                        <a href="#" class="signup-link">Contact your administrator</a>
+                    </p> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Login form submitted!");
+        });
+
+        // CREATE ACCOUNT BUTTON → OPEN signup.html
+        document.getElementById('createAccountBtn').addEventListener('click', function () {
+            window.location.href = "signup.html"; // <-- This is the only change
+        });
+
+        // Forgot password handler
+        document.querySelector('.forgot-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            alert("Password reset page will open here.");
+        });
+    </script>
+
+</body>
+</html>

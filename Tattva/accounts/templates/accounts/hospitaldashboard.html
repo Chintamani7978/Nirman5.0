@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{{ hospital_name|default:"Hospital Dashboard" }}</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#f6f8fb;
+            --card:#ffffff;
+            --muted:#7b8794;
+            --accent:#2f6df6; /* main blue */
+            --accent-2:#66a6ff;
+            --glass: rgba(47,109,246,0.08);
+            --pill:#eef4ff;
+            --radius:16px;
+            --shadow: 0 6px 20px rgba(28,45,77,0.06);
+            --soft-shadow: 0 6px 18px rgba(44,62,90,0.06);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            color: #1d2b3a;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%;margin:0;background:var(--bg)}
+        .app{max-width:1150px;margin:28px auto;padding:24px;}
+
+        /* Header */
+        .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+        .left{display:flex;gap:16px;align-items:center}
+        .location{background:var(--card);padding:8px 12px;border-radius:999px;box-shadow:var(--soft-shadow);display:flex;gap:8px;align-items:center}
+        .search{flex:1;margin-left:6px}
+        .search input{width:420px;max-width:42vw;border-radius:999px;padding:10px 14px;border:0;background:#f2f6ff;outline:none}
+        .profile{display:flex;gap:12px;align-items:center}
+        .bell{position:relative;cursor:pointer}
+        .badge{position:absolute;top:-6px;right:-6px;background:#ff5a5f;color:white;font-size:11px;padding:4px 6px;border-radius:999px}
+        .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+
+        /* grid */
+        .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+
+        /* Main column */
+        .main{display:flex;flex-direction:column;gap:20px}
+
+        .cards{display:flex;gap:18px}
+        .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);flex:1}
+        .kpi{display:flex;gap:14px;align-items:center}
+        .kpi .dot{width:46px;height:46px;border-radius:12px;background:var(--pill);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+        .kpi h3{margin:0;font-size:18px}
+        .kpi p{margin:0;color:var(--muted);font-size:13px}
+
+        /* Charts */
+        .charts{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+        .chart-card{background:var(--card);padding:16px;border-radius:14px;box-shadow:var(--shadow)}
+        .chart-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .small-muted{color:var(--muted);font-size:12px}
+
+        /* Doctor availability */
+        .table-card{background:var(--card);padding:12px;border-radius:14px;box-shadow:var(--shadow)}
+        table{width:100%;border-collapse:collapse}
+        th,td{padding:10px 8px;text-align:left;font-size:14px}
+        thead th{color:var(--muted);font-weight:600;font-size:12px}
+        tbody tr{background:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.98));border-radius:8px}
+        .status{padding:6px 10px;border-radius:999px;font-weight:600;font-size:12px}
+        .status.online{background:rgba(46,214,151,0.12);color:#1aa76a}
+        .status.busy{background:rgba(255,181,0,0.12);color:#c47c00}
+        .status.off{background:rgba(236,239,241,0.8);color:#7b8794}
+
+        /* Right column widgets */
+        .right .widget{background:var(--card);padding:14px;border-radius:14px;box-shadow:var(--shadow);margin-bottom:18px}
+        .upcoming .appt{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(90deg,#f8fbff,#ffffff)}
+        .appt .icon{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+        .appt .meta{flex:1}
+        .appt .meta h4{margin:0;font-size:15px}
+        .appt .meta p{margin:0;color:var(--muted);font-size:13px}
+        .pill-confirm{background:rgba(47,109,246,0.12);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+
+        .messagesHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer}
+        .messagesDropdown{display:none;border-top:1px solid #f2f4f7;padding-top:10px}
+        .messages .msg{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px}
+        .msg .dot{width:44px;height:44px;border-radius:10px;background:#f0f6ff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700}
+        .msg h5{margin:0;font-size:14px}
+        .msg p{margin:0;color:var(--muted);font-size:13px}
+
+        .emi-alert{display:flex;gap:10px;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(90deg,#fff7f7,#ffffff);border:1px solid #ffecec;margin-top:10px}
+        .emi-alert strong{color:#c44747}
+
+        /* responsive */
+        @media (max-width:980px){
+            .grid{grid-template-columns:1fr;}
+            .search input{width:200px}
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="topbar">
+            <div class="left">
+                <div class="location">📍 <strong style="margin-left:6px;color:var(--accent)">{{ hospital_name|default:"Hospital Dashboard" }}</strong></div>
+                <div class="search"><input placeholder="Search doctors, patients, invoices..." /></div>
+            </div>
+            <div class="profile">
+                <div class="bell" id="notifBell">🔔<span class="badge" id="notifCount">3</span></div>
+                <div class="avatar">HO</div> 
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="main">
+                <div class="cards">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <div style="color:var(--muted);font-size:13px">Today's Revenue</div>
+                                <h2 id="revenueToday" style="margin:6px 0 0">...</h2> 
+                                <div style="font-size:12px;color:var(--muted)">EMI settled — you received full payment</div>
+                            </div>
+                            <div class="kpi">
+                                <div class="dot">+8%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <div style="color:var(--muted);font-size:13px">Appointments</div>
+                                <h2 id="apptCount" style="margin:6px 0 0">...</h2> 
+                            </div>
+                            <div class="kpi">
+                                <div class="dot">Dr</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts">
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <div>
+                                <strong>Appointments (7d)</strong><div class="small-muted">Walk-ins vs Booked</div>
+                            </div>
+                            <div class="small-muted">Last 7 days</div>
+                        </div>
+                        <canvas id="appointmentsChart" height="160"></canvas>
+                    </div>
+
+                    <!-- REVENUE CHART SIMULATION TARGET -->
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <div>
+                                <strong>Real-time Revenue (week)</strong>
+                                <div class="small-muted">Auto updates — simulated</div>
+                            </div>
+                            <div class="small-muted">₹ Lakhs</div>
+                        </div>
+                        <canvas id="revenueChart" height="160"></canvas>
+                        <div id="realtimeInfo" class="small-muted" style="margin-top:8px">Showing live inflow...</div>
+                    </div>
+                </div>
+
+                <div class="table-card" style="margin-top:8px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                        <strong>Doctor Availability</strong>
+                        <div class="small-muted">Updated just now</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr><th>Doctor</th><th>Speciality</th><th>Next Slot</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="doctorsTable">
+                            <tr><td colspan="4" style="text-align:center;">Loading doctor data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <aside class="right">
+                <div class="widget upcoming">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                        <strong>Upcoming Appointments</strong>
+                        <a href="#" style="font-size:13px;color:var(--accent)">View all</a>
+                    </div>
+
+                    <div id="upcomingList">
+                        <p style="font-size:14px;color:var(--muted)">Loading upcoming appointments...</p>
+                    </div>
+                </div>
+
+                <div class="widget messages">
+                    <div class="messagesHeader" id="msgToggle">
+                        <strong>Messages & Notifications</strong>
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <div id="msgUnread" class="small-muted">2 unread</div>
+                            <div id="msgArrow">▼</div>
+                        </div>
+                    </div>
+
+                    <div class="messagesDropdown" id="messagesList">
+                        </div>
+                </div>
+
+                <div class="widget">
+                    <strong>EMI Payment Alerts</strong>
+                    <div id="emiAlerts" style="margin-top:10px">
+                        </div>
+                </div>
+
+                <div class="widget">
+                    <strong>Quick Actions</strong>
+                    <div style="display:flex;gap:8px;margin-top:12px">
+                        <button style="flex:1;padding:10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;font-weight:700">Add Appointment</button>
+                        <button style="padding:10px;border-radius:10px;border:1px solid #eef3ff;background:transparent;color:var(--accent);font-weight:700">Add Doctor</button>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // HOSPITAL_ID is dynamically injected by Django
+    const HOSPITAL_ID = parseInt("{{ hospital_id|default:0 }}"); 
+
+    // --- Utility function to format currency ---
+    function formatCurrency(number) {
+        if (typeof number === 'string' && number.startsWith('₹')) {
+            return number;
+        }
+        return '₹ ' + number.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    }
+
+    // --- Chart Contexts ---
+    const apCtx = document.getElementById('appointmentsChart').getContext('2d');
+    let apChart = null;
+    const revCtx = document.getElementById('revenueChart').getContext('2d');
+    let revenueChart = null;
+
+    // --- Fallback Data (used if API fails) ---
+    const defaultAppointmentsData = {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        booked: [34,28,36,30,40,22,20],
+        walkin: [12,8,10,6,14,8,4]
+    };
+
+    // ---------- Main Data Fetch Function ----------
+
+    async function fetchDashboardData() {
+        // Initial Loading State
+        document.getElementById('revenueToday').textContent = '...';
+        document.getElementById('apptCount').textContent = '...';
+
+        let apptDataForSimulation = defaultAppointmentsData;
+
+        try {
+            if (!HOSPITAL_ID || HOSPITAL_ID === "None") {
+                console.warn("Hospital ID is missing. Running in Simulation Only mode.");
+                throw new Error("Missing ID");
+            }
+
+            // Correct API endpoint URL: /api/hospitaldashboard/<ID>/
+            const response = await fetch(`/api/hospitaldashboard/${HOSPITAL_ID}/`); 
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('API Error Response:', errorData);
+                document.getElementById('revenueToday').textContent = 'Offline';
+                // We don't set apptCount to error here, we let the fallback simulation take over
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // --- 1. Update KPIs ---
+            document.getElementById('revenueToday').textContent = data.kpis.revenue_today;
+            // Note: We will overwrite apptCount with the simulation, but we set it here initially just in case
+            document.getElementById('apptCount').textContent = data.kpis.appointments_count;
+
+            // --- 2. Prep Appointments Data for Simulation ---
+            if (data.charts && data.charts.appointments_7d) {
+                apptDataForSimulation = data.charts.appointments_7d;
+            }
+
+            // --- 3. Update Doctors Table (Real Data) ---
+            const tbody = document.getElementById('doctorsTable');
+            tbody.innerHTML = '';
+            if (data.doctors && data.doctors.length > 0) {
+                data.doctors.forEach(d => {
+                    const tr = document.createElement('tr');
+                    const initials = d.name.split(' ').map(n=>n[0]).slice(0,2).join('');
+                    
+                    tr.innerHTML = `<td style="display:flex;gap:12px;align-items:center">
+                        <div style="width:44px;height:44px;border-radius:8px;background:#f5f8ff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">
+                            ${initials}
+                        </div>
+                        <div><strong style='font-size:14px'>${d.name}</strong><div style='color:var(--muted);font-size:13px'>${d.spec}</div></div>
+                        </td>
+                        <td style='vertical-align:middle'>${d.spec}</td>
+                        <td style='vertical-align:middle'>${d.slot}</td>
+                        <td style='vertical-align:middle'><span class='status ${d.status}'>${d.status_text}</span></td>`;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--muted);">No doctors assigned to this hospital.</td></tr>';
+            }
+
+            // --- 4. Update Upcoming Appointments (Real Data) ---
+            const upEl = document.getElementById('upcomingList');
+            upEl.innerHTML = '';
+            if (data.upcoming && data.upcoming.length > 0) {
+                data.upcoming.forEach(u => {
+                    const div = document.createElement('div');
+                    div.className = 'appt';
+                    div.style.marginBottom = '10px';
+                    
+                    const statusBg = u.status === 'Confirmed' ? 'rgba(47,109,246,0.12)' : 'rgba(255,181,0,0.12)';
+                    const statusColor = u.status === 'Confirmed' ? 'var(--accent)' : '#c47c00';
+                    const initials = u.patient.split(' ').map(p=>p[0]).slice(0,2).join('');
+
+                    div.innerHTML = `<div class='icon'>${initials}</div>
+                        <div class='meta'><h4>${u.patient} <span style='font-weight:600;color:var(--muted);font-size:13px'>• ${u.doc}</span></h4><p>${u.time}</p></div>
+                        <div><div class='pill-confirm' style='background:${statusBg};color:${statusColor}'>${u.status}</div></div>`;
+                    upEl.appendChild(div);
+                });
+            } else {
+                upEl.innerHTML = '<p style="font-size:14px;color:var(--muted)">No upcoming appointments found.</p>';
+            }
+
+        } catch (error) {
+            console.error('Dashboard data fetch error:', error);
+        } finally {
+            // --- 5. Start Real-time Simulations ---
+            // Moved to 'finally' so it runs even if API fails or is loading
+            startRevenueSimulation();
+            startAppointmentsSimulation(apptDataForSimulation);
+        }
+    }
+
+    // ---------- CHART FUNCTIONS ----------
+
+    function initializeAppointmentsChartEmpty() {
+        if (apChart) {
+            apChart.destroy();
+        }
+        apChart = new Chart(apCtx, {
+            type:'line',
+            data:{
+                labels: [], // Starts empty for simulation
+                datasets:[
+                    {
+                        label:'Booked', 
+                        data: [], 
+                        fill:true, tension:0.35, 
+                        backgroundColor:'rgba(47,109,246,0.12)', 
+                        borderColor:'rgba(47,109,246,1)', 
+                        pointRadius:3
+                    },
+                    {
+                        label:'Walk-ins', 
+                        data: [], 
+                        fill:true, tension:0.35, 
+                        backgroundColor:'rgba(102,166,255,0.08)', 
+                        borderColor:'rgba(102,166,255,1)', 
+                        pointRadius:3
+                    }
+                ]
+            },
+            options:{
+                plugins:{legend:{display:true,labels:{boxWidth:10}}},
+                interaction:{mode:'index',intersect:false},
+                scales:{y:{beginAtZero:true,ticks:{stepSize:10}}},
+                animation: { duration: 500 }
+            }
+        });
+    }
+
+    function initializeRevenueChart() {
+        if (revenueChart) {
+            revenueChart.destroy();
+        }
+        revenueChart = new Chart(revCtx, {
+            type:'line',
+            data: {
+                labels: [], 
+                datasets: [{
+                    label: 'Revenue (thousands)',
+                    data: [],
+                    fill: true,
+                    tension: 0.3,
+                    backgroundColor: 'rgba(47,109,246,0.12)',
+                    borderColor: 'rgba(47,109,246,1)',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                plugins:{legend:{display:false}},
+                scales: {y: {beginAtZero: true}},
+                animation: { duration: 500 }
+            }
+        });
+    }
+    
+    // --- Revenue Simulation Variables ---
+    const simulatedWeek = [12, 18, 15, 22, 30, 26, 38]; 
+    const weekDays = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    let revIndex = 0;
+    let realtimeTimer = null;
+
+    // --- Appointments Simulation Variables ---
+    let apptTimer = null;
+    let apptIndex = 0;
+
+    function startRevenueSimulation() {
+        if (realtimeTimer) clearInterval(realtimeTimer);
+        revIndex = 0;
+        initializeRevenueChart();
+
+        const realtimeInfo = document.getElementById('realtimeInfo');
+        if(realtimeInfo) realtimeInfo.textContent = 'Showing live inflow...';
+
+        realtimeTimer = setInterval(()=> {
+            if (revIndex >= weekDays.length) {
+                if(realtimeInfo) realtimeInfo.textContent = 'Week data complete (simulation).';
+                clearInterval(realtimeTimer);
+                realtimeTimer = null;
+                return;
+            }
+            
+            revenueChart.data.labels.push(weekDays[revIndex]);
+            revenueChart.data.datasets[0].data.push(simulatedWeek[revIndex]);
+            revenueChart.update();
+
+            // Update top KPI based on the SIMULATED chart data
+            const cum = revenueChart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+            const kpi = document.getElementById('revenueToday');
+            if(kpi) kpi.textContent = formatCurrency(cum * 1000); 
+
+            revIndex++;
+        }, 1500);
+    }
+
+    function startAppointmentsSimulation(sourceData) {
+        if (apptTimer) clearInterval(apptTimer);
+        apptIndex = 0;
+        initializeAppointmentsChartEmpty();
+
+        const labels = sourceData.labels || weekDays;
+        const booked = sourceData.booked || [];
+        const walkin = sourceData.walkin || [];
+
+        apptTimer = setInterval(() => {
+            if (apptIndex >= labels.length) {
+                clearInterval(apptTimer);
+                apptTimer = null;
+                return;
+            }
+
+            // Push data
+            apChart.data.labels.push(labels[apptIndex]);
+            const bVal = booked[apptIndex] !== undefined ? booked[apptIndex] : 0;
+            const wVal = walkin[apptIndex] !== undefined ? walkin[apptIndex] : 0;
+            
+            apChart.data.datasets[0].data.push(bVal);
+            apChart.data.datasets[1].data.push(wVal);
+            apChart.update();
+
+            // Dynamic KPI Update: Sum of Booked + Walkin so far
+            const currentBookedTotal = apChart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+            const currentWalkinTotal = apChart.data.datasets[1].data.reduce((a,b)=>a+b,0);
+            const total = currentBookedTotal + currentWalkinTotal;
+            
+            const kpi = document.getElementById('apptCount');
+            if(kpi) kpi.textContent = total;
+
+            apptIndex++;
+
+        }, 800); // Slightly faster than revenue chart for variety
+    }
+    
+    // Call the main fetch function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchDashboardData);
+
+    // ------------------------------------------------------------------
+    // --- STATIC WIDGET DATA AND TOGGLE LOGIC ---
+    // ------------------------------------------------------------------
+
+    const messages = [
+        {from:'System',text:'Appointment scheduled for Rahul Sharma at Tomorrow 10:30 AM.'},
+        {from:'Admin',text:'Dr. Anjali Gupta: leave approved for next Friday.'},
+        {from:'Finance',text:'EMI processed for patient Sonia Patel (first installment).'}
+    ];
+    const messagesList = document.getElementById('messagesList');
+    const msgUnread = document.getElementById('msgUnread');
+
+    function renderMessages() {
+        if(!messagesList) return;
+        messagesList.innerHTML = '';
+        messages.forEach(m=>{
+            const d = document.createElement('div');
+            d.className='msg';
+            d.style.borderBottom = '1px solid #f4f6f9';
+            d.style.paddingBottom = '8px';
+            d.style.marginBottom = '8px';
+            d.innerHTML = `<div class='dot'>${m.from.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+                            <div><h5>${m.from}</h5><p>${m.text}</p></div>`;
+            messagesList.appendChild(d);
+        });
+        if(msgUnread) msgUnread.textContent = `${messages.length} unread`;
+    }
+    renderMessages();
+
+    // Toggle dropdown
+    const msgToggle = document.getElementById('msgToggle');
+    const msgArrow = document.getElementById('msgArrow');
+    if(msgToggle && msgArrow) {
+        msgToggle.addEventListener('click', ()=>{
+            const dd = document.getElementById('messagesList');
+            const isHidden = dd.style.display === 'none' || dd.style.display === '';
+            dd.style.display = isHidden ? 'block' : 'none';
+            msgArrow.textContent = isHidden ? '▲' : '▼';
+        });
+    }
+
+    // Clicking notification bell also opens the messages
+    const notifBell = document.getElementById('notifBell');
+    if(notifBell) {
+        notifBell.addEventListener('click', ()=> {
+            const dd = document.getElementById('messagesList');
+            const isHidden = dd.style.display === 'none' || dd.style.display === '';
+            dd.style.display = isHidden ? 'block' : 'none';
+            if(msgArrow) msgArrow.textContent = isHidden ? '▲' : '▼';
+        });
+    }
+
+    // Optional: auto-mark messages as read after opening
+    if(msgToggle) {
+        msgToggle.addEventListener('click', ()=> {
+            setTimeout(()=>{ 
+                const nc = document.getElementById('notifCount');
+                if(nc) nc.style.display = 'none'; 
+            }, 1000);
+        });
+    }
+
+    // ---------- EMI Payment Alerts (example)
+    const emiAlerts = [
+        {patient:'Sonia Patel', amount:'₹2,500', due:'3 days'},
+        {patient:'Rahul Sharma', amount:'₹1,200', due:'Overdue'}
+    ];
+    const emiEl = document.getElementById('emiAlerts');
+    if(emiEl) {
+        emiAlerts.forEach(e=>{
+            const div = document.createElement('div');
+            div.className = 'emi-alert';
+            div.innerHTML = `<div style="width:40px;height:40px;border-radius:8px;background:#fff0f0;display:flex;align-items:center;justify-content:center;color:#c44747;font-weight:700">₹</div>
+                            <div style="flex:1"><strong>${e.patient}</strong><div style="font-size:13px;color:var(--muted)">${e.amount} • Due: ${e.due}</div></div>
+                            <div><button style="padding:8px;border-radius:8px;border:0;background:#f5f5f5;cursor:pointer">Details</button></div>`;
+            emiEl.appendChild(div);
+        });
+    }
+    
+</script>
+</body>
+</html>

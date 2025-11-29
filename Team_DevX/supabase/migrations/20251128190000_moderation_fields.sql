@@ -1,0 +1,19 @@
+-- Moderation fields for problems, solutions, comments, user_profiles
+ALTER TABLE problems ADD COLUMN IF NOT EXISTS is_flagged BOOLEAN DEFAULT FALSE;
+ALTER TABLE problems ADD COLUMN IF NOT EXISTS quality_score FLOAT;
+ALTER TABLE problems ADD COLUMN IF NOT EXISTS moderation_reason TEXT;
+ALTER TABLE problems ADD COLUMN IF NOT EXISTS moderated_at TIMESTAMPTZ;
+
+ALTER TABLE solutions ADD COLUMN IF NOT EXISTS is_flagged BOOLEAN DEFAULT FALSE;
+ALTER TABLE solutions ADD COLUMN IF NOT EXISTS quality_score FLOAT;
+ALTER TABLE solutions ADD COLUMN IF NOT EXISTS moderation_reason TEXT;
+ALTER TABLE solutions ADD COLUMN IF NOT EXISTS moderated_at TIMESTAMPTZ;
+
+ALTER TABLE comments ADD COLUMN IF NOT EXISTS is_flagged BOOLEAN DEFAULT FALSE;
+ALTER TABLE comments ADD COLUMN IF NOT EXISTS quality_score FLOAT;
+ALTER TABLE comments ADD COLUMN IF NOT EXISTS moderation_reason TEXT;
+ALTER TABLE comments ADD COLUMN IF NOT EXISTS moderated_at TIMESTAMPTZ;
+
+ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS is_flagged BOOLEAN DEFAULT FALSE;
+ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS moderation_reason TEXT;
+ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS moderated_at TIMESTAMPTZ;

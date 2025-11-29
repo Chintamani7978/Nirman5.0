@@ -1,0 +1,18 @@
+from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+import anvil.server
+from ._anvil_designer import LoginTemplate
+from .PatientLogin import PatientLogin
+from .DoctorLogin import DoctorLogin
+
+class Login(LoginTemplate):
+  def __init__(self, **properties):
+    self.init_components(**properties)
+
+  def button_1_click(self, **event_args):
+    open_form('Login.PatientLogin')
+
+  def button_2_click(self, **event_args):
+    open_form('Login.DoctorLogin')

@@ -1,0 +1,90 @@
+/* ------- Background -------- */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* Add your background image here */
+    background: url("bimage.jpg") no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ------- Portal Box -------- */
+
+.portal-box {
+    width: 380px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+
+/* Title */
+
+.portal-box h2 {
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #222;
+}
+
+
+/* Create Account button */
+
+.btn-main {
+    width: 100%;
+    padding: 14px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.btn-main:hover {
+    background: #007bff;
+}
+
+
+/* Divider */
+
+.divider {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+
+/* Login button */
+
+.btn-outline {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: #007bff;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid #0186a0;
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    background: #e3faff;
+}
+
+.small-logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 120px;
+    border-radius: 4px;
+    z-index: 9999;
+}

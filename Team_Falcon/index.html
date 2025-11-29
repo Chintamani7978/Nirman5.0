@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CrowdResolve - Civic Issue Reporting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="nav-left">
+        <div class="logo">CR</div>
+        <div class="brand">CrowdResolve</div>
+      </div>
+      <nav class="nav-right">
+        <button class="nav-link" data-section="home">Home</button>
+        <button class="nav-link" data-section="citizen-dashboard">
+          Citizen Dashboard
+        </button>
+        <button class="nav-link" data-section="official-dashboard">
+          Official Panel
+        </button>
+        <div class="nav-auth">
+          <span id="nav-user" class="nav-user"></span>
+          <button id="btn-login" class="btn-outline" data-section="auth">
+            Log in
+          </button>
+          <button id="btn-register" class="btn-primary" data-section="auth">
+            Sign up
+          </button>
+          <button id="btn-logout" class="btn-outline hidden">
+            Log out
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <!-- HOME SECTION -->
+      <section id="home" class="section active">
+        <div class="hero">
+          <div class="hero-text">
+            <p class="eyebrow">AI-DRIVEN CIVIC PLATFORM</p>
+            <h1>
+              Report civic issues in seconds.
+              <span class="accent">Let AI do the triage.</span>
+            </h1>
+            <p class="subtitle">
+              CrowdResolve connects citizens and local authorities with
+              AI-powered categorisation, smart routing, and live status
+              tracking.
+            </p>
+            <div class="hero-actions">
+              <button class="btn-primary" data-section="auth">
+                Get started as citizen
+              </button>
+              <button class="btn-outline" data-section="auth">
+                Log in as official
+              </button>
+            </div>
+            <div class="hero-highlights">
+              <div>
+                <div class="highlight-title">AI categorisation</div>
+                <div class="highlight-text">
+                  Automatically tags issues and suggests priority.
+                </div>
+              </div>
+              <div>
+                <div class="highlight-title">Transparent tracking</div>
+                <div class="highlight-text">
+                  Follow every issue from Open to Resolved.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="card-header">
+              <span class="card-title">Example issue</span>
+              <span class="badge badge-danger">High</span>
+            </div>
+            <div class="card-body">
+              <div class="card-issue-title">
+                Large pothole near main gate
+              </div>
+              <p class="card-summary">
+                AI: Categorised as <strong>Road / Pothole</strong> and routed
+                to <strong>Roads Department</strong>.
+              </p>
+              <div class="card-meta">
+                <span>Status: <span class="text-amber">In Progress</span></span>
+                <span>ETA: 2–3 days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="features">
+          <h2>For citizens and governments</h2>
+          <div class="features-grid">
+            <article class="feature-card">
+              <h3>One-tap reporting</h3>
+              <p>
+                Capture description, location, and photos of civic issues in a
+                few seconds.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>AI smart routing</h3>
+              <p>
+                Issues are auto-categorised and routed to the right department
+                based on content.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Live status tracking</h3>
+              <p>
+                Citizens can see every step from Open to Resolved with clear
+                updates.
+              </p>
+            </article>
+            <article class="feature-card">
+              <h3>Actionable dashboards</h3>
+              <p>
+                Officials get queues by priority, area, and type for faster
+                decisions.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="steps">
+          <div class="steps-text">
+            <h2>How CrowdResolve works</h2>
+            <p>
+              Behind a simple interface, CrowdResolve uses AI to reduce manual
+              triage work for officials and increase visibility for citizens.
+            </p>
+          </div>
+          <ol class="steps-list">
+            <li>
+              Citizens submit an issue with description, location, and optional
+              photo.
+            </li>
+            <li>
+              AI categorises the issue, suggests priority, and routes it to the
+              correct department.
+            </li>
+            <li>
+              Officials view structured queues, apply filters, and update
+              status.
+            </li>
+            <li>
+              Actions are tracked as Open, In Progress, Resolved, or Rejected.
+            </li>
+            <li>
+              Citizens track real-time progress in their personal dashboards.
+            </li>
+          </ol>
+        </section>
+
+        <section class="cta">
+          <div class="cta-text">
+            <h2>Ready to make your city smarter?</h2>
+            <p>
+              Start as a citizen reporting issues or onboard your department as
+              an official team. CrowdResolve adapts to your local governance
+              structure.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <button class="btn-primary" data-section="auth">
+              Sign up as citizen
+            </button>
+            <button class="btn-outline" data-section="auth">
+              Log in as official
+            </button>
+          </div>
+        </section>
+      </section>
+
+      <!-- AUTH SECTION -->
+      <section id="auth" class="section">
+        <div class="auth-grid">
+          <form id="login-form" class="card">
+            <h2>Log in</h2>
+            <p class="muted">
+              Use your registered email to access your dashboard.
+            </p>
+            <label>
+              Email
+              <input
+                type="email"
+                id="login-email"
+                placeholder="you@example.com"
+                required
+              />
+            </label>
+            <label>
+              Password
+              <input
+                type="password"
+                id="login-password"
+                placeholder="••••••••"
+                required
+              />
+            </label>
+            <button type="submit" class="btn-primary full-width">
+              Log in
+            </button>
+            <p id="login-error" class="error"></p>
+          </form>
+
+          <form id="register-form" class="card">
+            <h2>Create an account</h2>
+            <p class="muted">
+              Choose citizen for reporting or official for managing issues.
+            </p>
+            <label>
+              Full name
+              <input
+                type="text"
+                id="register-name"
+                placeholder="Your name"
+                required
+              />
+            </label>
+            <label>
+              Role
+              <select id="register-role">
+                <option value="citizen">Citizen</option>
+                <option value="official">Government Official</option>
+              </select>
+            </label>
+            <label>
+              Email
+              <input
+                type="email"
+                id="register-email"
+                placeholder="you@example.com"
+                required
+              />
+            </label>
+            <label>
+              Password
+              <input
+                type="password"
+                id="register-password"
+                placeholder="Create a password"
+                required
+              />
+            </label>
+            <button type="submit" class="btn-outline full-width">
+              Sign up
+            </button>
+            <p id="register-error" class="error"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- CITIZEN DASHBOARD -->
+      <section id="citizen-dashboard" class="section">
+        <div class="section-header">
+          <div>
+            <h2>Citizen dashboard</h2>
+            <p class="muted">
+              View and manage the issues you have reported in your city.
+            </p>
+          </div>
+        </div>
+        <div class="grid-2">
+          <form id="issue-form" class="card">
+            <h3>Report a new issue</h3>
+            <label>
+              Title
+              <input
+                type="text"
+                id="issue-title"
+                placeholder="E.g. Large pothole near main gate"
+                required
+              />
+            </label>
+            <label>
+              Description
+              <textarea
+                id="issue-description"
+                placeholder="Explain the issue, its impact, and any nearby landmarks."
+                required
+              ></textarea>
+            </label>
+            <label>
+              Location (text)
+              <input
+                type="text"
+                id="issue-location"
+                placeholder="E.g. Near Gate 2, Green Valley Society"
+              />
+            </label>
+            <button type="submit" class="btn-primary full-width">
+              Submit issue
+            </button>
+            <p id="issue-error" class="error"></p>
+          </form>
+
+          <div class="card">
+            <div class="card-header-inline">
+              <h3>My issues</h3>
+              <button id="btn-refresh-my-issues" class="btn-small">
+                Refresh
+              </button>
+            </div>
+            <div id="my-issues-list" class="issues-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OFFICIAL DASHBOARD -->
+      <section id="official-dashboard" class="section">
+        <div class="section-header">
+          <div>
+            <h2>Official issue management</h2>
+            <p class="muted">
+              View all reported issues, prioritised by AI for faster action.
+            </p>
+          </div>
+          <button id="btn-refresh-all-issues" class="btn-small">
+            Refresh
+          </button>
+        </div>
+        <div class="card">
+          <div id="all-issues-list" class="issues-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> CrowdResolve. All rights reserved.</div>
+      <div>AI-driven civic issue reporting & resolution.</div>
+    </footer>
+
+    <script src="src.js"></script>
+  </body>
+</html>

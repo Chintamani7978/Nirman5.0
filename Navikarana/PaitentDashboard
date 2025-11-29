@@ -1,0 +1,34 @@
+from ._anvil_designer import PatientDashboardTemplate
+from anvil import *
+import anvil.server
+
+class PatientDashboard(PatientDashboardTemplate):
+  def __init__(self, patient=None, **properties):
+    self.init_components(**properties)
+
+    self.patient = patient
+
+    if self.patient:
+      self.lbl_patient_name.text = f"Welcome, {self.patient['name']}"
+
+    # Load doctors
+    self.load_doctors()
+
+  def load_doctors(self):
+    doctors = anvil.server.call('get_doctors')
+
+    # Pass each doctor row + patient to the repeating panel
+    self.repeating_panel_doctors.items = [
+      {"doctor": d, "patient": self.patient}
+      for d in doctors
+    ]
+
+  def btn_update_profile_click(self, **event_args):
+    open_form('PatientProfile', patient=self.patient)
+
+  def btn_book_click(self, **event_args):
+    open_form('BookAppointment', patient=self.patient)
+
+  def btn_logout_click(self, **event_args):
+    anvil.server.call('logout_patient')
+    open_form('Login')

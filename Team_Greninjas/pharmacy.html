@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy & Medicine Checker - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html" class="active">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="admin-panel.html">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-pills"></i> Pharmacy & Medicine Checker</h1>
+        <p>Check medicine availability at nearby pharmacies</p>
+    </div>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="form-container">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Search for Medicine</h2>
+                <div class="form-group">
+                    <label for="medicineName"><i class="fas fa-pills"></i> Medicine Name</label>
+                    <input type="text" id="medicineName" placeholder="Enter medicine name (e.g., Paracetamol, Amoxicillin)" required>
+                </div>
+                <div class="form-group">
+                    <label for="location"><i class="fas fa-map-marker-alt"></i> Your Location</label>
+                    <input type="text" id="location" placeholder="Enter your location or area" required>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="searchMedicine()">
+                    <i class="fas fa-search"></i> Search Medicine
+                </button>
+            </div>
+
+            <div id="searchResults" style="margin-top: 40px;">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Sanjeevani Live</h3>
+                    <p>Your trusted healthcare companion for real-time medical services</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        const pharmacies = [
+            { id: 1, name: "City Pharmacy", location: "Downtown", distance: "0.5 km" },
+            { id: 2, name: "MediCare Pharmacy", location: "North District", distance: "1.2 km" },
+            { id: 3, name: "Health Plus", location: "East Side", distance: "2.0 km" },
+            { id: 4, name: "Apollo Pharmacy", location: "West End", distance: "1.8 km" }
+        ];
+
+        const medicines = {
+            "paracetamol": { available: true, price: 25, alternatives: ["Acetaminophen", "Tylenol"] },
+            "amoxicillin": { available: true, price: 150, alternatives: ["Amoxil", "Amox"] },
+            "aspirin": { available: true, price: 30, alternatives: ["Disprin", "Ecotrin"] },
+            "ibuprofen": { available: true, price: 45, alternatives: ["Brufen", "Advil"] },
+            "omeprazole": { available: true, price: 120, alternatives: ["Prilosec", "Losec"] }
+        };
+
+        function searchMedicine() {
+            const medicineName = document.getElementById('medicineName').value.toLowerCase().trim();
+            const location = document.getElementById('location').value.trim();
+
+            if (!medicineName || !location) {
+                showAlert('Please fill in all fields', 'warning');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('searchResults');
+            let found = false;
+
+            // Check if medicine exists
+            let medicineData = null;
+            for (const [key, value] of Object.entries(medicines)) {
+                if (medicineName.includes(key) || key.includes(medicineName)) {
+                    medicineData = value;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Medicine "${medicineName}" not found in our database. Please check the spelling or contact a pharmacy directly.</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // Display results
+            resultsDiv.innerHTML = `
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Available at Nearby Pharmacies</h2>
+                <div class="dashboard-grid">
+                    ${pharmacies.map(pharmacy => `
+                        <div class="hospital-card">
+                            <div class="hospital-header">
+                                <div>
+                                    <div class="hospital-name">
+                                        <i class="fas fa-store"></i> ${pharmacy.name}
+                                    </div>
+                                    <div class="hospital-location">
+                                        <i class="fas fa-map-marker-alt"></i> ${pharmacy.location} (${pharmacy.distance} away)
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 20px 0; border-top: 1px solid #e0e0e0; margin-top: 15px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <span style="font-weight: 600; color: var(--dark-gray);">Availability:</span>
+                                    <span class="status-badge available">In Stock</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <span style="font-weight: 600; color: var(--dark-gray);">Price:</span>
+                                    <span style="font-size: 1.2rem; color: var(--primary-blue); font-weight: bold;">₹${medicineData.price}</span>
+                                </div>
+                                <button class="btn btn-primary btn-block" onclick="orderMedicine(${pharmacy.id}, '${medicineName}')">
+                                    <i class="fas fa-shopping-cart"></i> Order Now
+                                </button>
+                                <button class="btn btn-secondary btn-block" onclick="getPharmacyDirections(${pharmacy.id})" style="margin-top: 10px;">
+                                    <i class="fas fa-route"></i> Get Directions
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${medicineData.alternatives.length > 0 ? `
+                    <div class="alert alert-info" style="margin-top: 30px;">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Alternative Medicines:</strong> ${medicineData.alternatives.join(', ')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        function orderMedicine(pharmacyId, medicineName) {
+            showAlert(`Order placed for ${medicineName} at ${pharmacies.find(p => p.id === pharmacyId).name}. You will receive a confirmation shortly.`, 'success');
+        }
+
+        function getPharmacyDirections(pharmacyId) {
+            const pharmacy = pharmacies.find(p => p.id === pharmacyId);
+            if (pharmacy) {
+                const address = encodeURIComponent(pharmacy.location);
+                window.open(`https://www.google.com/maps/dir/?api=1&destination=${address}`, '_blank');
+            }
+        }
+
+        // Allow Enter key to search
+        document.getElementById('medicineName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchMedicine();
+            }
+        });
+    </script>
+</body>
+</html>
+

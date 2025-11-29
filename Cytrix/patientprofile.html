@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <link rel="stylesheet" href="style4.css">
+</head>
+
+<body>
+    <img src="logo.jpg" alt="logo" class="small-logo">
+    <div class="profile-card">
+        <form action="http://localhost:3000/save" method="POST">
+            <!-- Profile Photo Upload -->
+            <label for="photoUpload" class="photo-circle">
+        <img id="previewPhoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
+    </label>
+            <input type="file" accept="image/*" id="photoUpload" style="display: none">
+            <h2>Patient Profile</h2>
+
+            <!-- Editable Fields -->
+            <div class="input-box">
+                <label>Name</label>
+                <input type="text" placeholder="Enter Name">
+            </div>
+
+            <div class="input-box">
+                <label>Email</label>
+                <input type="email" placeholder="Enter Email">
+            </div>
+
+            <div class="input-box">
+                <label>Age</label>
+                <input type="number" placeholder="Enter Age">
+            </div>
+
+            <div class="input-box">
+                <label>Gender</label>
+                <input type="text" placeholder="Male / Female">
+            </div>
+
+            <div class="input-box">
+                <label>Contact</label>
+                <input type="number" placeholder="Enter Contact Number">
+            </div>
+
+            <div class="input-box">
+                <label>Parkinson's Diagnosis</label>
+                <select>
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+            </div>
+            <div>
+
+            </div>
+
+            <div class="button-row">
+                <button onclick="window.location.href='save.html'" class="save-btn">Save</button>
+                <button onclick="window.location.href='logout.html'" class="logout-btn">Logout</button>
+                <!--<button class="button" onclick="setactive" (this)>save</button>
+                <button class="button" onclick="setactive" (this)>logout</button>-->
+
+            </div>
+
+            <script>
+                // Profile Photo Preview Script
+                const upload = document.getElementById("photoUpload");
+                const preview = document.getElementById("previewPhoto");
+
+                upload.addEventListener("change", () => {
+                    const file = upload.files[0];
+                    if (file) {
+                        preview.src = URL.createObjectURL(file);
+                    }
+                });
+            </script>
+
+</body>
+
+</html>

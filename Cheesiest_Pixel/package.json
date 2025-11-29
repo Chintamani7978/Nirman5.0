@@ -1,0 +1,25 @@
+{
+  "name": "copy-of-copy--samhitafusion-healthcare-platform-14",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@google/genai": "^1.30.0",
+    "lucide-react": "^0.555.0",
+    "react-router-dom": "^7.9.6",
+    "recharts": "^3.5.1",
+    "react-qr-code": "^2.0.18",
+    "framer-motion": "^11.0.28"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "vite": "^6.2.0"
+  }
+}

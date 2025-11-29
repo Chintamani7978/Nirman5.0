@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html" class="active">Patient Portal</a></li>
+                <li><a href="login.html" class="nav-login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-user-circle"></i> Patient Portal</h1>
+        <p>Manage your health records, appointments, and medical history in one place</p>
+    </div>
+
+    <!-- Patient Dashboard -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> Patient Management Dashboard</h2>
+            <p style="color: #666; margin-bottom: 30px;">Complete patient records with medical history, ongoing treatments, and assigned doctors</p>
+            
+            <div class="patient-grid" id="patientGrid">
+                <!-- Patient 1: Ankit Sharma -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Ankit Sharma</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1001</span>
+                            <span class="blood-group-badge">B+</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 28 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Male</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Migraine</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Pan-D, Naproxen</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">12 Oct 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Priya Sharma - Neurology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 2: Sasmita Rout -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Sasmita Rout</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1002</span>
+                            <span class="blood-group-badge">O+</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 34 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Female</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Thyroid</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Levothyroxine</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">20 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Sangeeta Mohapatra - Endocrinology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 3: Manoj Swain -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Manoj Swain</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1003</span>
+                            <span class="blood-group-badge">AB+</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 45 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Male</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Hypertension</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Lisinopril, Amlodipine</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">15 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Abinash Mohanty - Cardiology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 4: Debasmita Nayak -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Debasmita Nayak</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1004</span>
+                            <span class="blood-group-badge">A+</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 29 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Female</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Sinusitis</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Cefixime, Amoxicillin</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">18 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Bikash Nayak - ENT</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 5: Rakesh Patnaik -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Rakesh Patnaik</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1005</span>
+                            <span class="blood-group-badge">O-</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 52 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Male</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Diabetes Type 2</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Metformin, Glipizide</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">22 Oct 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Pragyan Parimita - General Medicine</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 6: Madhusmita Pahi -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Madhusmita Pahi</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1006</span>
+                            <span class="blood-group-badge">B-</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 38 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Female</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">PCOS</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Metformin, Spironolactone</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">25 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Jyoti Sahu - Gynecology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 7: Lingaraj Panda -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Lingaraj Panda</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1007</span>
+                            <span class="blood-group-badge">AB-</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 55 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Male</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Osteoarthritis</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Glucosamine, Naproxen</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">08 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Sushant Mishra - Orthopedics</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 8: Priyanka Das -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Priyanka Das</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1008</span>
+                            <span class="blood-group-badge">A-</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 31 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Female</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Asthma</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Albuterol, Fluticasone</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">10 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Ananya Rath - Pulmonology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 9: Harshil Mohapatra -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Harshil Mohapatra</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1009</span>
+                            <span class="blood-group-badge">B+</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 42 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Male</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Acid Reflux</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Omeprazole, Ranitidine</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">05 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Subrat Sahoo - Gastroenterology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient 10: Sujata Tripathy -->
+                <div class="patient-card-new">
+                    <div class="patient-card-header">
+                        <div class="patient-status-indicator active"><i class="fas fa-check-circle"></i> Active</div>
+                        <h3>Sujata Tripathy</h3>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-badge-row">
+                            <span class="patient-id-badge">ID: PT1010</span>
+                            <span class="blood-group-badge">O+</span>
+                        </div>
+                        <div class="patient-details">
+                            <p><i class="fas fa-calendar"></i> <strong>Age:</strong> 48 years</p>
+                            <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> Female</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-heartbeat"></i> Medical Condition</span>
+                            <p class="section-content">Breast Cancer (In Recovery)</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-pills"></i> Ongoing Medication</span>
+                            <p class="section-content">Tamoxifen, Chemotherapy</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-calendar-check"></i> Last Visit</span>
+                            <p class="section-content">28 Nov 2025</p>
+                        </div>
+                        <div class="patient-section-box">
+                            <span class="section-label"><i class="fas fa-user-md"></i> Assigned Doctor</span>
+                            <p class="section-content">Dr. Tapan Ratha - Oncology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hospital-profiles.html">Hospitals</a></li>
+                        <li><a href="doctor-verification.html">Doctors</a></li>
+                        <li><a href="patient-portal.html">Patient Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="pharmacy.html">Pharmacy</a></li>
+                        <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                        <li><a href="ambulance-booking.html">Ambulance</a></li>
+                        <li><a href="admin-panel.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About Sanjeevani Live</h4>
+                    <p>Sanjeevani Live is dedicated to providing comprehensive healthcare services and information to the people of Bhubaneswar and beyond.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency</h4>
+                    <p><strong>Ambulance:</strong> 108</p>
+                    <p><strong>Police:</strong> 100</p>
+                    <p><strong>Fire:</strong> 101</p>
+                    <p><strong>Sanjeevani Live Helpline:</strong> 1800-HEALTH</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

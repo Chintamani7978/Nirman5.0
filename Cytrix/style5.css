@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(19, 18, 18);
+}
+
+body {
+    background-color: #f0f4f8;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 450px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-box h2 {
+    background: white;
+    margin-left: 30px;
+    width: 320px;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+
+/* Photo upload circle */
+
+.photo-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.circle {
+    width: 180px;
+    height: 180px;
+    border: 2px solid rgb(3, 53, 70);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.circle img {
+    width: 175px;
+    height: 250px;
+    border-radius: 50%;
+    opacity: 0.7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle p {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.7;
+}
+
+
+/* Inputs */
+
+form input {
+    width: 100%;
+    padding: 9px;
+    margin-bottom: 12px;
+    outline: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout-btn {
+    float: right;
+}
+
+#name {
+    border: 1px solid #b7b7b7;
+    border-radius: 8px;
+}
+
+#email {
+    border: 1px solid #b7b7b7;
+    border-radius: 8px;
+}
+
+#text1 {
+    border: 1px solid #b7b7b7;
+    border-radius: 8px;
+}
+
+#text2 {
+    border: 1px solid #b7b7b7;
+    border-radius: 8px;
+}
+
+#number {
+    border: 1px solid #b7b7b7;
+    border-radius: 8px;
+}
+
+.save-btn,
+.logout-btn {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn {
+    background: #4c88ff;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #2f6fff;
+}
+
+.logout-btn {
+    background: #ff4c4c;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #e63c3c;
+}
+
+.small-logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 120px;
+    border-radius: 4px;
+    z-index: 9999;
+}

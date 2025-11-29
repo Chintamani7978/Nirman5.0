@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* Design Tokens - MaskMe */
+:root {
+  /* Colors - Dark Theme (Primary) */
+  --primary: #6C63FF;
+  --accent: #5CE1E6;
+  --deep: #0D0D0D;
+  --muted: #EDEDED;
+  --secondary: #3A2EFF;
+  
+  /* Semantic Colors */
+  --bg-primary: #0D0D0D;
+  --bg-secondary: #1A1A1A;
+  --text-primary: #EDEDED;
+  --text-secondary: #9CA3AF;
+  --border-glass: rgba(236, 236, 236, 0.1);
+  --shadow-glass: rgba(108, 99, 255, 0.15);
+  
+  /* Status Colors */
+  --status-active: #5CE1E6;
+  --status-expired: #F59E0B;
+  --status-destroyed: #EF4444;
+  
+  /* Typography Scale */
+  --h1: 34px;
+  --h2: 24px;
+  --h3: 20px;
+  --body: 16px;
+  --small: 14px;
+  --tiny: 12px;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  /* Motion Tokens */
+  --ease-cinematic-enter: cubic-bezier(0.23, 0.78, 0.43, 1);
+  --ease-slow-drift: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration-micro: 120ms;
+  --duration-quick: 220ms;
+  --duration-normal: 280ms;
+  --duration-slow: 400ms;
+  --duration-drift: 30s;
+  
+  /* Blur */
+  --blur-glass: 12px;
+  --blur-strong: 20px;
+}
+
+/* Light Theme Variant */
+[data-theme="light"] {
+  --bg-primary: #F5F5F7;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #0D0D0D;
+  --text-secondary: #6B7280;
+  --border-glass: rgba(13, 13, 13, 0.1);
+  --shadow-glass: rgba(108, 99, 255, 0.1);
+}
+
+/* Base Typography */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: var(--body);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-size: var(--h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--h2);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: var(--h3);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p {
+  font-size: var(--body);
+  line-height: 1.6;
+}
+
+small {
+  font-size: var(--small);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(108, 99, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 99, 255, 0.5);
+}
+
+/* Global Animations */
+@keyframes nebulaDriftA {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10px, -8px); }
+  50% { transform: translate(-5px, 10px); }
+  75% { transform: translate(-10px, -5px); }
+}
+
+@keyframes nebulaDriftB {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.6; }
+  33% { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
+  66% { transform: scale(0.98) translateY(5px); opacity: 0.5; }
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+}
+
+@keyframes staggerFadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(12px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(108, 99, 255, 0.6);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Utility Classes */
+.glass-card {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(var(--blur-glass));
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--shadow-glass);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

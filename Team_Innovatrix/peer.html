@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindMesh - Peer Community </title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style_login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo-container">
+        MINDMESH
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="peer.html">Peer Community</a></li>
+      <li><a href="counsel.html">Counsellors</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a></li>
+    </ul>
+    <div class="menu-toggle">☰</div>
+  </nav>
+  <section class="hero">
+    <h1>Peer Community</h1>
+    <p>Share your thoughts, support others, and grow together in a safe space 🌸</p>
+  </section>
+<section class="gd-section">
+  <h2 class="gd-title">Group Discussions</h2>
+  <p class="gd-subtitle">Join or create discussion groups and share your thoughts with peers.</p>
+  
+  <div class="gd-container">
+
+    <div class="gd-card">
+      <div class="gd-icon">➕</div>
+      <h3>Create a Group</h3>
+      <p>Start your own discussion group on any topic (e.g., Exam Stress, Happiness, Motivation).</p>
+      <button id="openModal" class="gd-btn">Create Group</button>
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 350px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    animation: popup 0.3s ease;
+  }
+
+  @keyframes popup {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-content h3 {
+    margin-top: 0;
+    color: #1f2b6c;
+  }
+
+  .modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .modal-actions {
+    text-align: right;
+    margin-top: 15px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+  }
+
+  .btn.primary { background: #2563eb; }
+  .btn.primary:hover { background: #1d4ed8; }
+
+  .btn.danger { background: #e11d48; }
+  .btn.danger:hover { background: #be123c; }
+</style>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Create New Group</h3>
+    <input type="text" id="groupName" placeholder="Enter group name">
+    <div class="modal-actions">
+      <button class="btn danger" id="closeModal">Cancel</button>
+      <button class="btn primary" id="createGroupBtn">Create</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("modal");
+  const openModal = document.getElementById("openModal"); // your main "Create Group" button
+  const closeModal = document.getElementById("closeModal");
+  const createGroupBtn = document.getElementById("createGroupBtn");
+  const groupNameInput = document.getElementById("groupName");
+
+  openModal.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  createGroupBtn.addEventListener("click", () => {
+    const groupName = groupNameInput.value.trim();
+    if(groupName !== "") {
+      alert("New group created: " + groupName); 
+      groupNameInput.value = "";
+      modal.style.display = "none";
+    } else {
+      alert("Please enter a group name!");
+    }
+  });
+
+  window.addEventListener("click", (e) => {
+    if(e.target === modal) modal.style.display = "none";
+  });
+</script>
+
+    </div>
+
+    <div class="gd-card">
+      <div class="gd-icon">👥</div>
+      <h3>Join a Group</h3>
+      <p>Explore existing groups and connect with peers going through similar challenges.</p>
+      <a href="join.html" class="gd-btn">Join Group</a>
+    </div>
+  </div>
+
+  <div class="gd-list">
+    <h4>Popular Groups</h4>
+    <ul>
+      <li>
+  📘 Exam Stress GD
+  <a href="join.html">
+    <button class="join-btn">Join</button>
+  </a>
+</li>
+
+<li>
+  😊 Can’t Be Happy
+  <a href="join.html">
+    <button class="join-btn">Join</button>
+  </a>
+</li>
+
+<li>
+  💬 Daily Motivation 
+  <a href="join.html">
+    <button class="join-btn">Join</button>
+  </a>
+</li>
+
+<li>
+  🧠 Mental Wellness
+  <a href="join.html">
+    <button class="join-btn">Join</button>
+  </a>
+</li>
+    </ul>
+  </div>
+</section>
+
+
+<style>
+.gd-section {
+  text-align: center;
+  padding: 50px 20px;
+  margin: 40px auto;
+  max-width: 1100px;
+  background: #f9fbff;
+  border-radius: 16px;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.05);
+}
+
+.gd-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 10px;
+}
+
+.gd-subtitle {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.gd-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.gd-card {
+  background: white;
+  padding: 25px 20px;
+  border-radius: 14px;
+  width: 280px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.gd-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.gd-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.gd-card h3 {
+  font-size: 1.3rem;
+  color: #1a237e;
+  margin-bottom: 8px;
+}
+
+.gd-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.gd-btn {
+  display: inline-block;
+  text-decoration: none;
+  background: #1a73e8;
+  color: white;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.gd-btn:hover {
+  background: #0d47a1;
+}
+
+.gd-list {
+  margin-top: 20px;
+  text-align: left;
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.gd-list h4 {
+  margin-bottom: 15px;
+  color: #1a237e;
+  font-size: 1.2rem;
+}
+
+.gd-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.gd-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+}
+
+.gd-list li:last-child {
+  border-bottom: none;
+}
+
+.join-btn {
+  background: #4caf50;
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.join-btn:hover {
+  background: #2e7d32;
+}
+</style>
+  <main>
+    <section class="story-section">
+      <div class="view-story">
+        <h2>View Story</h2>
+        <select>
+          <option>All</option>
+          <option>Age</option>
+          <option>Severity</option>
+          <option>Category</option>
+        </select>
+        <div id="story-list"></div>
+      </div>
+      <div class="post-story">
+        <h2>Post Story</h2>
+        <form id="storyForm">
+          <textarea placeholder="Share your story..." required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <input type="hidden" id="visibilityInput" name="visibility" value="Public" />
+  </form>
+  <div id="story-list"></div>
+  </div>
+
+  <section class="feed">
+    <div class="post">
+      <h3>Anonymous</h3>
+      <p>Feeling anxious before exams 😓 Any tips to stay calm?</p>
+      <div class="actions">
+        <i class="fa-solid fa-thumbs-up"></i>
+        <i class="fa-solid fa-comment"></i>
+        <i class="fa-solid fa-share"></i>
+      </div>
+    </div>
+    <div class="post">
+      <h3>Ravi</h3>
+      <p>Walking in the park and listening to music helps me relax 🎶🌿</p>
+      <div class="actions">
+        <i class="fa-solid fa-thumbs-up"></i>
+        <i class="fa-solid fa-comment"></i>
+        <i class="fa-solid fa-share"></i>
+      </div>
+    </div>
+    <div class="post">
+      <h3>Sophia</h3>
+      <p>I started journaling daily — it clears my head and reduces stress ✍️✨</p>
+      <div class="actions">
+        <i class="fa-solid fa-thumbs-up"></i>
+        <i class="fa-solid fa-comment"></i>
+        <i class="fa-solid fa-share"></i>
+      </div>
+    </div>
+  </section>
+
+  <div class="floating-btn" onclick="alert('📝 Add New Post Coming Soon!')">
+    <i class="fa-solid fa-plus"></i>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">FAQ</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Support</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+    <p>© 2025 MINDMESH | Team Innovatrix</p>
+  </footer>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

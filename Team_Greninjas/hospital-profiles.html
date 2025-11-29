@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Profiles - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html" class="active">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="login.html" class="nav-login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <div class="mode-toggle">
+                <button id="themeToggleBtn" class="theme-btn" title="Toggle light / dark">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-hospital"></i> Hospital Profiles</h1>
+        <p>Comprehensive information about all hospitals in Bhubaneswar</p>
+    </div>
+
+    <!-- Search Bar Section -->
+    <div class="search-section">
+        <div class="container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="hospitalSearch" class="search-input" placeholder="Search hospitals by name, location, or department...">
+                <button class="search-clear" id="clearHospitalSearch" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hospital Grid Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> Live Hospital Status Dashboard</h2>
+            <div class="hospital-grid" id="hospitalGrid">
+                <!-- Hospital 1: AIIMS -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge live"><i class="fas fa-check-circle"></i> Live</div>
+                        <h3>AIIMS Bhubaneswar</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">All India Institute of Medical Sciences</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Patrapada, Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2476789</p>
+                            <p><i class="fas fa-globe"></i> aiimsbhubaneswar.nic.in</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">300+</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">40</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">14</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Emergency</span>
+                            <span class="tag">Trauma</span>
+                            <span class="tag">24/7 O2</span>
+                            <span class="tag">ICU</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 2: KIMS -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge busy"><i class="fas fa-exclamation-circle"></i> Busy</div>
+                        <h3>KIMS Hospital</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Kalinga Institute of Medical Sciences</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Patia, KIIT Campus</p>
+                            <p><i class="fas fa-phone"></i> 0674-2725471</p>
+                            <p><i class="fas fa-globe"></i> kims.kiit.ac.in</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">250</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">30</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">10</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Cardiology</span>
+                            <span class="tag">Oncology</span>
+                            <span class="tag">Surgery</span>
+                            <span class="tag">Cath Lab</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 3: SUM -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge critical"><i class="fas fa-times-circle"></i> Critical</div>
+                        <h3>SUM Hospital</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Siksha O Anusandhan University</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Kalinga Nagar, Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2380779</p>
+                            <p><i class="fas fa-globe"></i> sumhospital.org</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">220</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">25</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">10</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Emergency</span>
+                            <span class="tag">Trauma</span>
+                            <span class="tag">Labs</span>
+                            <span class="tag">Surgery</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 4: Capital -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge live"><i class="fas fa-check-circle"></i> Live</div>
+                        <h3>Capital Hospital</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Government Medical Institute</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> BMC Square, Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2437151</p>
+                            <p><i class="fas fa-globe"></i> caphosp.odisha.gov.in</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">180</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">20</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Affordable</span>
+                            <span class="tag">Government</span>
+                            <span class="tag">24/7</span>
+                            <span class="tag">Ambulance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 5: Hi-Tech Medical College -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge busy"><i class="fas fa-exclamation-circle"></i> Busy</div>
+                        <h3>Hi-Tech Medical College</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Private Medical Institute</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Pandara, Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2445777</p>
+                            <p><i class="fas fa-globe"></i> hitech-mc.org</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">200</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">18</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">5</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Surgery</span>
+                            <span class="tag">Orthopedics</span>
+                            <span class="tag">Pharmacy</span>
+                            <span class="tag">Modern</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 6: CARE Hospitals -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge live"><i class="fas fa-check-circle"></i> Live</div>
+                        <h3>CARE Hospitals</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Multi-specialty Healthcare Chain</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2676767</p>
+                            <p><i class="fas fa-globe"></i> carehospitals.com</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">150</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">15</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">6</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Cardiology</span>
+                            <span class="tag">Diagnostics</span>
+                            <span class="tag">CCU</span>
+                            <span class="tag">Ambulance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 7: Apollo Hospitals -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge busy"><i class="fas fa-exclamation-circle"></i> Busy</div>
+                        <h3>Apollo Hospitals</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">International Healthcare Standards</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2929999</p>
+                            <p><i class="fas fa-globe"></i> apollohospitals.com</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">180</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">20</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Premium</span>
+                            <span class="tag">NICU</span>
+                            <span class="tag">International</span>
+                            <span class="tag">Teleconsult</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 8: AMRI Hospital -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge critical"><i class="fas fa-times-circle"></i> Critical</div>
+                        <h3>AMRI Hospital</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Advanced Medical Research Institute</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2565080</p>
+                            <p><i class="fas fa-globe"></i> amrihospitals.org</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">120</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">7</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Trauma</span>
+                            <span class="tag">24/7</span>
+                            <span class="tag">Diagnostics</span>
+                            <span class="tag">SICU</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital 9: Utkal Hospital -->
+                <div class="hospital-card-new">
+                    <div class="hospital-card-header">
+                        <div class="hospital-status-badge live"><i class="fas fa-check-circle"></i> Live</div>
+                        <h3>Utkal Hospital</h3>
+                    </div>
+                    <div class="hospital-card-body">
+                        <p class="hospital-subtitle">Multi-speciality Healthcare Centre</p>
+                        <div class="hospital-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Bhubaneswar</p>
+                            <p><i class="fas fa-phone"></i> 0674-2530530</p>
+                            <p><i class="fas fa-globe"></i> utkalhospital.org</p>
+                        </div>
+                        <div class="hospital-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Beds</span>
+                                <span class="stat-value">140</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">ICU Beds</span>
+                                <span class="stat-value">20</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Departments</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                        </div>
+                        <div class="hospital-tags">
+                            <span class="tag">Multi-specialty</span>
+                            <span class="tag">O2 Support</span>
+                            <span class="tag">Imaging</span>
+                            <span class="tag">Pharmacy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hospital-profiles.html">Hospitals</a></li>
+                        <li><a href="doctor-verification.html">Doctors</a></li>
+                        <li><a href="patient-portal.html">Patient Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="pharmacy.html">Pharmacy</a></li>
+                        <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                        <li><a href="ambulance-booking.html">Ambulance</a></li>
+                        <li><a href="admin-panel.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About Sanjeevani Live</h4>
+                    <p>Sanjeevani Live is dedicated to providing comprehensive healthcare services and information to the people of Bhubaneswar and beyond.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency</h4>
+                    <p><strong>Ambulance:</strong> 108</p>
+                    <p><strong>Police:</strong> 100</p>
+                    <p><strong>Fire:</strong> 101</p>
+                    <p><strong>Sanjeevani Live Helpline:</strong> 1800-HEALTH</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

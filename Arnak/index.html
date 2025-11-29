@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AGRIVOLUTION — Home</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    // Apply theme immediately to prevent flash
+    (function(){
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand" onclick="location.href='index.html'">
+        <div class="logo-circle">🌱</div>
+        <h1>AGRIVOLUTION</h1>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="community.html">Community</a>
+        <a href="learning.html">Learning Hub</a>
+        <a href="mandi.html">Mandi Locator</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        <a href="auth.html" style="background:transparent;border:1px solid rgba(47,142,68,0.12);padding:8px 12px;border-radius:8px;color:var(--primary)">Sign in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- hero -->
+    <section class="hero">
+      <img class="hero-bg" src="assets/pexels-clickon38-30851646.jpg" alt="hero"/>
+      <div class="overlay"></div>
+      <div class="container hero-content">
+        <div class="hero-badge"><span style="width:10px;height:10px;background:#34d399;border-radius:999px;display:inline-block"></span> Future of Farming is Here</div>
+        <h2 class="hero-title">Cultivating <span class="accent">Prosperity</span> Together</h2>
+        <p class="hero-lead">Join India's smartest agriculture platform. Connect with buyers, get AI-powered crop advice, and track real-time mandi prices.</p>
+        <div style="display:flex;gap:12px">
+          <button class="btn btn-primary" onclick="location.href='marketplace.html'">Explore Marketplace</button>
+          <button class="btn btn-outline" onclick="location.href='auth.html'">Join Community</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prices & quick stats -->
+    <section class="section">
+      <div class="container grid grid-2" style="align-items:start">
+        <div class="card">
+          <h3 style="margin:0 0 12px;font-size:22px;color:var(--text)">Mandi Prices Today</h3>
+          <p style="color:var(--muted);margin:0 0 16px;font-size:14px">Daily average prices from local markets</p>
+          <div id="price-chart" class="price-chart" style="margin-bottom:12px">Price chart</div>
+          <div id="price-container" class="price-list"></div>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+          <h3 style="margin:0 0 16px;font-size:22px;color:var(--text)">Why AGRIVOLUTION?</h3>
+          <ul style="color:var(--muted);margin:0">
+            <li style="margin-bottom:12px"><strong style="color:var(--text)">Secure Payments</strong> — Direct bank transfers with escrow protection.</li>
+            <li style="margin-bottom:12px"><strong style="color:var(--text)">Best Market Rates</strong> — Real-time mandi data to help you sell better.</li>
+            <li><strong style="color:var(--text)">AI Advisory</strong> — Instant crop diagnosis and farming tips.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" style="background:linear-gradient(180deg,transparent, rgba(47,142,68,0.02))">
+      <div class="container grid grid-2" style="align-items:center">
+        <div>
+          <img class="feature-img" src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1200&q=80" alt="fresh veg" />
+          <div class="feature-quote" style="margin-top:14px">
+            <div style="font-weight:800">"My income increased by 40% after using AGRIVOLUTION marketplace."</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:6px">— Ram Lal, Madhya Pradesh</div>
+          </div>
+        </div>
+        <div>
+          <h2 style="font-family:Georgia,serif;font-size:36px;margin:0 0 12px">Direct from Farm<br/>to Table</h2>
+          <p style="color:var(--muted);max-width:520px">Eliminate middlemen and get the best price for your hard work. Our marketplace connects you directly with bulk buyers, retailers, and consumers. List your produce in seconds.</p>
+          <div style="margin-top:16px">
+            <button class="btn btn-primary" onclick="location.href='marketplace.html'">Start Selling →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community teaser -->
+    <section class="section">
+      <div class="container grid grid-2" style="align-items:center">
+        <div>
+          <h2 style="font-family:Georgia,serif;font-size:32px;margin:0 0 12px">A Community That Grows Together</h2>
+          <p style="color:var(--muted);max-width:520px">Farming doesn't have to be lonely. Join thousands of farmers sharing their stories, tips, and daily wins. Ask questions, get advice, and celebrate harvests together.</p>
+          <div style="margin-top:16px"><button class="btn btn-outline" onclick="location.href='community.html'">Join the Conversation →</button></div>
+        </div>
+        <div id="community-teasers"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo-circle">🌱</div>
+            <h2>AGRIVOLUTION</h2>
+          </div>
+          <p class="footer-description">Empowering farmers across India with cutting-edge technology, vibrant community connections, and direct market access. Join the agricultural revolution today.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">📘</a>
+            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+            <a href="#" class="social-link" aria-label="Instagram">📷</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-heading">Platform</h4>
+            <ul class="footer-list">
+              <li><a href="marketplace.html">Marketplace</a></li>
+              <li><a href="community.html">Community</a></li>
+              <li><a href="learning.html">Learning Hub</a></li>
+              <li><a href="mandi.html">Mandi Locator</a></li>
+              <li><a href="auth.html">Sign In / Sign Up</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4 class="footer-heading">Resources</h4>
+            <ul class="footer-list">
+              <li><a href="#">Crop Calendar</a></li>
+              <li><a href="#">Weather Forecast</a></li>
+              <li><a href="#">Price Trends</a></li>
+              <li><a href="#">Farming Guides</a></li>
+              <li><a href="#">Success Stories</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4 class="footer-heading">Support</h4>
+            <ul class="footer-list">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Safety & Security</a></li>
+              <li><a href="#">Report Issue</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4 class="footer-heading">Company</h4>
+            <ul class="footer-list">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Mission</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-newsletter">
+          <h4 class="footer-heading">Stay Updated</h4>
+          <p class="newsletter-text">Get the latest farming tips, market prices, and platform updates delivered to your inbox.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="email" placeholder="Enter your email" class="newsletter-input" required />
+            <button type="submit" class="btn btn-primary newsletter-btn">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="footer-bottom-content">
+          <p class="copyright">© 2025 AGRIVOLUTION. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Made with ❤️ for Indian Farmers</span>
+            <span class="separator">•</span>
+            <span>Available in 12+ Languages</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot -->
+  <button id="chat-btn" class="chat-btn">💬</button>
+  <div id="chat-window" class="chat-window" style="display:none">
+    <div class="chat-header">
+      <div style="display:flex;gap:10px;align-items:center"><img src="https://images.unsplash.com/photo-1542293787938-c9e299b8808b?auto=format&fit=crop&w=120&q=80" style="width:36px;height:36px;border-radius:8px"/><strong>Arnak AI</strong></div>
+      <div style="display:flex;gap:8px;align-items:center"><button id="chat-close" style="background:transparent;border:0;color:white;font-size:20px;cursor:pointer">✕</button></div>
+    </div>
+    <div id="chat-body" class="chat-body"></div>
+    <div class="chat-input">
+      <input id="chat-input" placeholder="Ask about crops..." />
+      <button id="chat-send" class="btn btn-primary">Send</button>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

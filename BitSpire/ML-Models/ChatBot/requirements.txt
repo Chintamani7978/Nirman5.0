@@ -1,0 +1,20 @@
+# Core Python Libraries
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+joblib
+uvicorn
+
+# Flask Backend
+flask
+flask-cors
+
+# Google Generative AI
+google-generativeai
+
+
+# Optional - if using JSON APIs, data manipulation, or debugging
+requests
+dotenv

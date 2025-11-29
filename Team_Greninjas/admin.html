@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Admin Panel - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="admin-panel.html" class="active">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div id="adminLoginSection" class="page-content">
+        <div class="container">
+            <div class="form-container" style="max-width: 500px;">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px; text-align: center;">
+                    <i class="fas fa-shield-alt"></i> Hospital Admin Login
+                </h2>
+                <div class="form-group">
+                    <label for="adminHospital"><i class="fas fa-hospital"></i> Hospital</label>
+                    <select id="adminHospital" required>
+                        <option value="">Select your hospital</option>
+                        <option value="1">City General Hospital</option>
+                        <option value="2">Metro Medical Center</option>
+                        <option value="3">Community Health Clinic</option>
+                        <option value="4">Regional Hospital</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adminUsername"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="adminUsername" placeholder="Enter admin username" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="adminLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <p style="text-align: center; margin-top: 20px; color: var(--gray); font-size: 0.9rem;">
+                    Demo: Use any hospital and username "admin" with password "admin"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminDashboardSection" style="display: none;">
+        <div class="page-header">
+            <h1><i class="fas fa-tachometer-alt"></i> Hospital Admin Dashboard</h1>
+            <p id="adminHospitalName">Manage your hospital resources</p>
+        </div>
+
+        <div class="page-content">
+            <div class="container">
+                <div style="text-align: right; margin-bottom: 20px;">
+                    <button class="btn btn-secondary" onclick="adminLogout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+
+                <div class="alert alert-info" style="margin-bottom: 30px;">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Real-time Updates:</strong> Changes you make here will be reflected immediately on the public dashboard.
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <h2 style="color: var(--primary-blue); margin-bottom: 20px;">
+                        <i class="fas fa-edit"></i> Update Hospital Resources
+                    </h2>
+                    <form id="resourceUpdateForm">
+                        <div class="form-group">
+                            <label for="updateBedsAvailable"><i class="fas fa-bed"></i> Beds Available</label>
+                            <input type="number" id="updateBedsAvailable" min="0" required>
+                            <small style="color: var(--gray);">Total beds: <span id="totalBeds">100</span></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateICUAavailable"><i class="fas fa-procedures"></i> ICU Beds Available</label>
+                            <input type="number" id="updateICUAavailable" min="0" required>
+                            <small style="color: var(--gray);">Total ICU beds: <span id="totalICU">15</span></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateOxygen"><i class="fas fa-wind"></i> Oxygen Available (Liters)</label>
+                            <input type="number" id="updateOxygen" min="0" required>
+                            <small style="color: var(--gray);">Total capacity: <span id="totalOxygen">150</span>L</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateOPDQueue"><i class="fas fa-users"></i> OPD Queue Length</label>
+                            <input type="number" id="updateOPDQueue" min="0" required>
+                            <small style="color: var(--gray);">Number of patients waiting</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateEmergencyWait"><i class="fas fa-clock"></i> Emergency Wait Time (minutes)</label>
+                            <input type="number" id="updateEmergencyWait" min="0" required>
+                            <small style="color: var(--gray);">Average wait time for emergency cases</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateMedicines"><i class="fas fa-pills"></i> Medicine Availability</label>
+                            <textarea id="updateMedicines" rows="4" placeholder="List available medicines (e.g., Paracetamol, Amoxicillin, etc.)"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-save"></i> Update Resources
+                        </button>
+                    </form>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <h2 style="color: var(--primary-blue); margin-bottom: 20px;">
+                        <i class="fas fa-chart-bar"></i> Current Status
+                    </h2>
+                    <div class="dashboard-grid" id="currentStatus">
+                        <!-- Current status will be displayed here -->
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <h2 style="color: var(--primary-blue); margin-bottom: 20px;">
+                        <i class="fas fa-history"></i> Update History
+                    </h2>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Updated By</th>
+                                    <th>Changes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="updateHistory">
+                                <tr>
+                                    <td colspan="3" style="text-align: center; padding: 40px; color: var(--gray);">
+                                        No update history available
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Sanjeevani Live</h3>
+                    <p>Your trusted healthcare companion for real-time medical services</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        let currentHospitalId = null;
+        let currentHospital = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminSession = getFromLocalStorage('adminSession');
+            if (adminSession) {
+                currentHospitalId = adminSession.hospitalId;
+                loadHospitalData();
+                showAdminDashboard();
+            }
+        });
+
+        function adminLogin() {
+            const hospitalId = document.getElementById('adminHospital').value;
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value;
+
+            if (!hospitalId || !username || !password) {
+                showAlert('Please fill in all fields', 'warning');
+                return;
+            }
+
+            // Simple authentication (in real app, this would be server-side)
+            if (username === 'admin' && password === 'admin') {
+                currentHospitalId = parseInt(hospitalId);
+                saveToLocalStorage('adminSession', { hospitalId: currentHospitalId, username });
+                loadHospitalData();
+                showAdminDashboard();
+                showAlert('Login successful!', 'success');
+            } else {
+                showAlert('Invalid credentials', 'danger');
+            }
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('adminLoginSection').style.display = 'none';
+            document.getElementById('adminDashboardSection').style.display = 'block';
+        }
+
+        function loadHospitalData() {
+            currentHospital = hospitals.find(h => h.id === currentHospitalId);
+            if (!currentHospital) {
+                showAlert('Hospital not found', 'danger');
+                return;
+            }
+
+            document.getElementById('adminHospitalName').textContent = `Managing: ${currentHospital.name}`;
+            
+            // Populate form
+            document.getElementById('updateBedsAvailable').value = currentHospital.beds.available;
+            document.getElementById('updateICUAavailable').value = currentHospital.icu.available;
+            document.getElementById('updateOxygen').value = currentHospital.oxygen.available;
+            document.getElementById('updateOPDQueue').value = currentHospital.opdQueue;
+            document.getElementById('updateEmergencyWait').value = currentHospital.emergencyWait;
+            
+            document.getElementById('totalBeds').textContent = currentHospital.beds.total;
+            document.getElementById('totalICU').textContent = currentHospital.icu.total;
+            document.getElementById('totalOxygen').textContent = currentHospital.oxygen.total;
+
+            // Render current status
+            renderCurrentStatus();
+
+            // Load update history
+            loadUpdateHistory();
+
+            // Handle form submission
+            document.getElementById('resourceUpdateForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                updateResources();
+            });
+        }
+
+        function renderCurrentStatus() {
+            const container = document.getElementById('currentStatus');
+            container.innerHTML = `
+                <div class="hospital-card">
+                    <div class="hospital-header">
+                        <div>
+                            <div class="hospital-name">${currentHospital.name}</div>
+                            <div class="hospital-location">
+                                <i class="fas fa-map-marker-alt"></i> ${currentHospital.location}
+                            </div>
+                        </div>
+                        <span class="status-indicator ${currentHospital.status}"></span>
+                    </div>
+                    <div class="metrics-grid" style="margin-top: 15px;">
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-bed"></i></div>
+                            <div class="metric-label">Beds</div>
+                            <div class="metric-value">${currentHospital.beds.available}/${currentHospital.beds.total}</div>
+                            <span class="status-badge ${currentHospital.beds.status}">${currentHospital.beds.status}</span>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-procedures"></i></div>
+                            <div class="metric-label">ICU</div>
+                            <div class="metric-value">${currentHospital.icu.available}/${currentHospital.icu.total}</div>
+                            <span class="status-badge ${currentHospital.icu.status}">${currentHospital.icu.status}</span>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-wind"></i></div>
+                            <div class="metric-label">Oxygen</div>
+                            <div class="metric-value">${currentHospital.oxygen.available}L</div>
+                            <span class="status-badge ${currentHospital.oxygen.status}">${currentHospital.oxygen.status}</span>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon"><i class="fas fa-users"></i></div>
+                            <div class="metric-label">OPD Queue</div>
+                            <div class="metric-value">${currentHospital.opdQueue}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateResources() {
+            const bedsAvailable = parseInt(document.getElementById('updateBedsAvailable').value);
+            const icuAvailable = parseInt(document.getElementById('updateICUAavailable').value);
+            const oxygen = parseInt(document.getElementById('updateOxygen').value);
+            const opdQueue = parseInt(document.getElementById('updateOPDQueue').value);
+            const emergencyWait = parseInt(document.getElementById('updateEmergencyWait').value);
+            const medicines = document.getElementById('updateMedicines').value;
+
+            // Validate
+            if (bedsAvailable > currentHospital.beds.total) {
+                showAlert(`Beds available cannot exceed total beds (${currentHospital.beds.total})`, 'warning');
+                return;
+            }
+            if (icuAvailable > currentHospital.icu.total) {
+                showAlert(`ICU beds available cannot exceed total ICU beds (${currentHospital.icu.total})`, 'warning');
+                return;
+            }
+            if (oxygen > currentHospital.oxygen.total) {
+                showAlert(`Oxygen available cannot exceed total capacity (${currentHospital.oxygen.total}L)`, 'warning');
+                return;
+            }
+
+            // Update hospital data
+            currentHospital.beds.available = bedsAvailable;
+            currentHospital.icu.available = icuAvailable;
+            currentHospital.oxygen.available = oxygen;
+            currentHospital.opdQueue = opdQueue;
+            currentHospital.emergencyWait = emergencyWait;
+
+            // Update status badges
+            currentHospital.beds.status = bedsAvailable === 0 ? 'full' : 
+                                          bedsAvailable < currentHospital.beds.total * 0.3 ? 'limited' : 'available';
+            currentHospital.icu.status = icuAvailable === 0 ? 'full' : 
+                                         icuAvailable < currentHospital.icu.total * 0.3 ? 'limited' : 'available';
+            currentHospital.oxygen.status = oxygen < currentHospital.oxygen.total * 0.2 ? 'limited' : 'available';
+
+            // Update overall status
+            if (bedsAvailable === 0 && icuAvailable === 0) {
+                currentHospital.status = 'critical';
+            } else if (bedsAvailable < currentHospital.beds.total * 0.3 || icuAvailable < currentHospital.icu.total * 0.3) {
+                currentHospital.status = 'busy';
+            } else {
+                currentHospital.status = 'live';
+            }
+
+            // Save update history
+            const history = getFromLocalStorage('updateHistory') || [];
+            history.unshift({
+                hospitalId: currentHospitalId,
+                hospitalName: currentHospital.name,
+                timestamp: new Date().toISOString(),
+                changes: {
+                    beds: bedsAvailable,
+                    icu: icuAvailable,
+                    oxygen: oxygen,
+                    opdQueue: opdQueue,
+                    emergencyWait: emergencyWait
+                },
+                updatedBy: getFromLocalStorage('adminSession')?.username || 'admin'
+            });
+            saveToLocalStorage('updateHistory', history);
+
+            // Update hospitals array
+            const index = hospitals.findIndex(h => h.id === currentHospitalId);
+            if (index !== -1) {
+                hospitals[index] = currentHospital;
+            }
+
+            renderCurrentStatus();
+            loadUpdateHistory();
+            showAlert('Resources updated successfully! Changes are now live.', 'success');
+        }
+
+        function loadUpdateHistory() {
+            const history = getFromLocalStorage('updateHistory') || [];
+            const hospitalHistory = history.filter(h => h.hospitalId === currentHospitalId).slice(0, 10);
+
+            const tbody = document.getElementById('updateHistory');
+            if (hospitalHistory.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 40px; color: var(--gray);">
+                            No update history available
+                        </td>
+                    </tr>
+                `;
+            } else {
+                tbody.innerHTML = hospitalHistory.map(entry => `
+                    <tr>
+                        <td>${new Date(entry.timestamp).toLocaleString()}</td>
+                        <td>${entry.updatedBy}</td>
+                        <td>
+                            Beds: ${entry.changes.beds}, ICU: ${entry.changes.icu}, 
+                            Oxygen: ${entry.changes.oxygen}L, OPD: ${entry.changes.opdQueue}, 
+                            Wait: ${entry.changes.emergencyWait}min
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function adminLogout() {
+            localStorage.removeItem('adminSession');
+            document.getElementById('adminDashboardSection').style.display = 'none';
+            document.getElementById('adminLoginSection').style.display = 'block';
+            showAlert('Logged out successfully', 'info');
+        }
+    </script>
+</body>
+</html>
+

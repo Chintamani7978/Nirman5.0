@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Verification - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html" class="active">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsultation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="admin-panel.html">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-user-md"></i> Doctor Verification</h1>
+        <p>Verify doctor credentials and qualifications</p>
+    </div>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="form-container">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Verify Doctor</h2>
+                <div class="form-group">
+                    <label for="doctorName"><i class="fas fa-user"></i> Doctor Name</label>
+                    <input type="text" id="doctorName" placeholder="Enter doctor's full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="licenseNumber"><i class="fas fa-id-card"></i> Medical License Number</label>
+                    <input type="text" id="licenseNumber" placeholder="Enter license number" required>
+                </div>
+                <div class="form-group">
+                    <label for="specialization"><i class="fas fa-stethoscope"></i> Specialization</label>
+                    <select id="specialization" required>
+                        <option value="">Select specialization</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="general">General Medicine</option>
+                        <option value="surgery">Surgery</option>
+                        <option value="dermatology">Dermatology</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="verifyDoctor()">
+                    <i class="fas fa-search"></i> Verify Doctor
+                </button>
+            </div>
+
+            <div id="verificationResults" style="margin-top: 40px;">
+                <!-- Results will be displayed here -->
+            </div>
+
+            <div style="margin-top: 60px;">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Verified Doctors</h2>
+                <div class="dashboard-grid" id="verifiedDoctors">
+                    <!-- Verified doctors list -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Sanjeevani Live</h3>
+                    <p>Your trusted healthcare companion for real-time medical services</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        const verifiedDoctors = [
+            {
+                id: 1,
+                name: "Dr. Rajesh Kumar",
+                specialization: "Cardiology",
+                license: "MD12345",
+                hospital: "City General Hospital",
+                experience: "15 years",
+                verified: true,
+                rating: 4.8
+            },
+            {
+                id: 2,
+                name: "Dr. Priya Sharma",
+                specialization: "Pediatrics",
+                license: "MD23456",
+                hospital: "Metro Medical Center",
+                experience: "12 years",
+                verified: true,
+                rating: 4.9
+            },
+            {
+                id: 3,
+                name: "Dr. Amit Patel",
+                specialization: "Orthopedics",
+                license: "MD34567",
+                hospital: "Regional Hospital",
+                experience: "20 years",
+                verified: true,
+                rating: 4.7
+            },
+            {
+                id: 4,
+                name: "Dr. Sneha Reddy",
+                specialization: "Neurology",
+                license: "MD45678",
+                hospital: "City General Hospital",
+                experience: "10 years",
+                verified: true,
+                rating: 4.6
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderVerifiedDoctors();
+        });
+
+        function renderVerifiedDoctors() {
+            const container = document.getElementById('verifiedDoctors');
+            container.innerHTML = verifiedDoctors.map(doctor => `
+                <div class="hospital-card">
+                    <div class="hospital-header">
+                        <div>
+                            <div class="hospital-name">
+                                <i class="fas fa-user-md"></i> ${doctor.name}
+                            </div>
+                            <div class="hospital-location">
+                                <i class="fas fa-hospital"></i> ${doctor.hospital}
+                            </div>
+                        </div>
+                        <span class="status-badge available">
+                            <i class="fas fa-check-circle"></i> Verified
+                        </span>
+                    </div>
+                    <div style="padding: 15px 0; border-top: 1px solid #e0e0e0; margin-top: 15px;">
+                        <div style="margin-bottom: 10px;">
+                            <strong>Specialization:</strong> ${doctor.specialization}
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>Experience:</strong> ${doctor.experience}
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>Rating:</strong> 
+                            <span style="color: var(--warning);">
+                                ${'★'.repeat(Math.floor(doctor.rating))}${'☆'.repeat(5 - Math.floor(doctor.rating))}
+                            </span>
+                            ${doctor.rating}/5
+                        </div>
+                        <div style="margin-bottom: 10px; font-size: 0.9rem; color: var(--gray);">
+                            <strong>License:</strong> ${doctor.license}
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="bookConsultation(${doctor.id})">
+                            <i class="fas fa-calendar"></i> Book Consultation
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function verifyDoctor() {
+            const doctorName = document.getElementById('doctorName').value.trim();
+            const licenseNumber = document.getElementById('licenseNumber').value.trim();
+            const specialization = document.getElementById('specialization').value;
+
+            if (!doctorName || !licenseNumber || !specialization) {
+                showAlert('Please fill in all fields', 'warning');
+                return;
+            }
+
+            // Simulate verification
+            const foundDoctor = verifiedDoctors.find(d => 
+                d.license.toLowerCase() === licenseNumber.toLowerCase() &&
+                d.name.toLowerCase().includes(doctorName.toLowerCase())
+            );
+
+            const resultsDiv = document.getElementById('verificationResults');
+            
+            if (foundDoctor) {
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Doctor Verified Successfully!</strong><br>
+                            <div style="margin-top: 15px;">
+                                <p><strong>Name:</strong> ${foundDoctor.name}</p>
+                                <p><strong>Specialization:</strong> ${foundDoctor.specialization}</p>
+                                <p><strong>License Number:</strong> ${foundDoctor.license}</p>
+                                <p><strong>Hospital:</strong> ${foundDoctor.hospital}</p>
+                                <p><strong>Experience:</strong> ${foundDoctor.experience}</p>
+                                <p><strong>Status:</strong> <span class="status-badge available">Verified & Active</span></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Doctor Not Found in Verified Database</strong><br>
+                            <p style="margin-top: 10px;">The provided credentials do not match our verified doctor database. Please verify the information or contact support.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function bookConsultation(doctorId) {
+            window.location.href = `teleconsultation.html?doctor=${doctorId}`;
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Registration – Kisan Seva</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-green: #1fb936;
+      --secondary-green: #4a7c59;
+      --accent-gold: #d4af37;
+      --light-green: #a8d5ba;
+      --cream: #fefdf8;
+      --earth-brown: #8b4513;
+      --dark-green: #1a3a1c;
+      --soil-brown: #6b4423;
+      --light-gray: #f8fafc;
+      --success: #16a34a;
+      --error: #dc2626;
+      --shadow-light: 0 4px 12px -2px rgba(45, 95, 47, 0.15);
+      --shadow-medium: 0 12px 24px -4px rgba(45, 95, 47, 0.2);
+      --shadow-heavy: 0 25px 50px -12px rgba(45, 95, 47, 0.3);
+      --border-radius: 20px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient-primary: linear-gradient(135deg, #16a91b 0%, #4a7c59 50%, #148a3a 100%);
+      --gradient-secondary: linear-gradient(135deg, #a8d5ba 0%, #c8e6d0 50%, #e8f5ea 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 30%, #f5f8f5 70%, #fffef8 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 20px 0;
+      overflow-x: hidden;
+    }
+
+    /* Animated background elements */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(168, 213, 186, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(45, 95, 47, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      transition: var(--transition);
+    }
+
+    .loading-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-content {
+      text-align: center;
+      color: white;
+    }
+
+    .loading-spinner {
+      width: 70px;
+      height: 70px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--accent-gold);
+      animation: spin 1.2s ease-in-out infinite;
+      margin: 0 auto 30px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      animation: pulse 2s ease-in-out infinite;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-heavy);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: slideInUp 1s ease-out 0.5s forwards;
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(168, 213, 186, 0.3);
+    }
+
+    @keyframes slideInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header Styles */
+    .header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="agricultural" width="40" height="40" patternUnits="userSpaceOnUse"><g fill="rgba(255,255,255,0.1)"><circle cx="10" cy="10" r="2"/><path d="M20 15 L25 10 L30 15 L25 20 Z"/><circle cx="35" cy="30" r="1.5"/></g></pattern></defs><rect width="100" height="100" fill="url(%23agricultural)"/></svg>');
+      animation: float 40s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translate(-50px, -50px) rotate(0deg); }
+      100% { transform: translate(-50px, -50px) rotate(360deg); }
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      letter-spacing: -0.025em;
+      animation: fadeInDown 1s ease-out 0.7s both;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .header p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      font-weight: 400;
+      animation: fadeInDown 1s ease-out 0.9s both;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .header-icon {
+      font-size: 1.8rem;
+      margin-right: 15px;
+      animation: bounce 2s ease-in-out infinite;
+      color: var(--accent-gold);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-8px); }
+    }
+
+    /* Progress Indicator */
+    .progress-container {
+      background: var(--gradient-secondary);
+      padding: 40px;
+      border-bottom: 2px solid rgba(168, 213, 186, 0.3);
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .progress-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(45, 95, 47, 0.2);
+      border-radius: 10px;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .progress-line-active {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      transform: translateY(-50%);
+      z-index: 2;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0;
+      box-shadow: 0 0 10px rgba(45, 95, 47, 0.4);
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 3;
+      background: var(--gradient-secondary);
+      padding: 0 30px;
+    }
+
+    .step-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: white;
+      border: 4px solid rgba(45, 95, 47, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--primary-green);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-light);
+    }
+
+    .step-circle.active {
+      border-color: var(--primary-green);
+      color: var(--primary-green);
+      transform: scale(1.15);
+      box-shadow: var(--shadow-medium);
+      background: linear-gradient(135deg, white 0%, #f0f9f0 100%);
+    }
+
+    .step-circle.completed {
+      background: var(--gradient-primary);
+      border-color: var(--primary-green);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .step-circle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: var(--primary-green);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: var(--transition);
+    }
+
+    .step-circle.active::before {
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+    }
+
+    .step-title {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--primary-green);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .step-item.active .step-title {
+      color: var(--dark-green);
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(45, 95, 47, 0.1);
+    }
+
+    /* Form Container */
+    .form-wrapper {
+      position: relative;
+      overflow: hidden;
+      min-height: 750px;
+    }
+
+    .form-step {
+      display: flex;
+      min-height: 750px;
+      transform: translateX(0);
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-step.slide-out-left {
+      transform: translateX(-100%);
+    }
+
+    .form-step.slide-in-right {
+      transform: translateX(0);
+    }
+
+    .form-content {
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,252,248,0.95) 100%);
+    }
+
+    .media-section {
+      flex: 1;
+      position: relative;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .video-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7) contrast(1.1);
+    }
+
+    .media-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .media-content {
+      text-align: center;
+      color: white;
+      max-width: 450px;
+      padding: 40px;
+      animation: fadeInScale 1.2s ease-out 0.3s both;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .media-content i {
+      font-size: 5rem;
+      margin-bottom: 30px;
+      animation: glow 3s ease-in-out infinite alternate;
+      color: var(--accent-gold);
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 0 40px rgba(212, 175, 55, 0.4); }
+      to { text-shadow: 0 0 30px rgba(212, 175, 55, 0.8), 0 0 60px rgba(212, 175, 55, 0.6); }
+    }
+
+    .media-content h3 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .media-content p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* Agricultural decorative elements */
+    .media-content::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      border: 2px dashed rgba(212, 175, 55, 0.3);
+      border-radius: 20px;
+      z-index: -1;
+      animation: rotateBorder 20s linear infinite;
+    }
+
+    @keyframes rotateBorder {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Form Elements */
+    .section-title {
+      color: var(--primary-green);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.025em;
+      animation: slideInLeft 0.8s ease-out;
+      text-shadow: 1px 1px 2px rgba(45, 95, 47, 0.1);
+    }
+
+    .section-title i {
+      margin-right: 20px;
+      color: var(--accent-gold);
+      animation: bounceIn 1s ease-out 0.3s both;
+      font-size: 2rem;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+      animation: slideInUp 0.8s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .form-group:nth-child(2) { animation-delay: 0.1s; }
+    .form-group:nth-child(3) { animation-delay: 0.2s; }
+    .form-group:nth-child(4) { animation-delay: 0.3s; }
+    .form-group:nth-child(5) { animation-delay: 0.4s; }
+    .form-group:nth-child(6) { animation-delay: 0.5s; }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: var(--dark-green);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      letter-spacing: 0.025em;
+    }
+
+    .form-label i {
+      margin-right: 12px;
+      color: var(--accent-gold);
+      width: 18px;
+      font-size: 1.1rem;
+    }
+
+    .form-control, .form-select {
+      border: 3px solid rgba(168, 213, 186, 0.4);
+      border-radius: 15px;
+      padding: 18px 25px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-light);
+      color: var(--dark-green);
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 4px rgba(45, 95, 47, 0.15), var(--shadow-medium);
+      transform: translateY(-3px);
+      outline: none;
+      background: white;
+    }
+
+    .form-control:hover, .form-select:hover {
+      border-color: var(--secondary-green);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* File Upload */
+    .file-upload-area {
+      border: 3px dashed rgba(45, 95, 47, 0.3);
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(168, 213, 186, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--primary-green);
+      background: linear-gradient(135deg, rgba(168, 213, 186, 0.2) 0%, rgba(255, 255, 255, 0.9) 100%);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .file-upload-area.drag-over {
+      border-color: var(--secondary-green);
+      background: linear-gradient(135deg, rgba(168, 213, 186, 0.3) 0%, rgba(255, 255, 255, 1) 100%);
+      transform: scale(1.02);
+    }
+
+    .file-upload-area input[type="file"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: var(--primary-green);
+      margin-bottom: 20px;
+      animation: uploadFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes uploadFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .upload-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 8px;
+    }
+
+    .upload-hint {
+      font-size: 0.9rem;
+      color: var(--primary-green);
+      opacity: 0.8;
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+
+    .btn-primary-custom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-primary-custom:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-heavy);
+      background: linear-gradient(135deg, #4a7c59 0%, #2d5f2f 50%, #1a3a1c 100%);
+    }
+
+    .btn-secondary-custom {
+      background: white;
+      border: 3px solid var(--primary-green);
+      color: var(--primary-green);
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow-light);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .btn-secondary-custom:hover {
+      background: var(--primary-green);
+      color: white;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 9999;
+    }
+
+    .custom-toast {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: var(--shadow-heavy);
+      border-left: 6px solid var(--success);
+      min-width: 400px;
+      animation: slideInRight 0.6s ease-out, fadeOut 0.6s ease-out 4.5s forwards;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .custom-toast.error {
+      border-left-color: var(--error);
+    }
+
+    .toast-icon {
+      font-size: 1.8rem;
+      color: var(--success);
+    }
+
+    .toast-icon.error {
+      color: var(--error);
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-weight: 700;
+      color: var(--dark-green);
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+    }
+
+    .toast-message {
+      color: #6b7280;
+      font-size: 1rem;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+
+    /* Footer */
+    .footer-section {
+      background: var(--gradient-secondary);
+      padding: 40px;
+      text-align: center;
+      border-top: 2px solid rgba(168, 213, 186, 0.3);
+    }
+
+    .footer-section a {
+      color: var(--primary-green);
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      position: relative;
+      font-size: 1.1rem;
+    }
+
+    .footer-section a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent-gold);
+      transition: width 0.4s ease;
+    }
+
+    .footer-section a:hover::after {
+      width: 100%;
+    }
+
+    .footer-section a:hover {
+      color: var(--dark-green);
+    }
+
+    /* Password Strength Indicator */
+    .progress-bar.weak { 
+      background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+    }
+    .progress-bar.medium { 
+      background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+    }
+    .progress-bar.strong { 
+      background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-container {
+        margin: 10px;
+        border-radius: 15px;
+      }
+      
+      .form-step {
+        flex-direction: column;
+        min-height: auto;
+      }
+      
+      .media-section {
+        min-height: 350px;
+        order: -1;
+      }
+      
+      .form-content {
+        padding: 40px 25px;
+      }
+      
+      .header {
+        padding: 40px 25px;
+      }
+      
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .progress-steps {
+        flex-direction: column;
+        gap: 25px;
+      }
+      
+      .progress-line, .progress-line-active {
+        display: none;
+      }
+
+      .media-content {
+        padding: 25px;
+        max-width: 350px;
+      }
+
+      .media-content h3 {
+        font-size: 2.2rem;
+      }
+
+      .media-content i {
+        font-size: 4rem;
+      }
+    }
+
+    /* Hidden utility */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Button loading state */
+    .btn-loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .btn-loading .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1.2s linear infinite;
+      margin-right: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading Kisan Mitra...</div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="main-container" id="mainContainer">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <h1>
+          <i class="fas fa-seedling header-icon"></i>
+          Kisan Mitra
+        </h1>
+        <p>Empowering Farmers Through Advanced Agricultural Technology Solutions and Smart Farming Practices</p>
+      </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+      <div class="progress-steps">
+        <div class="progress-line"></div>
+        <div class="progress-line-active" id="progressLine"></div>
+        
+        <div class="step-item active" id="stepIndicator1">
+          <div class="step-circle">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="step-title">Personal Information</div>
+        </div>
+        
+        <div class="step-item" id="stepIndicator2">
+          <div class="step-circle">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="step-title">Address & Documents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form id="registrationForm">
+      <div class="form-wrapper">
+        <!-- Step 1 -->
+        <div id="step1" class="form-step">
+          <div class="form-content">
+            <h2 class="section-title">
+              <i class="fas fa-user-circle"></i>
+              Personal Information
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-signature"></i>
+                Full Name
+              </label>
+              <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-calendar-alt"></i>
+                Date of Birth
+              </label>
+              <input type="date" name="dob" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-id-card"></i>
+                Aadhaar Number
+              </label>
+              <input type="text" name="aadhaar" class="form-control" placeholder="XXXX-XXXX-XXXX" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-phone-alt"></i> 
+                Mobile Number
+              </label>
+              <input type="tel" name="mobile" id="mobile" class="form-control" placeholder="Enter 10-digit mobile number"
+                pattern="^[0-9]{10}$" maxlength="10" title="Mobile number must be exactly 10 digits" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-envelope"></i> 
+                Email ID
+              </label>
+              <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email address"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                title="Enter a valid email address" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-lock"></i>
+                Create Password
+              </label>
+              <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Minimum 8 characters"
+                required oninput="checkPasswordStrength()">
+              <small class="text-muted mt-1">Must contain at least 8 characters with one number and one letter</small>
+            
+              <div class="progress mt-2" style="height: 10px; border-radius: 10px; overflow: hidden;">
+                <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
+                  aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <small id="strengthText" class="form-text text-muted mt-1"></small>
+            </div>
+
+            <button type="button" class="btn-primary-custom" onclick="nextStep()">
+              <span>Continue to Next Step</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          
+          <div class="media-section">
+            <div class="video-wrapper">
+              <video autoplay muted loop playsinline class="bg-video">
+                <source src="https://cdn.pixabay.com/video/2024/05/05/210766_tiny.mp4" type="video/mp4">
+                <source src="https://cdn.pixabay.com/video/2021/08/21/85898-591840759_tiny.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="media-overlay">
+              <div class="media-content">
+                <i class="fas fa-users"></i>
+                <h3>Join Our Farming Community</h3>
+                <p>Connect with thousands of progressive farmers using modern technology to increase crop yield, reduce costs, and build sustainable agricultural practices for future generations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="step2" class="form-step hidden">
+          <div class="media-section">
+            <div class="video-wrapper">
+              <video autoplay muted loop playsinline class="bg-video">
+                <source src="https://cdn.pixabay.com/video/2023/05/18/163560-828200792_tiny.mp4" type="video/mp4">
+                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="media-overlay">
+              <div class="media-content">
+                <i class="fas fa-shield-check"></i>
+                <h3>Secure Document Verification</h3>
+                <p>Your documents are protected with advanced encryption and stored securely. We verify your land ownership and banking details to provide personalized agricultural loans and subsidies.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-content">
+            <h2 class="section-title">
+              <i class="fas fa-map-marked-alt"></i>
+              Address & Documents
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-home"></i>
+                Present Address
+              </label>
+              <input type="text" name="presentAddress" class="form-control" placeholder="Current residential address" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-building"></i>
+                Permanent Address
+              </label>
+              <input type="text" name="permanentAddress" class="form-control" placeholder="Permanent residential address" required>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label class="form-label">
+                  <i class="fas fa-flag"></i>
+                  State
+                </label>
+                <select name="state" id="state" class="form-select" required>
+                  <option value="">Select State</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Odisha">Odisha</option>
+                </select>
+              </div>
+              
+              <div class="col-md-4 form-group">
+                <label class="form-label">
+                  <i class="fas fa-city"></i>
+                  District
+                </label>
+                <select name="district" id="district" class="form-select" required>
+                  <option value="">Select District</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label class="form-label">
+                  <i class="fas fa-mail-bulk"></i>
+                  Pincode
+                </label>
+                <input type="text" name="pincode" class="form-control" placeholder="6-digit pincode" pattern="[0-9]{6}" maxlength="6"
+                  minlength="6" title="Please enter exactly 6 digits" required>
+              </div>
+            </div>
+
+            <h4 style="color: var(--primary-green); margin: 50px 0 30px 0; font-weight: 700; display: flex; align-items: center;">
+              <i class="fas fa-cloud-upload-alt" style="margin-right: 15px; color: var(--accent-gold);"></i> 
+              Upload Required Documents
+            </h4>
+            
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="form-label">
+                  <i class="fas fa-id-badge"></i>
+                  Aadhaar Card
+                </label>
+                <div class="file-upload-area" onclick="document.querySelector('input[name=aadhaarCard]').click()">
+                  <input type="file" name="aadhaarCard" accept=".jpg,.jpeg,.png,.pdf" required>
+                  <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                  </div>
+                  <div class="upload-text">Click to upload Aadhaar Card</div>
+                  <div class="upload-hint">JPG, PNG or PDF (Max 5MB)</div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 form-group">
+                <label class="form-label">
+                  <i class="fas fa-file-contract"></i>
+                  Land Ownership Document
+                </label>
+                <div class="file-upload-area" onclick="document.querySelector('input[name=ror]').click()">
+                  <input type="file" name="ror" accept=".jpg,.jpeg,.png,.pdf" required>
+                  <div class="upload-icon">
+                    <i class="fas fa-file-alt"></i>
+                  </div>
+                  <div class="upload-text">Click to upload Land Document</div>
+                  <div class="upload-hint">Revenue records or land papers</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="form-label">
+                  <i class="fas fa-university"></i>
+                  Bank Passbook
+                </label>
+                <div class="file-upload-area" onclick="document.querySelector('input[name=bankPassbook]').click()">
+                  <input type="file" name="bankPassbook" accept=".jpg,.jpeg,.png,.pdf" required>
+                  <div class="upload-icon">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <div class="upload-text">Click to upload Bank Passbook</div>
+                  <div class="upload-hint">First page with account details</div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 form-group">
+                <label class="form-label">
+                  <i class="fas fa-camera"></i>
+                  Profile Photograph
+                </label>
+                <div class="file-upload-area" onclick="document.querySelector('input[name=profilePhoto]').click()">
+                  <input type="file" name="profilePhoto" accept=".jpg,.jpeg,.png" required>
+                  <div class="upload-icon">
+                    <i class="fas fa-user-circle"></i>
+                  </div>
+                  <div class="upload-text">Click to upload Photo</div>
+                  <div class="upload-hint">Clear passport size photo</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-5">
+              <button type="button" class="btn-secondary-custom" onclick="prevStep()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Previous</span>
+              </button>
+              <button type="submit" class="btn-primary-custom">
+                <span>Complete Registration</span>
+                <i class="fas fa-check-circle"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="footer-section">
+      <p>Already have an account? <a href="/frontend/forms/login.html">Login Here</a></p>
+      <p class="mt-3" style="color: var(--primary-green); font-weight: 500;">© 2025 Kisan Mitra. Empowering farmers with modern agricultural technology.</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        document.getElementById('loadingScreen').classList.add('fade-out');
+        setTimeout(() => {
+          document.getElementById('loadingScreen').style.display = 'none';
+        }, 600);
+      }, 1800);
+
+      initializeFormEnhancements();
+    });
+
+    // Toast notification system
+    function showToast(message, type = 'success', title = '') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      const toastTitle = title || (type === 'success' ? 'Success!' : 'Error!');
+      const iconClass = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+      
+      toast.className = `custom-toast ${type}`;
+      toast.innerHTML = `
+        <i class="toast-icon ${type} ${iconClass}"></i>
+        <div class="toast-content">
+          <div class="toast-title">${toastTitle}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+        <button class="btn-close" onclick="this.parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">×</button>
+      `;
+      
+      toastContainer.appendChild(toast);
+      
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.style.animation = 'fadeOut 0.6s ease-out forwards';
+          setTimeout(() => toast.remove(), 600);
+        }
+      }, 5500);
+    }
+
+    // Password strength checker
+    function checkPasswordStrength() {
+      const password = document.getElementById("passwordInput").value;
+      const strengthBar = document.getElementById("passwordStrengthBar");
+      const strengthText = document.getElementById("strengthText");
+
+      let strength = 0;
+      let feedback = [];
+
+      if (password.length >= 8) {
+        strength += 1;
+      } else if (password.length > 0) {
+        feedback.push("At least 8 characters");
+      }
+
+      if (/[0-9]/.test(password)) {
+        strength += 1;
+      } else if (password.length > 0) {
+        feedback.push("One number");
+      }
+
+      if (/[A-Z]/.test(password)) strength += 1;
+      if (/[a-z]/.test(password)) strength += 1;
+      if (/[\W_]/.test(password)) strength += 1;
+
+      switch (Math.min(strength, 4)) {
+        case 0:
+          strengthBar.style.width = "0%";
+          strengthBar.className = "progress-bar";
+          strengthText.textContent = "";
+          break;
+        case 1:
+          strengthBar.style.width = "25%";
+          strengthBar.className = "progress-bar weak";
+          strengthText.textContent = "Weak - " + feedback.join(", ");
+          break;
+        case 2:
+          strengthBar.style.width = "50%";
+          strengthBar.className = "progress-bar medium";
+          strengthText.textContent = "Medium - Add special characters";
+          break;
+        case 3:
+          strengthBar.style.width = "75%";
+          strengthBar.className = "progress-bar strong";
+          strengthText.textContent = "Strong password";
+          break;
+        case 4:
+          strengthBar.style.width = "100%";
+          strengthBar.className = "progress-bar strong";
+          strengthText.textContent = "Very Strong password";
+          break;
+      }
+    }
+
+    // Form validation utilities
+    const validators = {
+      name: (value) => {
+        if (!value.trim()) return 'Full name is required';
+        if (value.length < 2) return 'Name must be at least 2 characters';
+        if (!/^[a-zA-Z\s]+$/.test(value)) return 'Name should contain only letters';
+        return null;
+      },
+      
+      dob: (value) => {
+        if (!value) return 'Date of birth is required';
+        const age = new Date().getFullYear() - new Date(value).getFullYear();
+        if (age < 18) return 'Must be at least 18 years old';
+        if (age > 100) return 'Please enter a valid date of birth';
+        return null;
+      },
+      
+      aadhaar: (value) => {
+        const cleaned = value.replace(/\D/g, '');
+        if (!cleaned) return 'Aadhaar number is required';
+        if (cleaned.length !== 12) return 'Aadhaar must be exactly 12 digits';
+        return null;
+      },
+      
+      mobile: (value) => {
+        const cleaned = value.replace(/\D/g, '');
+        if (!cleaned) return 'Mobile number is required';
+        if (cleaned.length !== 10) return 'Mobile number must be exactly 10 digits';
+        return null;
+      },
+
+      email: (value) => {
+        if (!value) return 'Email is required';
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(value)) return 'Please enter a valid email address';
+        return null;
+      },
+      
+      password: (value) => {
+        if (!value) return 'Password is required';
+        if (value.length < 8) return 'Password must be at least 8 characters';
+        if (!/\d/.test(value)) return 'Password must contain at least one number';
+        if (!/[a-zA-Z]/.test(value)) return 'Password must contain at least one letter';
+        return null;
+      },
+      
+      pincode: (value) => {
+        if (!value) return 'Pincode is required';
+        if (!/^\d{6}$/.test(value)) return 'Pincode must be 6 digits';
+        return null;
+      }
+    };
+
+    // Real-time validation
+    function validateField(field) {
+      const name = field.name;
+      const value = field.value;
+      const validator = validators[name];
+      
+      if (validator) {
+        const error = validator(value);
+        toggleFieldError(field, error);
+        return !error;
+      }
+      return true;
+    }
+
+    function toggleFieldError(field, error) {
+      const existingError = field.parentNode.querySelector('.field-error');
+      
+      if (existingError) {
+        existingError.remove();
+      }
+      
+      if (error) {
+        field.style.borderColor = 'var(--error)';
+        field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error mt-1';
+        errorDiv.style.fontSize = '0.9rem';
+        errorDiv.style.color = 'var(--error)';
+        errorDiv.style.fontWeight = '500';
+        errorDiv.textContent = error;
+        field.parentNode.appendChild(errorDiv);
+      } else {
+        field.style.borderColor = 'var(--success)';
+        field.style.boxShadow = '0 0 0 3px rgba(22, 163, 74, 0.1)';
+      }
+    }
+
+    // Initialize form enhancements
+    function initializeFormEnhancements() {
+      const fields = document.querySelectorAll('input[required], select[required]');
+      fields.forEach(field => {
+        field.addEventListener('blur', () => validateField(field));
+        field.addEventListener('input', () => {
+          if (field.style.borderColor === 'var(--error)') {
+            validateField(field);
+          }
+        });
+      });
+
+      // Format Aadhaar input
+      const aadhaarInput = document.querySelector('input[name="aadhaar"]');
+      aadhaarInput.addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '').slice(0, 12);
+        this.value = value.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
+      });
+
+      // Format mobile input
+      const mobileInput = document.querySelector('input[name="mobile"]');
+      mobileInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+      });
+
+      // Format pincode input
+      const pincodeInput = document.querySelector('input[name="pincode"]');
+      pincodeInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+      });
+
+      // State-District dropdown
+      const districtsByState = {
+        "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Tirupati", "Kakinada"],
+        "Karnataka": ["Bengaluru", "Mysuru", "Mangaluru", "Hubli", "Belagavi"],
+        "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Kollam"],
+        "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Salem", "Tiruchirappalli"],
+        "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad"],
+        "Punjab": ["Amritsar", "Ludhiana", "Jalandhar", "Patiala", "Bathinda"],
+        "Haryana": ["Gurugram", "Faridabad", "Panipat", "Ambala", "Karnal"],
+        "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Meerut"],
+        "Odisha": ["Bhubaneswar", "Cuttack", "Puri", "Berhampur", "Sambalpur"]
+      };
+
+      const stateSelect = document.getElementById("state");
+      const districtSelect = document.getElementById("district");
+
+      stateSelect.addEventListener("change", function () {
+        const selectedState = this.value;
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+
+        if (districtsByState[selectedState]) {
+          districtsByState[selectedState].forEach(function (district) {
+            const option = document.createElement("option");
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+          });
+        }
+      });
+
+      // File upload enhancements
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach(input => {
+        input.addEventListener('change', handleFileSelect);
+        
+        const uploadArea = input.closest('.file-upload-area');
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        uploadArea.addEventListener('drop', handleFileDrop);
+      });
+    }
+
+    // File handling functions
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      const uploadArea = e.target.closest('.file-upload-area');
+      
+      if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+          showToast('File size must be less than 5MB', 'error');
+          e.target.value = '';
+          return;
+        }
+        
+        updateUploadArea(uploadArea, file.name, true);
+        showToast(`${file.name} uploaded successfully`, 'success');
+      }
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      
+      const files = e.dataTransfer.files;
+      const input = e.currentTarget.querySelector('input[type="file"]');
+      
+      if (files.length > 0) {
+        input.files = files;
+        input.dispatchEvent(new Event('change'));
+      }
+    }
+
+    function updateUploadArea(area, fileName, success) {
+      const icon = area.querySelector('.upload-icon i');
+      const text = area.querySelector('.upload-text');
+      
+      if (success) {
+        icon.className = 'fas fa-check-circle';
+        icon.style.color = 'var(--success)';
+        text.textContent = fileName;
+        area.style.borderColor = 'var(--success)';
+        area.style.backgroundColor = 'rgba(22, 163, 74, 0.1)';
+      }
+    }
+
+    // Step navigation with animations
+    function nextStep() {
+      if (!validateStep1()) return;
+      
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const progressLine = document.getElementById('progressLine');
+      const stepIndicator1 = document.getElementById('stepIndicator1');
+      const stepIndicator2 = document.getElementById('stepIndicator2');
+      
+      step1.style.transform = 'translateX(-100%)';
+      step1.style.opacity = '0';
+      
+      setTimeout(() => {
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        step2.style.transform = 'translateX(100%)';
+        step2.style.opacity = '0';
+        
+        setTimeout(() => {
+          step2.style.transform = 'translateX(0)';
+          step2.style.opacity = '1';
+        }, 50);
+      }, 400);
+      
+      progressLine.style.width = '100%';
+      stepIndicator1.classList.remove('active');
+      stepIndicator1.classList.add('completed');
+      stepIndicator1.querySelector('.step-circle').innerHTML = '<i class="fas fa-check"></i>';
+      stepIndicator2.classList.add('active');
+      
+      showToast('Personal information completed successfully!', 'success');
+    }
+
+    function prevStep() {
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const progressLine = document.getElementById('progressLine');
+      const stepIndicator1 = document.getElementById('stepIndicator1');
+      const stepIndicator2 = document.getElementById('stepIndicator2');
+      
+      step2.style.transform = 'translateX(100%)';
+      step2.style.opacity = '0';
+      
+      setTimeout(() => {
+        step2.classList.add('hidden');
+        step1.classList.remove('hidden');
+        step1.style.transform = 'translateX(-100%)';
+        step1.style.opacity = '0';
+        
+        setTimeout(() => {
+          step1.style.transform = 'translateX(0)';
+          step1.style.opacity = '1';
+        }, 50);
+      }, 400);
+      
+      progressLine.style.width = '0%';
+      stepIndicator2.classList.remove('active');
+      stepIndicator1.classList.remove('completed');
+      stepIndicator1.classList.add('active');
+      stepIndicator1.querySelector('.step-circle').innerHTML = '<i class="fas fa-user"></i>';
+    }
+
+    // Validation functions
+    function validateStep1() {
+      const fields = ['name', 'dob', 'aadhaar', 'mobile', 'email', 'password'];
+      let isValid = true;
+      
+      fields.forEach(fieldName => {
+        const field = document.querySelector(`input[name="${fieldName}"]`);
+        if (!validateField(field)) {
+          isValid = false;
+        }
+      });
+      
+      if (!isValid) {
+        showToast('Please fix the errors before continuing', 'error');
+      }
+      
+      return isValid;
+    }
+
+    function validateStep2() {
+      const requiredFields = ['presentAddress', 'permanentAddress', 'state', 'district', 'pincode'];
+      const fileFields = ['aadhaarCard', 'ror', 'bankPassbook', 'profilePhoto'];
+      let isValid = true;
+      
+      requiredFields.forEach(fieldName => {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        if (!field.value.trim()) {
+          field.style.borderColor = 'var(--error)';
+          isValid = false;
+        }
+      });
+      
+      fileFields.forEach(fieldName => {
+        const field = document.querySelector(`input[name="${fieldName}"]`);
+        if (!field.files || field.files.length === 0) {
+          const uploadArea = field.closest('.file-upload-area');
+          uploadArea.style.borderColor = 'var(--error)';
+          isValid = false;
+        }
+      });
+      
+      const pincodeField = document.querySelector('input[name="pincode"]');
+      if (!validateField(pincodeField)) {
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        showToast('Please complete all required fields and upload all documents', 'error');
+      }
+      
+      return isValid;
+    }
+
+    // Form submission
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      if (!validateStep2()) return;
+      
+      const submitButton = document.querySelector('button[type="submit"]');
+      const originalText = submitButton.innerHTML;
+      
+      submitButton.innerHTML = `
+        <span class="text-success">Registered successfully!</span>
+        <i class="fas fa-check"></i>
+      `;
+
+      setTimeout(() => {
+        submitButton.classList.add('btn-loading');
+        submitButton.innerHTML = `
+          <div class="spinner"></div>
+          <span>Processing Registration...</span>
+        `;
+      }, 1200); 
+      
+      submitButton.disabled = true;
+      
+      try {
+        const formData = new FormData(this);
+        
+        // Clean Aadhaar number
+        const aadhaar = formData.get('aadhaar').replace(/\D/g, '');
+        formData.set('aadhaar', aadhaar);
+           
+        const response = await fetch('http://localhost:5000/auth/register', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Registration failed');
+        }
+        
+        const result = await response.json();
+        
+        showToast(result.message || 'Registration completed successfully!', 'success', 'Welcome to Kisan Mitra!');
+        
+        setTimeout(() => {
+          window.location.href = '/frontend/forms/login.html';
+        }, 2500);
+        
+      } catch (error) {
+        console.error('Error:', error);
+        showToast(error.message || 'Registration failed. Please try again.', 'error');
+      } finally {
+        submitButton.classList.remove('btn-loading');
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+      }
+    });
+
+    // Add smooth scrolling to form sections
+    function smoothScrollToTop() {
+      document.querySelector('.main-container').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    // Enhanced step transitions with smooth scroll
+    const originalNextStep = nextStep;
+    nextStep = function() {
+      originalNextStep();
+      setTimeout(smoothScrollToTop, 450);
+    };
+
+    const originalPrevStep = prevStep;
+    prevStep = function() {
+      originalPrevStep();
+      setTimeout(smoothScrollToTop, 450);
+    };
+
+    // Add some agricultural-themed animations
+    function addFloatingElements() {
+      const floatingElements = ['🌱', '🌾', '🚜', '🌿', '🍃'];
+      
+      setInterval(() => {
+        if (Math.random() > 0.7) {
+          const element = document.createElement('div');
+          element.textContent = floatingElements[Math.floor(Math.random() * floatingElements.length)];
+          element.style.cssText = `
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+            top: ${Math.random() * 100}vh;
+            left: -50px;
+            animation: floatAcross ${5 + Math.random() * 10}s linear forwards;
+          `;
+          
+          const style = document.createElement('style');
+          style.textContent = `
+            @keyframes floatAcross {
+              to {
+                transform: translateX(calc(100vw + 100px)) rotate(360deg);
+                opacity: 0;
+              }
+            }
+          `;
+          document.head.appendChild(style);
+          document.body.appendChild(element);
+          
+          setTimeout(() => {
+            element.remove();
+            style.remove();
+          }, 15000);
+        }
+      }, 3000);
+    }
+
+    // Initialize floating elements after page load
+    setTimeout(addFloatingElements, 3000);
+
+    // Add focus enhancement for better accessibility
+    document.querySelectorAll('input, select, button').forEach(element => {
+      element.addEventListener('focus', function() {
+        this.style.outline = '3px solid var(--accent-gold)';
+        this.style.outlineOffset = '2px';
+      });
+      
+      element.addEventListener('blur', function() {
+        this.style.outline = 'none';
+      });
+    });
+
+    // Add keyboard navigation support
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && e.ctrlKey) {
+        const currentStep = document.querySelector('.form-step:not(.hidden)');
+        if (currentStep.id === 'step1') {
+          nextStep();
+        } else if (currentStep.id === 'step2') {
+          document.getElementById('registrationForm').dispatchEvent(new Event('submit'));
+        }
+      }
+    });
+
+    // Add success confetti effect
+    function createConfetti() {
+      const colors = ['#2d5f2f', '#4a7c59', '#d4af37', '#a8d5ba'];
+      const confettiCount = 50;
+      
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+          position: fixed;
+          width: 10px;
+          height: 10px;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          top: -10px;
+          left: ${Math.random() * 100}vw;
+          opacity: 0.8;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 10000;
+          animation: confettiFall ${2 + Math.random() * 3}s ease-out forwards;
+        `;
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    // Add confetti animation
+    const confettiStyle = document.createElement('style');
+    confettiStyle.textContent = `
+      @keyframes confettiFall {
+        to {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(confettiStyle);
+
+    // Enhanced form submission with confetti
+    const originalFormSubmission = document.getElementById('registrationForm').onsubmit;
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      setTimeout(() => {
+        if (!e.defaultPrevented) {
+          createConfetti();
+        }
+      }, 1500);
+    });
+
+    // Add progressive loading for better UX
+    let loadProgress = 0;
+    const loadingBar = document.createElement('div');
+    loadingBar.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: var(--gradient-primary);
+      z-index: 10001;
+      transition: width 0.3s ease;
+    `;
+    document.body.appendChild(loadingBar);
+
+    function updateLoadingProgress(progress) {
+      loadingBar.style.width = progress + '%';
+      if (progress >= 100) {
+        setTimeout(() => {
+          loadingBar.style.opacity = '0';
+          setTimeout(() => loadingBar.remove(), 300);
+        }, 500);
+      }
+    }
+
+    // Simulate progressive loading
+    const progressInterval = setInterval(() => {
+      loadProgress += Math.random() * 30;
+      if (loadProgress >= 100) {
+        loadProgress = 100;
+        clearInterval(progressInterval);
+      }
+      updateLoadingProgress(loadProgress);
+    }, 200);
+  </script>
+</body>
+</html>

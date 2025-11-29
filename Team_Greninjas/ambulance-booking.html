@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Booking - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html" class="active">Ambulance</a></li>
+                <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="login.html" class="nav-login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-ambulance"></i> Emergency Ambulance Booking</h1>
+        <p>Get emergency medical assistance instantly</p>
+    </div>
+
+    <!-- Emergency Alert -->
+    <section class="emergency-section">
+        <div class="container">
+            <div class="emergency-alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <strong>Emergency Hotline: 108</strong><br>
+                    For immediate emergency assistance, call 108 or 102
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Ambulances Grid -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-ambulance"></i> Available Ambulances</h2>
+            <div class="ambulance-grid" id="ambulanceGrid">
+                <!-- Ambulance 1: AMB-1001 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1001</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Advanced Life Support (ALS)
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Rakesh Nayak</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50001</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> AIIMS Bhubaneswar</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">8 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹35</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Ventilator</span>
+                            <span class="equipment-tag">Defibrillator</span>
+                            <span class="equipment-tag">Oxygen</span>
+                            <span class="equipment-tag">Monitor</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1001', 'AIIMS Bhubaneswar')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 2: AMB-1002 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1002</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Basic Life Support (BLS)
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Manoj Pradhan</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50002</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> SUM Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">5 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹25</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Oxygen</span>
+                            <span class="equipment-tag">First Aid</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1002', 'SUM Hospital')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 3: AMB-1003 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1003</div>
+                        <div class="ambulance-availability busy">
+                            <i class="fas fa-clock"></i> Busy (15 min wait)
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> ICU Critical Care Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Ritesh Singh</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50003</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> Apollo Hospitals</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">12 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹50</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Ventilator</span>
+                            <span class="equipment-tag">ECG</span>
+                            <span class="equipment-tag">Nurse On-board</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1003', 'Apollo Hospitals')">
+                            <i class="fas fa-phone"></i> Join Queue
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 4: AMB-1004 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1004</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Cardiac Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Chittaranjan Sahu</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50004</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> KIMS Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">6 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹40</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Defibrillator</span>
+                            <span class="equipment-tag">Cardiac Monitor</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1004', 'KIMS Hospital')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 5: AMB-1005 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1005</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Newborn/Pediatric Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Ajay Mahanta</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50005</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> Care Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">9 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹45</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Infant Warmer</span>
+                            <span class="equipment-tag">Oxygen</span>
+                            <span class="equipment-tag">Pediatric Ventilator</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1005', 'Care Hospital')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 6: AMB-1006 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1006</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Trauma Emergency Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Sameer Das</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50006</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> Hi-Tech Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">7 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹30</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Spine Board</span>
+                            <span class="equipment-tag">Splints</span>
+                            <span class="equipment-tag">Oxygen</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1006', 'Hi-Tech Hospital')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 7: AMB-1007 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1007</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Rapid Response Bike Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Suraj Behera</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50007</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> Capital Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">3 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹10</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">First Aid</span>
+                            <span class="equipment-tag">Oxygen (Portable)</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1007', 'Capital Hospital')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 8: AMB-1008 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1008</div>
+                        <div class="ambulance-availability busy">
+                            <i class="fas fa-clock"></i> Occupied
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Mobile ICU Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Binay Jena</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50008</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> AMRI Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">11 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹50</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Ventilator</span>
+                            <span class="equipment-tag">Suction</span>
+                            <span class="equipment-tag">Multi-parameter Monitor</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1008', 'AMRI Hospital')" disabled>
+                            <i class="fas fa-phone"></i> Currently Occupied
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 9: AMB-1009 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1009</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Basic Patient Transfer Van
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Trilochan Parida</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50009</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> Utkal Hospital</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">10 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹20</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Wheelchair</span>
+                            <span class="equipment-tag">Stretcher</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1009', 'Utkal Hospital')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ambulance 10: AMB-1010 -->
+                <div class="ambulance-card">
+                    <div class="ambulance-card-header">
+                        <div class="ambulance-id"><i class="fas fa-hashtag"></i> AMB-1010</div>
+                        <div class="ambulance-availability available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </div>
+                    </div>
+                    <div class="ambulance-card-body">
+                        <h3 class="ambulance-type">
+                            <i class="fas fa-siren"></i> Highway Emergency Ambulance
+                        </h3>
+                        <div class="ambulance-info">
+                            <p><i class="fas fa-user-circle"></i> <strong>Driver:</strong> Lokanath Patra</p>
+                            <p><i class="fas fa-phone"></i> <strong>Mobile:</strong> +91 98765 50010</p>
+                            <p><i class="fas fa-hospital"></i> <strong>Hospital:</strong> SUM Trauma Center</p>
+                        </div>
+                        <div class="ambulance-metrics">
+                            <div class="metric">
+                                <span class="metric-label">ETA</span>
+                                <span class="metric-value">14 min</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Charge/km</span>
+                                <span class="metric-value">₹30</span>
+                            </div>
+                        </div>
+                        <div class="ambulance-equipment">
+                            <span class="equipment-tag">Trauma Kit</span>
+                            <span class="equipment-tag">Splints</span>
+                            <span class="equipment-tag">Oxygen</span>
+                            <span class="equipment-tag">Communication Radio</span>
+                        </div>
+                        <button class="btn btn-book-ambulance" onclick="bookAmbulance('AMB-1010', 'SUM Trauma Center')">
+                            <i class="fas fa-phone"></i> Request Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hospital-profiles.html">Hospitals</a></li>
+                        <li><a href="doctor-verification.html">Doctors</a></li>
+                        <li><a href="patient-portal.html">Patient Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="pharmacy.html">Pharmacy</a></li>
+                        <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                        <li><a href="ambulance-booking.html">Ambulance</a></li>
+                        <li><a href="admin-panel.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About Sanjeevani Live</h4>
+                    <p>Sanjeevani Live is dedicated to providing comprehensive healthcare services and information to the people of Bhubaneswar and beyond.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency</h4>
+                    <p><strong>Ambulance:</strong> 108</p>
+                    <p><strong>Police:</strong> 100</p>
+                    <p><strong>Fire:</strong> 101</p>
+                    <p><strong>Sanjeevani Live Helpline:</strong> 1800-HEALTH</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        function bookAmbulance(ambulanceId, hospital) {
+            if (event.target.disabled) return;
+            alert(`✓ Ambulance Request Confirmed!\n\nAmbulance: ${ambulanceId}\nHospital: ${hospital}\n\nYour ambulance is on the way. You will receive a call from the driver shortly with exact ETA.`);
+        }
+    </script>
+</body>
+</html>

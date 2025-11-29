@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teleconsultation - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsulation.html" class="active">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+                <li><a href="login.html" class="nav-login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-video"></i> Teleconsultation</h1>
+        <p>Book online consultations with verified doctors</p>
+    </div>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-icon"><i class="fas fa-video"></i></div>
+                        <div>
+                            <h2>Book Teleconsultation</h2>
+                            <p>Schedule an appointment with a doctor</p>
+                        </div>
+                    </div>
+
+                    <form id="consultationForm" class="booking-form">
+                        <!-- Select Hospital -->
+                        <div class="form-group">
+                            <label for="hospital"><i class="fas fa-hospital"></i> Select Hospital</label>
+                            <select id="hospital" required>
+                                <option value="">Choose a hospital</option>
+                                <option value="aiims">AIIMS Bhubaneswar - All India Institute of Medical Sciences</option>
+                                <option value="kims">KIMS Hospital - Kalinga Institute of Medical Sciences</option>
+                                <option value="sum">SUM Hospital - Siksha O Anusandhan University</option>
+                                <option value="capital">Capital Hospital - Government Medical Institute</option>
+                                <option value="hitech">Hi-Tech Medical College - Private Medical Institute</option>
+                                <option value="care">CARE Hospitals - Multi-specialty Healthcare Chain</option>
+                                <option value="apollo">Apollo Hospitals - International Healthcare Standards</option>
+                                <option value="amri">AMRI Hospital - Advanced Medical Research Institute</option>
+                                <option value="utkal">Utkal Hospital - Multi-speciality Healthcare Centre</option>
+                            </select>
+                        </div>
+
+                        <!-- Select Doctor -->
+                        <div class="form-group">
+                            <label for="doctor"><i class="fas fa-user-md"></i> Select Doctor</label>
+                            <select id="doctor" required>
+                                <option value="">Choose a doctor</option>
+                                <option value="dr-priya">Dr. Priya Sharma - Neurology - MBBS, MD</option>
+                                <option value="dr-sangeeta">Dr. Sangeeta Mohapatra - Endocrinology - MBBS, MD, DM</option>
+                                <option value="dr-abinash">Dr. Abinash Mohanty - Cardiology - MBBS, MD, DM</option>
+                                <option value="dr-bikash">Dr. Bikash Nayak - ENT - MBBS, MS (ENT)</option>
+                                <option value="dr-pragyan">Dr. Pragyan Parimita - General Medicine - MBBS, MD</option>
+                                <option value="dr-jyoti">Dr. Jyoti Sahu - Gynecology - MBBS, MS (OB/GY)</option>
+                                <option value="dr-sushant">Dr. Sushant Mishra - Orthopedics - MBBS, MS (Ortho)</option>
+                                <option value="dr-ananya">Dr. Ananya Rath - Pulmonology - MBBS, MD, DM</option>
+                                <option value="dr-subrat">Dr. Subrat Sahoo - Gastroenterology - MBBS, MD, DM</option>
+                                <option value="dr-tapan">Dr. Tapan Ratha - Oncology - MBBS, MD, DNB</option>
+                                <option value="dr-rajesh">Dr. Rajesh Kumar - Urology - MBBS, MS, MCh</option>
+                                <option value="dr-sneha">Dr. Sneha Reddy - Nephrology - MBBS, MD, DM</option>
+                                <option value="dr-vikram">Dr. Vikram Sharma - Psychiatry - MBBS, MD, DPM</option>
+                                <option value="dr-deepak">Dr. Deepak Patel - Dermatology - MBBS, MD, DVL</option>
+                                <option value="dr-meena">Dr. Meena Verma - Pediatrics - MBBS, MD, DCH</option>
+                                <option value="dr-harsh">Dr. Harsh Desai - Rheumatology - MBBS, MD, DM</option>
+                                <option value="dr-anjali">Dr. Anjali Gupta - Ophthalmology - MBBS, MS (Ophtho)</option>
+                                <option value="dr-naveen">Dr. Naveen Sharma - Neurosurgery - MBBS, MS, MCh</option>
+                                <option value="dr-sakshi">Dr. Sakshi Mishra - Infectious Disease - MBBS, MD, DM</option>
+                                <option value="dr-arun">Dr. Arun Verma - Anesthesiology - MBBS, MD, DNB</option>
+                            </select>
+                        </div>
+
+                        <!-- Appointment Date and Time -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointmentDate"><i class="fas fa-calendar"></i> Appointment Date</label>
+                                <input type="date" id="appointmentDate" placeholder="dd-mm-yyyy" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointmentTime"><i class="fas fa-clock"></i> Appointment Time</label>
+                                <input type="time" id="appointmentTime" placeholder="--:--" required>
+                            </div>
+                        </div>
+
+                        <!-- Reason for Consultation -->
+                        <div class="form-group">
+                            <label for="reason"><i class="fas fa-clipboard"></i> Reason for Consultation</label>
+                            <textarea id="reason" rows="5" placeholder="Describe your symptoms or reason for consultation..." required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-book">
+                            <i class="fas fa-check-circle"></i> Book Appointment
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div style="margin-top: 60px;">
+                <h2 style="color: var(--primary-blue); margin-bottom: 20px;"><i class="fas fa-user-md"></i> Available Doctors</h2>
+                <div class="doctor-grid" id="availableDoctors">
+                    <!-- Available doctors will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="hospital-profiles.html">Hospitals</a></li>
+                        <li><a href="doctor-verification.html">Doctors</a></li>
+                        <li><a href="patient-portal.html">Patient Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="pharmacy.html">Pharmacy</a></li>
+                        <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                        <li><a href="ambulance-booking.html">Ambulance</a></li>
+                        <li><a href="admin-panel.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About Sanjeevani Live</h4>
+                    <p>Sanjeevani Live is dedicated to providing comprehensive healthcare services and information to the people of Bhubaneswar and beyond.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency</h4>
+                    <p><strong>Ambulance:</strong> 108</p>
+                    <p><strong>Police:</strong> 100</p>
+                    <p><strong>Fire:</strong> 101</p>
+                    <p><strong>Sanjeevani Live Helpline:</strong> 1800-HEALTH</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sanjeevani Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // All Verified Doctors Data
+        const allDoctors = [
+            {
+                id: 1,
+                name: "Dr. Priya Sharma",
+                specialty: "Neurology",
+                qualifications: "MBBS, MD",
+                experience: "12 years",
+                available: true,
+                nextSlot: "10:00 AM",
+                fee: 500,
+                hospital: "AIIMS Bhubaneswar"
+            },
+            {
+                id: 2,
+                name: "Dr. Sangeeta Mohapatra",
+                specialty: "Endocrinology",
+                qualifications: "MBBS, MD, DM",
+                experience: "15 years",
+                available: true,
+                nextSlot: "11:00 AM",
+                fee: 600,
+                hospital: "KIMS Hospital"
+            },
+            {
+                id: 3,
+                name: "Dr. Abinash Mohanty",
+                specialty: "Cardiology",
+                qualifications: "MBBS, MD, DM",
+                experience: "18 years",
+                available: true,
+                nextSlot: "02:00 PM",
+                fee: 700,
+                hospital: "Apollo Hospitals"
+            },
+            {
+                id: 4,
+                name: "Dr. Bikash Nayak",
+                specialty: "ENT",
+                qualifications: "MBBS, MS (ENT)",
+                experience: "10 years",
+                available: true,
+                nextSlot: "03:00 PM",
+                fee: 450,
+                hospital: "SUM Hospital"
+            },
+            {
+                id: 5,
+                name: "Dr. Pragyan Parimita",
+                specialty: "General Medicine",
+                qualifications: "MBBS, MD",
+                experience: "8 years",
+                available: true,
+                nextSlot: "09:00 AM",
+                fee: 400,
+                hospital: "Capital Hospital"
+            },
+            {
+                id: 6,
+                name: "Dr. Jyoti Sahu",
+                specialty: "Gynecology",
+                qualifications: "MBBS, MS (OB/GY)",
+                experience: "14 years",
+                available: true,
+                nextSlot: "10:30 AM",
+                fee: 550,
+                hospital: "KIMS Hospital"
+            },
+            {
+                id: 7,
+                name: "Dr. Sushant Mishra",
+                specialty: "Orthopedics",
+                qualifications: "MBBS, MS (Ortho)",
+                experience: "11 years",
+                available: true,
+                nextSlot: "04:00 PM",
+                fee: 600,
+                hospital: "Hi-Tech Medical College"
+            },
+            {
+                id: 8,
+                name: "Dr. Ananya Rath",
+                specialty: "Pulmonology",
+                qualifications: "MBBS, MD, DM",
+                experience: "13 years",
+                available: true,
+                nextSlot: "11:30 AM",
+                fee: 650,
+                hospital: "AIIMS Bhubaneswar"
+            },
+            {
+                id: 9,
+                name: "Dr. Subrat Sahoo",
+                specialty: "Gastroenterology",
+                qualifications: "MBBS, MD, DM",
+                experience: "16 years",
+                available: true,
+                nextSlot: "01:00 PM",
+                fee: 700,
+                hospital: "CARE Hospitals"
+            },
+            {
+                id: 10,
+                name: "Dr. Tapan Ratha",
+                specialty: "Oncology",
+                qualifications: "MBBS, MD, DNB",
+                experience: "17 years",
+                available: false,
+                nextSlot: "05:00 PM",
+                fee: 800,
+                hospital: "Apollo Hospitals"
+            },
+            {
+                id: 11,
+                name: "Dr. Rajesh Kumar",
+                specialty: "Urology",
+                qualifications: "MBBS, MS, MCh",
+                experience: "14 years",
+                available: true,
+                nextSlot: "02:30 PM",
+                fee: 650,
+                hospital: "AMRI Hospital"
+            },
+            {
+                id: 12,
+                name: "Dr. Sneha Reddy",
+                specialty: "Nephrology",
+                qualifications: "MBBS, MD, DM",
+                experience: "12 years",
+                available: true,
+                nextSlot: "03:30 PM",
+                fee: 600,
+                hospital: "SUM Hospital"
+            },
+            {
+                id: 13,
+                name: "Dr. Vikram Sharma",
+                specialty: "Psychiatry",
+                qualifications: "MBBS, MD, DPM",
+                experience: "10 years",
+                available: true,
+                nextSlot: "09:30 AM",
+                fee: 500,
+                hospital: "Utkal Hospital"
+            },
+            {
+                id: 14,
+                name: "Dr. Deepak Patel",
+                specialty: "Dermatology",
+                qualifications: "MBBS, MD, DVL",
+                experience: "9 years",
+                available: true,
+                nextSlot: "10:00 AM",
+                fee: 450,
+                hospital: "Capital Hospital"
+            },
+            {
+                id: 15,
+                name: "Dr. Meena Verma",
+                specialty: "Pediatrics",
+                qualifications: "MBBS, MD, DCH",
+                experience: "11 years",
+                available: true,
+                nextSlot: "11:00 AM",
+                fee: 400,
+                hospital: "KIMS Hospital"
+            },
+            {
+                id: 16,
+                name: "Dr. Harsh Desai",
+                specialty: "Rheumatology",
+                qualifications: "MBBS, MD, DM",
+                experience: "13 years",
+                available: false,
+                nextSlot: "04:30 PM",
+                fee: 550,
+                hospital: "Hi-Tech Medical College"
+            },
+            {
+                id: 17,
+                name: "Dr. Anjali Gupta",
+                specialty: "Ophthalmology",
+                qualifications: "MBBS, MS (Ophtho)",
+                experience: "12 years",
+                available: true,
+                nextSlot: "02:00 PM",
+                fee: 600,
+                hospital: "AIIMS Bhubaneswar"
+            },
+            {
+                id: 18,
+                name: "Dr. Naveen Sharma",
+                specialty: "Neurosurgery",
+                qualifications: "MBBS, MS, MCh",
+                experience: "15 years",
+                available: true,
+                nextSlot: "03:00 PM",
+                fee: 900,
+                hospital: "Apollo Hospitals"
+            },
+            {
+                id: 19,
+                name: "Dr. Sakshi Mishra",
+                specialty: "Infectious Disease",
+                qualifications: "MBBS, MD, DM",
+                experience: "11 years",
+                available: true,
+                nextSlot: "10:30 AM",
+                fee: 550,
+                hospital: "CARE Hospitals"
+            },
+            {
+                id: 20,
+                name: "Dr. Arun Verma",
+                specialty: "Anesthesiology",
+                qualifications: "MBBS, MD, DNB",
+                experience: "16 years",
+                available: true,
+                nextSlot: "01:30 PM",
+                fee: 700,
+                hospital: "AMRI Hospital"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderAvailableDoctors();
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').setAttribute('min', today);
+
+            // Handle form submission
+            document.getElementById('consultationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                bookConsultation();
+            });
+        });
+
+        function renderAvailableDoctors() {
+            const container = document.getElementById('availableDoctors');
+            container.innerHTML = allDoctors.map(doctor => `
+                <div class="doctor-card-telemedicine">
+                    <div class="doctor-card-header">
+                        <div class="doctor-status-badge ${doctor.available ? 'available' : 'unavailable'}">
+                            <i class="fas ${doctor.available ? 'fa-check-circle' : 'fa-clock'}"></i>
+                            ${doctor.available ? 'Available' : 'Busy'}
+                        </div>
+                        <h3>${doctor.name}</h3>
+                    </div>
+                    <div class="doctor-card-body">
+                        <p class="doctor-specialty"><i class="fas fa-stethoscope"></i> ${doctor.specialty}</p>
+                        <p class="doctor-detail"><i class="fas fa-certificate"></i> ${doctor.qualifications}</p>
+                        <p class="doctor-detail"><i class="fas fa-hourglass-half"></i> ${doctor.experience} experience</p>
+                        <p class="doctor-detail"><i class="fas fa-hospital"></i> ${doctor.hospital}</p>
+                        <div class="doctor-meta">
+                            <span class="fee"><i class="fas fa-tag"></i> ₹${doctor.fee}</span>
+                            <span class="slot"><i class="fas fa-clock"></i> ${doctor.nextSlot}</span>
+                        </div>
+                        <button class="btn btn-primary btn-book-with" onclick="selectDoctor('${doctor.name}', '${doctor.specialty}')" ${!doctor.available ? 'disabled' : ''}>
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectDoctor(doctorName, specialty) {
+            // Find doctor in dropdown and select
+            const doctorSelect = document.getElementById('doctor');
+            for (let option of doctorSelect.options) {
+                if (option.text.includes(doctorName)) {
+                    doctorSelect.value = option.value;
+                    break;
+                }
+            }
+            
+            // Scroll to form
+            document.getElementById('consultationForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function bookConsultation() {
+            const hospital = document.getElementById('hospital').value;
+            const doctor = document.getElementById('doctor').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+            const reason = document.getElementById('reason').value;
+
+            if (!hospital || !doctor || !date || !time || !reason) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Get doctor and hospital names from dropdowns
+            const doctorName = document.querySelector('#doctor option:checked').text;
+            const hospitalName = document.querySelector('#hospital option:checked').text;
+
+            // Show success message
+            alert(`✓ Teleconsultation Booking Confirmed!\n\nHospital: ${hospitalName}\nDoctor: ${doctorName}\nDate: ${date}\nTime: ${time}\n\nYou will receive a confirmation via email and SMS with video link.`);
+
+            // Reset form
+            document.getElementById('consultationForm').reset();
+        }
+    </script>
+</body>
+</html>
+

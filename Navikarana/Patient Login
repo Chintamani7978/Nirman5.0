@@ -1,0 +1,61 @@
+from ._anvil_designer import PatientLoginTemplate
+from anvil import *
+import anvil.server
+
+class PatientLogin(PatientLoginTemplate):
+
+  def __init__(self, **properties):
+    self.init_components(**properties)
+
+    # Hide signup panel when form loads
+    self.Panel_SignUp.visible = False
+    self.Panel_SignIn.visible = True
+
+
+  #  CREATE ACCOUNT BUTTON CLICK
+  def btn_show_signup_click(self, **event_args):
+    self.Panel_SignIn.visible = False
+    self.Panel_SignUp.visible = True
+  
+
+
+  # SIGN UP BUTTON
+  def btn_signup_click(self, **event_args):
+    name = self.txt_name.text
+    email = self.txt_email_signup.text
+    password = self.txt_pass_signup.text
+    confirm = self.txt_pass_confirm.text
+
+    if not name or not email or not password or not confirm:
+      alert("Please fill all fields.")
+      return
+
+    if password != confirm:
+      alert("Passwords do not match!")
+      return
+
+    result = anvil.server.call('signup_patient', name, email, password)
+    alert(result['msg'])
+
+    if result['success']:
+      self.Panel_SignUp.visible = False
+      self.Panel_SignIn.visible = True
+
+
+  # SIGN IN BUTTON
+  def btn_signin_click(self, **event_args):
+    email = self.txt_email.text
+    password = self.txt_password.text
+
+    if not email or not password:
+      alert("Please enter email and password.")
+      return
+
+    result = anvil.server.call('login_patient', email, password)
+
+    if not result['success']:
+      alert(result['msg'])
+      return
+
+    alert("Login successful!")
+    open_form('PatientDashboard', patient=result['user'])

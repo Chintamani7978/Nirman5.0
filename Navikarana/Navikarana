@@ -1,0 +1,120 @@
+#LOGIN
+
+from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+import anvil.server
+from ._anvil_designer import LoginTemplate
+from .PatientLogin import PatientLogin
+from .DoctorLogin import DoctorLogin
+
+class Login(LoginTemplate):
+  def __init__(self, **properties):
+    self.init_components(**properties)
+
+  def button_1_click(self, **event_args):
+    open_form('Login.PatientLogin')
+
+  def button_2_click(self, **event_args):
+    open_form('Login.DoctorLogin')
+
+#Patient Login
+
+from ._anvil_designer import PatientLoginTemplate
+from anvil import *
+import anvil.server
+
+class PatientLogin(PatientLoginTemplate):
+
+  def __init__(self, **properties):
+    self.init_components(**properties)
+
+    # Hide signup panel when form loads
+    self.Panel_SignUp.visible = False
+    self.Panel_SignIn.visible = True
+
+
+  # CREATE ACCOUNT BUTTON CLICK  (New)
+  def btn_show_signup_click(self, **event_args):
+    self.Panel_SignIn.visible = False
+    self.Panel_SignUp.visible = True
+  
+
+
+  # SIGN UP BUTTON
+  def btn_signup_click(self, **event_args):
+    name = self.txt_name.text
+    email = self.txt_email_signup.text
+    password = self.txt_pass_signup.text
+    confirm = self.txt_pass_confirm.text
+
+    if not name or not email or not password or not confirm:
+      alert("Please fill all fields.")
+      return
+
+    if password != confirm:
+      alert("Passwords do not match!")
+      return
+
+    result = anvil.server.call('signup_patient', name, email, password)
+    alert(result['msg'])
+
+    if result['success']:
+      self.Panel_SignUp.visible = False
+      self.Panel_SignIn.visible = True
+
+
+  # SIGN IN BUTTON
+  def btn_signin_click(self, **event_args):
+    email = self.txt_email.text
+    password = self.txt_password.text
+
+    if not email or not password:
+      alert("Please enter email and password.")
+      return
+
+    result = anvil.server.call('login_patient', email, password)
+
+    if not result['success']:
+      alert(result['msg'])
+      return
+
+    alert("Login successful!")
+    open_form('PatientDashboard', patient=result['user'])
+
+#PaitentDashboard
+rom ._anvil_designer import PatientDashboardTemplate
+from anvil import *
+import anvil.server
+
+class PatientDashboard(PatientDashboardTemplate):
+  def __init__(self, patient=None, **properties):
+    self.init_components(**properties)
+
+    self.patient = patient
+
+    if self.patient:
+      self.lbl_patient_name.text = f"Welcome, {self.patient['name']}"
+
+    # Load doctors
+    self.load_doctors()
+
+  def load_doctors(self):
+    doctors = anvil.server.call('get_doctors')
+
+    # Pass each doctor row + patient to the repeating panel
+    self.repeating_panel_doctors.items = [
+      {"doctor": d, "patient": self.patient}
+      for d in doctors
+    ]
+
+  def btn_update_profile_click(self, **event_args):
+    open_form('PatientProfile', patient=self.patient)
+
+  def btn_book_click(self, **event_args):
+    open_form('BookAppointment', patient=self.patient)
+
+  def btn_logout_click(self, **event_args):
+    anvil.server.call('logout_patient')
+    open_form('Login')

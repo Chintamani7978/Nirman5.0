@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sanjeevani Live</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            border-radius: 50%;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0 0 0;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: #0066cc;
+            width: 18px;
+        }
+
+        .form-group input {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #0066cc;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #0052a3;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            padding: 12px;
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .social-btn {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .social-btn:hover {
+            border-color: #0066cc;
+            background: #f8f9ff;
+        }
+
+        .signup-link {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .signup-link a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: #0052a3;
+        }
+
+        .error-message {
+            padding: 12px;
+            background: #f8d7da;
+            color: #721c24;
+            border-radius: 6px;
+            border-left: 4px solid #dc3545;
+            font-size: 13px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .success-message {
+            padding: 12px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 6px;
+            border-left: 4px solid #28a745;
+            font-size: 13px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .user-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-type-btn {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .user-type-btn.active {
+            border-color: #0066cc;
+            background: #f0f7ff;
+            color: #0066cc;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Sanjeevani Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospital-profiles.html">Hospitals</a></li>
+                <li><a href="pharmacy.html">Pharmacy</a></li>
+                <li><a href="doctor-verification.html">Doctor Verification</a></li>
+                <li><a href="ambulance-booking.html">Ambulance</a></li>
+                <li><a href="teleconsulation.html">Teleconsultation</a></li>
+                <li><a href="patient-portal.html">Patient Portal</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Login Header -->
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h1>Sanjeevani Live</h1>
+                <p>Secure Login to Your Healthcare Portal</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <!-- User Type Selector -->
+            <div class="user-type-selector">
+                <button class="user-type-btn active" data-type="patient">
+                    <i class="fas fa-user-circle"></i> Patient
+                </button>
+                <button class="user-type-btn" data-type="doctor">
+                    <i class="fas fa-user-md"></i> Doctor
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form">
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a class="forgot-password" onclick="handleForgotPassword()">Forgot password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="login-divider">OR</div>
+
+            <!-- Social Login -->
+            <div class="social-login">
+                <button class="social-btn" onclick="handleGoogleLogin()">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="social-btn" onclick="handlePhoneLogin()">
+                    <i class="fas fa-phone"></i> Phone
+                </button>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div class="signup-link">
+                Don't have an account? <a onclick="handleSignup()">Sign up here</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Demo Credentials
+        const DEMO_CREDENTIALS = {
+            patient: {
+                email: 'patient@sanjeevani.com',
+                password: 'patient123'
+            },
+            doctor: {
+                email: 'doctor@sanjeevani.com',
+                password: 'doctor123'
+            }
+        };
+
+        let selectedUserType = 'patient';
+
+        // User Type Selector
+        document.querySelectorAll('.user-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.user-type-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedUserType = this.getAttribute('data-type');
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+            });
+        });
+
+        // Show Message Helper
+        function showMessage(message, type = 'error') {
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+            
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+                successEl.style.display = 'none';
+            } else if (type === 'success') {
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+                errorEl.style.display = 'none';
+            } else {
+                errorEl.textContent = message;
+                errorEl.style.backgroundColor = '#e7f3ff';
+                errorEl.style.color = '#0066cc';
+                errorEl.style.borderLeftColor = '#0066cc';
+                errorEl.style.display = 'block';
+                successEl.style.display = 'none';
+            }
+        }
+
+        // Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+
+        function handleLogin() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Validation
+            if (!email || !password) {
+                showMessage('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Demo credential check
+            const demoEmail = DEMO_CREDENTIALS[selectedUserType].email;
+            const demoPassword = DEMO_CREDENTIALS[selectedUserType].password;
+
+            if (email === demoEmail && password === demoPassword) {
+                // Success
+                showMessage('Login successful! Redirecting...', 'success');
+                
+                // Store user info in localStorage
+                const userData = {
+                    email: email,
+                    userType: selectedUserType,
+                    loginTime: new Date().toISOString(),
+                    rememberMe: rememberMe
+                };
+                localStorage.setItem('sanjeevaniUser', JSON.stringify(userData));
+
+                // Redirect after 1.5 seconds
+                setTimeout(() => {
+                    if (selectedUserType === 'patient') {
+                        window.location.href = 'patient-portal.html';
+                    } else {
+                        window.location.href = 'doctor-verification.html';
+                    }
+                }, 1500);
+            } else {
+                showMessage('Invalid email or password. Use demo credentials: ' + demoEmail + ' / ' + demoPassword, 'error');
+            }
+        }
+
+        function handleForgotPassword() {
+            const email = prompt('Enter your email address:');
+            if (email) {
+                showMessage('Password reset link sent to ' + email, 'success');
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function handleGoogleLogin() {
+            showMessage('Google login integration coming soon!', 'info');
+        }
+
+        function handlePhoneLogin() {
+            showMessage('Phone login integration coming soon!', 'info');
+        }
+
+        function handleSignup() {
+            showMessage('Sign up page will be available soon!', 'info');
+        }
+
+        // Demo credentials messages removed
+    </script>
+</body>
+</html>

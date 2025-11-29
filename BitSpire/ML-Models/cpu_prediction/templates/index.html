@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EV Charging Cost Predictor</title>
+</head>
+<body>
+    <h2>Enter Charging Details</h2>
+    <form method="POST">
+        Energy Consumed (kWh): <input type="text" name="energy" required><br><br>
+        Vehicle Age (years): <input type="text" name="age" required><br><br>
+        Total Duration (hrs): <input type="text" name="duration" required><br><br>
+        Time of Day (0=Morning,1=Afternoon,2=Evening,3=Night): <input type="text" name="time_of_day" required><br><br>
+        Day of Week (0=Mon ... 6=Sun): <input type="text" name="day_of_week" required><br><br>
+        Charger Type (0=Slow,1=Fast): <input type="text" name="charger_type" required><br><br>
+        User Type (0=Private,1=Commercial): <input type="text" name="user_type" required><br><br>
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction %}
+        <h3>Predicted Cost per Unit: {{ prediction }}</h3>
+    {% endif %}
+</body>
+</html>

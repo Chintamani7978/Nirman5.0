@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindMesh-Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style_peer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo-container">
+    MINDMESH
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="peer.html">Peer Community</a></li>
+      <li><a href="counsel.html">Counsellors</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a></li>
+    </ul>
+    </ul>
+  </nav>
+  <section>
+    <h2>XYZ College,India</h2>
+    <p><strong>Building/Block:</strong> B-Block, Ground Floor</p>
+    <p><strong>Room No.:</strong> 102</p>
+    <p><strong>Office Contact:</strong> +91-98765-43210</p>
+    <h3>Book an Appointment</h3>
+    <form id="bookingForm">
+         <select>
+          <option>Select Counsellor</option>
+          <option>Dr.Anjali Sharma</option>
+          <option>Mr.Ramesh Kumar</option>
+          <option>Dr.Neha Verma</option>
+        </select>
+      <input type="text" id="studentName" placeholder="Your Name" required>
+      <input type="number" id="studentAge" placeholder="Your Age" required>
+      <input type="date" id="appointmentDate" required>
+      <input type="time" id="appointmentTime" required>
+
+      <textarea id="concern" placeholder="Briefly describe your concern (optional)"></textarea>
+      <button class="book-btn" onclick="alert('Thank You Booking! Counsellor will Confirm You soon!!')">
+  Book Appointment
+</button>
+    </form>
+    <div id="bookingMsg"></div>
+  </section>
